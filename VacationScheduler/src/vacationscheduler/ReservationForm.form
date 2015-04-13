@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="Label_User" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="ComboBox_User" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Label_ReservationDate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="TextBox_DateOfReservation" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="Label_UseDate" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_NumberOfNights" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="TextBox_UseDate" max="32767" attributes="0"/>
+                          <Component id="TextBox_NumberOfNights" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Label_UnitSize" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="ComboBox_UnitSize" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Label_ConfirmationNumber" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="TextBox_ConfirmationNumber" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Label_PointsRequired" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="TextBox_PointsRequired" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="Label_PointsAvailable" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="Label_PointsAfter" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="Label_CalculatedPointsAfter" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="Label_Discounted" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="Checkbox_Discounted" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="Label_Upgraded" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="Checkbox_upgraded" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="Label_GuestOrHolding" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="Radiobtn_Guest" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="Radiobtn_Holding" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="Label_PaymentMethod" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="Radiobtn_Credit" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Radiobtn_Cash" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Radiobtn_Other" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="84" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="TextBox_OtherPaymentMethod" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Label_GuestName" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="TextBox_GuestName" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Label_AmountPaid" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="TextBox_AmountPaid" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Label_DatePaid" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="TextBox_DatePaid" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="Btn_Okay" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="Btn_Cancel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="ComboBox_User" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Label_User" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_PointsAvailable" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_ReservationDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextBox_DateOfReservation" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="Label_UseDate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="Label_NumberOfNights" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TextBox_NumberOfNights" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="TextBox_UseDate" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="ComboBox_UnitSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Label_UnitSize" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_ConfirmationNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextBox_ConfirmationNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_PointsRequired" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextBox_PointsRequired" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_PointsAfter" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Label_CalculatedPointsAfter" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_Discounted" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Checkbox_Discounted" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_Upgraded" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Checkbox_upgraded" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_GuestOrHolding" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Radiobtn_Guest" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Radiobtn_Holding" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_GuestName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextBox_GuestName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_AmountPaid" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextBox_AmountPaid" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_DatePaid" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextBox_DatePaid" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_PaymentMethod" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Radiobtn_Cash" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="Radiobtn_Credit" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="Radiobtn_Other" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="TextBox_OtherPaymentMethod" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Btn_Okay" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Btn_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JComboBox" name="ComboBox_User">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_User">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="User"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_PointsAvailable">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Available Points:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel3"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_ReservationDate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Date of Reservation:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_DateOfReservation">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_UseDate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Use Date:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_UseDate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField2"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_NumberOfNights">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Number of Nights:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_NumberOfNights">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_UnitSize">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Unit Size:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="ComboBox_UnitSize">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_ConfirmationNumber">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Confirmation #:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_ConfirmationNumber">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=" "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_PointsRequired">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Points Required:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_PointsRequired">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_PointsAfter">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Points After:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_CalculatedPointsAfter">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel11"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_Discounted">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Was It Discounted:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Checkbox_Discounted">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="check if discounted"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_Upgraded">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Was it upgraded?:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Checkbox_upgraded">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="check if upgraded"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_GuestOrHolding">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guest or Holding:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="Radiobtn_Guest">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guest"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="Radiobtn_Holding">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Holding"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_GuestName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guest Name:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_GuestName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guest Name"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_AmountPaid">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Amount Paid:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_AmountPaid">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_DatePaid">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Date Paid:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_DatePaid">
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_PaymentMethod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Payment Method:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="Radiobtn_Cash">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cash"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="Radiobtn_Credit">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Credit"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="Radiobtn_Other">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Other:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextBox_OtherPaymentMethod">
+    </Component>
+    <Component class="javax.swing.JButton" name="Btn_Okay">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Okay"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="Btn_Cancel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancel"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

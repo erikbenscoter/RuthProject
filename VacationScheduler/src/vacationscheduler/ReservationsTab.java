@@ -5,8 +5,11 @@
  */
 package vacationscheduler;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,14 +20,16 @@ public class ReservationsTab extends javax.swing.JPanel {
     /**
      * Creates new form ReservationsTab
      */
+    ReservationForm newReservation;
+    
     public ReservationsTab() {
         initComponents();
-        String [] reservationsOptions = {"Make A New Reservation",
+        String [] reservationsOptions = {"","Make A New Reservation",
             "View Existing Reservations","Manage Existing Reservation"};
         this.jComboBox1.setModel(new DefaultComboBoxModel(reservationsOptions));
         this.setVisible(true);
         
-        
+        newReservation = new ReservationForm();
         
         
         
@@ -40,8 +45,25 @@ public class ReservationsTab extends javax.swing.JPanel {
     private void initComponents() {
 
         jComboBox1 = new javax.swing.JComboBox();
+        Panel_ChangePanel = new javax.swing.JPanel();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout Panel_ChangePanelLayout = new javax.swing.GroupLayout(Panel_ChangePanel);
+        Panel_ChangePanel.setLayout(Panel_ChangePanelLayout);
+        Panel_ChangePanelLayout.setHorizontalGroup(
+            Panel_ChangePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        Panel_ChangePanelLayout.setVerticalGroup(
+            Panel_ChangePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 217, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -51,18 +73,48 @@ public class ReservationsTab extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jComboBox1, 0, 559, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(Panel_ChangePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Panel_ChangePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        
+        
+        String selection = (String) this.jComboBox1.getSelectedItem();
+        this.setVisible(false);
+        this.Panel_ChangePanel.setVisible(false);
+        
+        switch(selection){
+            case "Make A New Reservation":
+                
+                this.Panel_ChangePanel.setLayout(new FlowLayout());
+                this.Panel_ChangePanel.add(this.newReservation);
+                
+                Dimension d = new Dimension();
+                d.height = newReservation.getHeight();
+                d.width = newReservation.getWidth();
+                this.setMinimumSize(d);
+                this.Panel_ChangePanel.setMinimumSize(d);
+                
+                break;
+        }
+        this.Panel_ChangePanel.invalidate();
+        this.Panel_ChangePanel.setVisible(true);
+        this.invalidate();
+        this.setVisible(true);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Panel_ChangePanel;
     private javax.swing.JComboBox jComboBox1;
     // End of variables declaration//GEN-END:variables
 }

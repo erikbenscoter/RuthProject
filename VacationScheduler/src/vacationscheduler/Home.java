@@ -94,7 +94,7 @@ public class Home extends javax.swing.JFrame {
             jTabbedPane1.setMnemonicAt(0, KeyEvent.VK_1);
             this.setVisible(true);
         //tab 1 will be users
-            this.jTabbedPane1.addTab("Users", new Users());
+            this.jTabbedPane1.addTab("Users", new UsersTab());
             jTabbedPane1.setMnemonicAt(1, KeyEvent.VK_1);
             this.setVisible(true);
         //tab 2 will be reservations

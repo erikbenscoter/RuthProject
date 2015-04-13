@@ -15,16 +15,16 @@ import javax.swing.JPanel;
  *
  * @author erikbenscoter
  */
-public class Users extends javax.swing.JPanel {
+public class UsersTab extends javax.swing.JPanel {
 
     /**
-     * Creates new form Users
+     * Creates new form UsersTab
      */
     boolean createNewUser = true;
     UserMaitenanceForm mnuForm;
     UserMaitenanceForm updateUserForm;
     
-    public Users() {
+    public UsersTab() {
         initComponents();
         String [] userComboBoxOptions={"existing user","modify existing user","create a new user"};
         mnuForm = new UserMaitenanceForm();
