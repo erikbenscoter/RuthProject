@@ -1,0 +1,16 @@
+Fri May 08 07:05:25 EDT 2015 : Apache Derby Network Server - 10.10.2.0 - (1582446) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Fri May 08 07:05:26 EDT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-014d-3333-8a82-00001417d8ec 
+on database directory /home/erikbenscoter/Dropbox/RuthProject/VacationScheduler/VPDB with class loader sun.misc.Launcher$AppClassLoader@14dad5dc 
+Loaded from file:/usr/local/glassfish-4.1/javadb/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_45-internal-b14
+user.dir=/usr/local/glassfish-4.1/javadb
+os.name=Linux
+os.arch=amd64
+os.version=3.19.0-16-generic
+derby.system.home=/home/erikbenscoter/Dropbox/RuthProject/VacationScheduler
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Fri May 08 19:45:09 EDT 2015: Shutting down Derby engine

@@ -11,14 +11,26 @@ import javax.swing.JFrame;
  *
  * @author erikbenscoter
  */
-public class UserMaitenanceForm extends javax.swing.JPanel {
+public class OwnerMaitenanceForm extends javax.swing.JPanel {
 
     /**
      * Creates new form MakeNewUser
      */
-    public UserMaitenanceForm() {
+    Owner own;
+    UsersTab userTab;
+    public OwnerMaitenanceForm(UsersTab userTab){
+        this.userTab = userTab;
+        InCommonConstructor();
+    }
+    public OwnerMaitenanceForm() {
+        InCommonConstructor();
+    }
+    public void InCommonConstructor(){
         initComponents();
+        
         this.setVisible(true);
+        own = new Owner();
+        
     }
 
     /**
@@ -48,10 +60,13 @@ public class UserMaitenanceForm extends javax.swing.JPanel {
         TextField_Password = new javax.swing.JTextField();
         TextField_UserName = new javax.swing.JTextField();
         Label_UserName = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(254, 254, 254));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         Label_FirstName.setText("First Name:");
 
-        TextField_FirstName.setText("First Name");
         TextField_FirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_FirstNameActionPerformed(evt);
@@ -60,11 +75,14 @@ public class UserMaitenanceForm extends javax.swing.JPanel {
 
         Label_LastName.setText("Last Name:");
 
-        TextField_LastName.setText("Last Name");
+        TextField_LastName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextField_LastNameActionPerformed(evt);
+            }
+        });
 
         Label_PointsOwned.setText("Points Owned");
 
-        TextField_PointsOwned.setText("0");
         TextField_PointsOwned.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_PointsOwnedActionPerformed(evt);
@@ -73,10 +91,15 @@ public class UserMaitenanceForm extends javax.swing.JPanel {
 
         Label_OwnerReimburseRate.setText("Owner Reimbursement Rate:");
 
-        TextField_OwnerReimburseRate.setText("0");
-
+        Button_Okay.setBackground(new java.awt.Color(0, 255, 0));
         Button_Okay.setText("Okay");
+        Button_Okay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_OkayActionPerformed(evt);
+            }
+        });
 
+        Button_Cancel.setBackground(new java.awt.Color(255, 0, 46));
         Button_Cancel.setText("Cancel");
         Button_Cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,20 +113,15 @@ public class UserMaitenanceForm extends javax.swing.JPanel {
 
         Label_Password.setText("Password:");
 
-        TextField_Email.setText("Email Address");
-
-        TextField_PhoneNumber.setText("xxx-xxx-xxxx");
         TextField_PhoneNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_PhoneNumberActionPerformed(evt);
             }
         });
 
-        TextField_Password.setText("Password");
-
-        TextField_UserName.setText("User Name");
-
         Label_UserName.setText("User Name:");
+
+        jLabel1.setText("x-(xxx)-xxx-xxxx");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -129,7 +147,9 @@ public class UserMaitenanceForm extends javax.swing.JPanel {
                                         .addComponent(Label_Email)
                                         .addGap(171, 171, 171)
                                         .addComponent(TextField_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 264, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1)
+                                .addGap(0, 134, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +192,9 @@ public class UserMaitenanceForm extends javax.swing.JPanel {
                     .addComponent(TextField_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TextField_PhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(TextField_PhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
                     .addComponent(Label_PhoneNumber))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,12 +229,33 @@ public class UserMaitenanceForm extends javax.swing.JPanel {
     }//GEN-LAST:event_TextField_PointsOwnedActionPerformed
 
     private void Button_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_CancelActionPerformed
-        // TODO add your handling code here:
+        this.userTab.resetPanel();
     }//GEN-LAST:event_Button_CancelActionPerformed
 
     private void TextField_PhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_PhoneNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TextField_PhoneNumberActionPerformed
+
+    private void Button_OkayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_OkayActionPerformed
+        own.emailAddress = this.TextField_Email.getText();
+        own.firstName = this.TextField_FirstName.getText();
+        own.lastName = this.TextField_LastName.getText();
+        own.password = this.TextField_Password.getText();
+        own.phoneNumber = this.TextField_PhoneNumber.getText();
+        own.pointsOwned = Integer.parseInt(this.TextField_PointsOwned.getText());
+        own.reimbursementRate = Double.parseDouble(this.TextField_OwnerReimburseRate.getText());
+        own.userName = this.TextField_UserName.getText();
+        
+        DBConnection dbconnection = new DBConnection();
+        dbconnection.insert(own);
+        this.userTab.resetPanel();
+        
+        
+    }//GEN-LAST:event_Button_OkayActionPerformed
+
+    private void TextField_LastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_LastNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_LastNameActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -234,5 +277,6 @@ public class UserMaitenanceForm extends javax.swing.JPanel {
     private javax.swing.JTextField TextField_PhoneNumber;
     private javax.swing.JTextField TextField_PointsOwned;
     private javax.swing.JTextField TextField_UserName;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

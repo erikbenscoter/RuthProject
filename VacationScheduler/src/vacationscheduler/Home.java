@@ -5,8 +5,12 @@
  */
 package vacationscheduler;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 import javax.swing.JComponent;
+import static vacationscheduler.UsersTab.OwnerOrGuest.GUEST;
+import static vacationscheduler.UsersTab.OwnerOrGuest.OWNER;
 
 /**
  *
@@ -18,9 +22,23 @@ public class Home extends javax.swing.JFrame {
     /**
      * Creates new form Home
      */
+    int numberOfTabs=3;
     public Home() {
         initComponents();
         createTabs();
+        this.jTabbedPane1.setBackground(Color.white);
+        for(int i = 0;i<numberOfTabs; i++){
+            Color colors[] = {Color.LIGHT_GRAY,Color.GREEN,
+                                Color.PINK,Color.WHITE,Color.YELLOW};
+            Random r = new Random();
+            int x = r.nextInt(colors.length);
+            System.out.println(x);
+            
+            this.jTabbedPane1.setBackgroundAt(i, colors[x]);
+        }
+        this.jTabbedPane1.setBackgroundAt(WIDTH, Color.yellow);
+       
+        setVisible(true);
     }
 
     /**
@@ -36,6 +54,8 @@ public class Home extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -44,7 +64,7 @@ public class Home extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
         );
 
         pack();
@@ -93,11 +113,15 @@ public class Home extends javax.swing.JFrame {
             jTabbedPane1.addTab("Home", new UpcomingReservations());
             jTabbedPane1.setMnemonicAt(0, KeyEvent.VK_1);
             this.setVisible(true);
-        //tab 1 will be users
-            this.jTabbedPane1.addTab("Users", new UsersTab());
+        //tab 1 will be owners
+            this.jTabbedPane1.addTab("Owners", new UsersTab(OWNER));
             jTabbedPane1.setMnemonicAt(1, KeyEvent.VK_1);
             this.setVisible(true);
-        //tab 2 will be reservations
+        //tab 2 will be guests
+            this.jTabbedPane1.addTab("Guests", new UsersTab(GUEST));
+            jTabbedPane1.setMnemonicAt(2, KeyEvent.VK_1);
+            this.setVisible(true);
+        //tab 3 will be reservations
             this.jTabbedPane1.addTab("Reservation", new ReservationsTab());
     }
 

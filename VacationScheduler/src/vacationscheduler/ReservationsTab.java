@@ -24,15 +24,10 @@ public class ReservationsTab extends javax.swing.JPanel {
     
     public ReservationsTab() {
         initComponents();
-        String [] reservationsOptions = {"","Make A New Reservation",
-            "View Existing Reservations","Manage Existing Reservation"};
+        String [] reservationsOptions = {"",
+            "View Existing Reservations","Manage Existing Reservation","Make A New Reservation"};
         this.jComboBox1.setModel(new DefaultComboBoxModel(reservationsOptions));
         this.setVisible(true);
-        
-        newReservation = new ReservationForm();
-        
-        
-        
     }
 
     /**
@@ -71,7 +66,7 @@ public class ReservationsTab extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, 0, 559, Short.MAX_VALUE)
+                .addComponent(jComboBox1, 0, 372, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(Panel_ChangePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -94,22 +89,15 @@ public class ReservationsTab extends javax.swing.JPanel {
         
         switch(selection){
             case "Make A New Reservation":
-                
-                this.Panel_ChangePanel.setLayout(new FlowLayout());
-                this.Panel_ChangePanel.add(this.newReservation);
-                
-                Dimension d = new Dimension();
-                d.height = newReservation.getHeight();
-                d.width = newReservation.getWidth();
-                this.setMinimumSize(d);
-                this.Panel_ChangePanel.setMinimumSize(d);
-                
-                break;
+               JFrame jf = new JFrame();
+                newReservation = new ReservationForm(jf);
+                jf.setSize(600, 550);
+                jf.add(newReservation);
+                jf.invalidate();
+                jf.setVisible(true);
+                jf.setAlwaysOnTop(true);
         }
-        this.Panel_ChangePanel.invalidate();
-        this.Panel_ChangePanel.setVisible(true);
-        this.invalidate();
-        this.setVisible(true);
+        
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 

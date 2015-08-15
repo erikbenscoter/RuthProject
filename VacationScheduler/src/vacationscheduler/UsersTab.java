@@ -10,30 +10,55 @@ import java.awt.FlowLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import static vacationscheduler.UsersTab.OwnerOrGuest.GUEST;
+import static vacationscheduler.UsersTab.OwnerOrGuest.OWNER;
 
 /**
  *
  * @author erikbenscoter
  */
 public class UsersTab extends javax.swing.JPanel {
-
+    public enum OwnerOrGuest{
+        OWNER,GUEST
+    }
     /**
      * Creates new form UsersTab
      */
     boolean createNewUser = true;
-    UserMaitenanceForm mnuForm;
-    UserMaitenanceForm updateUserForm;
+    OwnerMaitenanceForm mnuForm;
+    GuestMaitenanceForm gmForm;
+    OwnerMaitenanceForm updateUserForm;
+    GuestMaitenanceForm updateGuestForm;
     
-    public UsersTab() {
+    public UsersTab(OwnerOrGuest oOrG) {
         initComponents();
-        String [] userComboBoxOptions={"existing user","modify existing user","create a new user"};
-        mnuForm = new UserMaitenanceForm();
-        updateUserForm = new UserMaitenanceForm();
+        String replaceableWord = "owner";
+        if(oOrG == GUEST)
+            replaceableWord = "guest";
+        String [] userComboBoxOptions={"existing "+replaceableWord,
+                    "modify existing "+replaceableWord,
+                    "create a new "+replaceableWord};
+            
+        mnuForm = new OwnerMaitenanceForm(this);
+        gmForm = new GuestMaitenanceForm(this);
+        updateUserForm = new OwnerMaitenanceForm(this);
+        updateGuestForm = new GuestMaitenanceForm(this);
         
         
         this.UserComboBox.setModel(new DefaultComboBoxModel(userComboBoxOptions));
         
         
+        this.setVisible(true);
+    }
+   
+    public void resetPanel(){
+        this.setVisible(false);
+        this.PanelChanger.setVisible(false);
+        this.PanelChanger.removeAll();
+        mnuForm = new OwnerMaitenanceForm();
+        this.PanelChanger.invalidate();
+        this.PanelChanger.setVisible(true);
+        this.invalidate();
         this.setVisible(true);
     }
 
@@ -49,6 +74,8 @@ public class UsersTab extends javax.swing.JPanel {
         UserComboBox = new javax.swing.JComboBox();
         PanelChanger = new javax.swing.JPanel();
 
+        setBackground(new java.awt.Color(0, 1, 255));
+
         UserComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         UserComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,7 +83,7 @@ public class UsersTab extends javax.swing.JPanel {
             }
         });
 
-        PanelChanger.setBackground(new java.awt.Color(224, 219, 219));
+        PanelChanger.setBackground(new java.awt.Color(0, 132, 255));
 
         javax.swing.GroupLayout PanelChangerLayout = new javax.swing.GroupLayout(PanelChanger);
         PanelChanger.setLayout(PanelChangerLayout);
@@ -95,16 +122,27 @@ public class UsersTab extends javax.swing.JPanel {
         PanelChanger.removeAll();
         this.setVisible(false);
         switch(selectedItem){
-            case "create a new user":
+            case "create a new owner":
                 
                 PanelChanger.setLayout(new FlowLayout());
                 PanelChanger.add(this.mnuForm);
                 
                break;
-            case "modify existing user":
+            case "modify existing owner":
                 
                 this.PanelChanger.setLayout(new FlowLayout());
                 this.PanelChanger.add(this.updateUserForm);
+                break;
+            case "create a new guest":
+                
+                PanelChanger.setLayout(new FlowLayout());
+                PanelChanger.add(this.gmForm);
+                
+               break;
+            case "modify existing guest":
+                
+                this.PanelChanger.setLayout(new FlowLayout());
+                this.PanelChanger.add(this.updateGuestForm);
                 break;
             default:
                                        

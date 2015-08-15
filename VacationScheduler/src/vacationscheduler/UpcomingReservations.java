@@ -16,7 +16,21 @@ public class UpcomingReservations extends javax.swing.JPanel {
      */
     public UpcomingReservations() {
         initComponents();
+        setUpTable();
         this.setVisible(true);
+    }
+    public void setUpTable(){
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Date", "Location", "Owner Name", "Cost","Number of Nights"
+            }
+        ));
     }
 
     /**
