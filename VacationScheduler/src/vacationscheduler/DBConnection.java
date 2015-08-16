@@ -36,7 +36,7 @@ public class DBConnection {
     
 public Connection getConnection(){
        try{
-                Class.forName("org.sqlite.jdbc4").newInstance();
+                Class.forName("org.sqlite.JDBC").newInstance();
                 Connection conn = DriverManager.getConnection(host);
                 return conn;
 //            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -75,7 +75,7 @@ public Connection getConnection(){
         inserts.add(Integer.toString(own.currentAvailablePts));
         inserts.add(Double.toString(own.reimbursementRate));
         
-        String command = "INSERT INTO ROOT.OWNERS (EMAIL, FIRST_NAME, LAST_NAME,"
+        String command = "INSERT INTO OWNERS (EMAIL, FIRST_NAME, LAST_NAME,"
                 +"PHONE_NUMBER, USER_NAME, PASSWORD, POINTS_OWNED, "
                 +"CURRENT_POINTS, OWNER_REIMBURSEMENT_RATE) values(";
         String parameters = "";
@@ -120,7 +120,7 @@ public Connection getConnection(){
             inserts.add(g.creditCardNumber ) ;
             inserts.add(g.numberPreviousRentals ) ; 
         
-        String command = "INSERT INTO ROOT.GUESTS (EMAIL,FIRST_NAME,"
+        String command = "INSERT INTO GUESTS (EMAIL,FIRST_NAME,"
                 +"LAST_NAME,PHONE_NUMBER,CREDIT_CARD_NUMBER,"
                 +"PREVIOUS_RENTALS) VALUES(";
         
@@ -144,7 +144,7 @@ public Connection getConnection(){
         Connection con = this.getConnection();
         try{
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT EMAIL FROM ROOT.OWNERS");
+            ResultSet rs = st.executeQuery("SELECT EMAIL FROM OWNERS");
             
             Vector output = new Vector();
             
@@ -165,7 +165,7 @@ public Connection getConnection(){
             Vector output = new Vector();
             
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT FIRST_NAME,LAST_NAME FROM ROOT." + tableName);
+            ResultSet rs = st.executeQuery("SELECT FIRST_NAME,LAST_NAME FROM " + tableName);
             
             while(rs.next()){
                 output.add(rs.getString("FIRST_NAME") + " " + rs.getString("LAST_NAME"));
@@ -183,8 +183,8 @@ public Connection getConnection(){
             Vector output = new Vector();
             
             Statement st = con.createStatement();
-            System.out.println("SELECT EMAIL FROM ROOT." + tableName);
-            ResultSet rs = st.executeQuery("SELECT EMAIL FROM ROOT." + tableName);
+            System.out.println("SELECT EMAIL FROM " + tableName);
+            ResultSet rs = st.executeQuery("SELECT EMAIL FROM " + tableName);
             
             while(rs.next()){
                 output.add(rs.getString("EMAIL"));
@@ -204,7 +204,7 @@ public Connection getConnection(){
             Vector avpts = new Vector();
             
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT CURRENT_POINTS FROM ROOT.OWNERS");
+            ResultSet rs = st.executeQuery("SELECT CURRENT_POINTS FROM OWNERS");
             
             while(rs.next()){
                 avpts.add(Double.toString(rs.getDouble("CURRENT_POINTS")));
