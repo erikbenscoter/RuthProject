@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import java.sql.*;
 
 /**
  *
@@ -19,7 +20,14 @@ import javax.swing.JOptionPane;
  */
 public class DBConnection {
     
-    String host = "jdbc:derby://localhost:1527/VPDB";
+    //new code
+    Connection conn = null;
+    String host = "jdbc:sqlite:RuthDB";
+    
+    //old code
+    
+    
+    //String host = "jdbc:derby://localhost:1527/VPDB";
     //String host = "jdbc:derby:VPDB";
 
     String uName = "root";
@@ -28,9 +36,12 @@ public class DBConnection {
     
 public Connection getConnection(){
        try{
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-            Connection con = DriverManager.getConnection(host, uName,pass);
-            return con;
+                Class.forName("org.sqlite.jdbc4").newInstance();
+                Connection conn = DriverManager.getConnection(host);
+                return conn;
+//            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+//            Connection con = DriverManager.getConnection(host, uName,pass);
+//            return con;
        }catch(Exception e){
            System.out.println(e);
            return null;
@@ -39,8 +50,8 @@ public Connection getConnection(){
     }
     public void insert(String insertCommand){
         try{
-            Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
-            Connection con = DriverManager.getConnection(host, uName,pass);
+            
+            Connection con = getConnection();
             Statement statement = con.createStatement();
             statement.execute(insertCommand);
             JOptionPane.showMessageDialog(null, "Thank you your changes have been made\n");
