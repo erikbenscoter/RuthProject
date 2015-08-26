@@ -22,7 +22,7 @@ public class DBConnection {
     
     //new code
     Connection conn = null;
-    String host = "jdbc:sqlite:RuthDB";
+    static String host = "jdbc:sqlite:RuthDB";
     
     //old code
     
@@ -34,7 +34,7 @@ public class DBConnection {
     String pass = "password";
     
     
-public Connection getConnection(){
+public static Connection getConnection(){
        try{
                 Class.forName("org.sqlite.JDBC").newInstance();
                 Connection conn = DriverManager.getConnection(host);
@@ -228,4 +228,101 @@ public Connection getConnection(){
         
     }
     
+    public static Owner get(String p_email){
+        Owner ownerToReturn;
+        String myQuery = "SELECT * FROM OWNERS WHERE First_Name = '"+p_email+"'";
+        Connection con = getConnection();
+        ResultSet rs;
+        Statement st;
+        
+        String emailAddress;
+        String firstName;
+        String lastName;
+        String phoneNumber;
+        String userName;
+        String password;
+        int pointsOwned;
+        int currentAvailablePoints;
+        double reimbursementRate;
+        
+        
+        
+        
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+            
+            emailAddress = rs.getString("Email");
+            firstName = rs.getString("First_Name");
+            lastName = rs.getString("Last_Name");
+            phoneNumber = rs.getString("Phone_Number");
+            userName = rs.getString("User_Name");
+            password = rs.getString("Password");
+            pointsOwned = rs.getInt("Points_Owned");
+            currentAvailablePoints = rs.getInt("Current_Points");
+            reimbursementRate = rs.getDouble("Owner_Reimbursement_Rate");
+            
+            ownerToReturn = new Owner(emailAddress, firstName, lastName, phoneNumber, userName, password, pointsOwned, currentAvailablePoints, reimbursementRate);
+            return ownerToReturn;
+
+
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+             return new Owner();
+        }
+          
+    }
+    
+    public static Vector getAllOwners(){
+        Owner ownerToAdd;
+        Vector ownerVectorToReturn = new Vector();
+        String myQuery = "SELECT * FROM OWNERS";
+        Connection con = getConnection();
+        ResultSet rs;
+        Statement st;
+        
+        String emailAddress;
+        String firstName;
+        String lastName;
+        String phoneNumber;
+        String userName;
+        String password;
+        int pointsOwned;
+        int currentAvailablePoints;
+        double reimbursementRate;
+        
+        
+        
+        
+        try{
+            
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+
+            while(rs.next()){
+                
+                emailAddress = rs.getString("Email");
+                firstName = rs.getString("First_Name");
+                lastName = rs.getString("Last_Name");
+                phoneNumber = rs.getString("Phone_Number");
+                userName = rs.getString("User_Name");
+                password = rs.getString("Password");
+                pointsOwned = rs.getInt("Points_Owned");
+                currentAvailablePoints = rs.getInt("Current_Points");
+                reimbursementRate = rs.getDouble("Owner_Reimbursement_Rate");
+
+                ownerToAdd = new Owner(emailAddress, firstName, lastName, phoneNumber, userName, password, pointsOwned, currentAvailablePoints, reimbursementRate);
+                ownerVectorToReturn.add(ownerToAdd);
+                
+            }
+            return ownerVectorToReturn;
+
+
+        }catch(Exception e){
+            
+             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+             return ownerVectorToReturn;
+             
+        }
+    }
 }

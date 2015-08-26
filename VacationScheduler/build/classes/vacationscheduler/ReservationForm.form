@@ -56,8 +56,15 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="TextBox_DateOfReservation" max="32767" attributes="0"/>
                           <Component id="TextBox_NumberOfNights" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jComboBox3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="DateOfReservationYears" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -88,9 +95,14 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                                      <Component id="Label_Email" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="Label_PointsAfter" min="-2" max="-2" attributes="0"/>
@@ -104,11 +116,6 @@
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
-                                      <Component id="Label_Email" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -165,15 +172,22 @@
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Label_Email" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Label_PointsAvailableText" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Label_availablePts" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="Label_PointsAvailableText" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_availablePts" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="Label_ReservationDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="DateOfReservationYears" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="Label_NumberOfNights" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="TextBox_NumberOfNights" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -183,10 +197,6 @@
                           <Component id="Label_UnitSize" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="TextBox_UnitSize" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="TextBox_DateOfReservation" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Label_ReservationDate" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -246,7 +256,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="TextBox_OtherPaymentMethod" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Btn_Okay" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Btn_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -294,11 +304,6 @@
         <Property name="text" type="java.lang.String" value="Date of Reservation:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="TextBox_DateOfReservation">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="mm/dd/yyyy"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="Label_NumberOfNights">
       <Properties>
         <Property name="text" type="java.lang.String" value="Number of Nights:"/>
@@ -333,6 +338,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextBox_PointsRequiredActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_PointsAfter">
       <Properties>
@@ -341,7 +349,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="Label_CalculatedPointsAfter">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel11"/>
+        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Discounted">
@@ -482,6 +490,35 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="--"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox2">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;01&quot;, &quot;02&quot;, &quot;03&quot;, &quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot; })" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox3">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;01&quot; ,&quot;02&quot; ,&quot;03&quot; ,&quot;04&quot; ,&quot;05&quot; ,&quot;06&quot; ,&quot;07&quot; ,&quot;08&quot; ,&quot;09&quot; ,&quot;10&quot; ,&quot;11&quot; ,&quot;12&quot; ,&quot;13&quot; ,&quot;14&quot; ,&quot;15&quot; ,&quot;16&quot; ,&quot;17&quot; ,&quot;18&quot; ,&quot;19&quot; ,&quot;20&quot; ,&quot;21&quot; ,&quot;22&quot; ,&quot;23&quot; ,&quot;24&quot; ,&quot;25&quot; ,&quot;26&quot; ,&quot;27&quot; ,&quot;28&quot; ,&quot;29&quot; ,&quot;30&quot; ,&quot;31&quot; })" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="DateOfReservationYears">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DateOfReservationYearsActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

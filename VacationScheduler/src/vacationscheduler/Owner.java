@@ -10,9 +10,9 @@ package vacationscheduler;
  * @author erikbenscoter
  */
 public class Owner {
-    String emailAddress, firstName,lastName,phoneNumber,userName,password;
-    int pointsOwned, currentAvailablePts;
-    double reimbursementRate;
+    public String emailAddress, firstName,lastName,phoneNumber,userName,password;
+    public int pointsOwned, currentAvailablePts;
+    public double reimbursementRate;
     public Owner(){
         
     }
