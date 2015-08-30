@@ -57,7 +57,8 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
             ownerNames.add(((Owner) owners.get(itterator)).firstName + " " + ((Owner) owners.get(itterator)).lastName); 
             
         }
-              
+           
+        Textbox_Location.setEditable(false);
         
         this.ComboBox_Owner.setModel(new DefaultComboBoxModel(ownerNames));
         //this.ComboBox_GuestName.setModel(new DefaultComboBoxModel(guestNames));
@@ -99,6 +100,10 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
 
         
     }
+    public void setLocation(String p_location){
+        Textbox_Location.setText(p_location);
+    }
+    
     public void recalculatePointsAfter(){
 
         if(!TextBox_PointsRequired.getText().equals("")){
@@ -161,6 +166,9 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         jComboBox2 = new javax.swing.JComboBox();
         jComboBox3 = new javax.swing.JComboBox();
         DateOfReservationYears = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
+        Textbox_Location = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -244,6 +252,11 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         });
 
         jCheckBox1.setText("check if guest is lined up");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -278,16 +291,19 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
             }
         });
 
+        jButton1.setText("Location...");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Location");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Btn_Okay)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_Cancel)
-                .addGap(59, 59, 59))
             .addComponent(TextBox_OtherPaymentMethod, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -364,13 +380,24 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                         .addComponent(Label_PaymentMethod)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Btn_Okay)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Btn_Cancel)
+                        .addGap(47, 47, 47))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Label_ConfirmationNumber)
                             .addComponent(Label_UnitSize)
-                            .addComponent(Label_PointsRequired))
-                        .addGap(44, 44, 44)
+                            .addComponent(Label_PointsRequired)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Textbox_Location)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1))
                             .addComponent(TextBox_PointsRequired)
                             .addComponent(TextBox_UnitSize)
                             .addComponent(TextBox_ConfirmationNumber))))
@@ -416,9 +443,14 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                     .addComponent(Label_PointsRequired)
                     .addComponent(TextBox_PointsRequired, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Label_PointsAfter)
-                    .addComponent(Label_CalculatedPointsAfter))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(Textbox_Location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Label_CalculatedPointsAfter)
+                    .addComponent(Label_PointsAfter, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Label_Discounted)
@@ -453,7 +485,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(TextBox_OtherPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Btn_Okay)
                     .addComponent(Btn_Cancel)))
@@ -509,6 +541,14 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
        recalculatePointsAfter();
     }//GEN-LAST:event_TextBox_PointsRequiredActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        PickLocationForm plf = new PickLocationForm(this);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+       
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Cancel;
@@ -541,6 +581,8 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     private javax.swing.JTextField TextBox_OtherPaymentMethod;
     private javax.swing.JTextField TextBox_PointsRequired;
     private javax.swing.JTextField TextBox_UnitSize;
+    private javax.swing.JTextField Textbox_Location;
+    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
@@ -549,6 +591,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

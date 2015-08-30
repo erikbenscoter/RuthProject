@@ -48,7 +48,7 @@ public static Connection getConnection(){
        }
        
     }
-    public void insert(String insertCommand){
+    public static void insert(String insertCommand){
         try{
             
             Connection con = getConnection();
@@ -324,5 +324,36 @@ public static Connection getConnection(){
              return ownerVectorToReturn;
              
         }
+    }
+    public static Vector GetAllLocations(){
+        Connection con;
+        Statement st;
+        ResultSet rs;
+        String myQuery;
+        Vector returnVector;
+        String locationToAdd;
+        
+        
+        myQuery = "SELECT * FROM LOCATIONS";
+        returnVector =  new Vector();
+        
+        
+        try{
+            con = getConnection();
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+            
+            while(rs.next()){
+                locationToAdd = rs.getString("Location");
+                returnVector.add(locationToAdd);
+            }
+            return returnVector;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "There was an error please try again\n" + e);
+            return new Vector();
+        }
+        
+        
+        
     }
 }
