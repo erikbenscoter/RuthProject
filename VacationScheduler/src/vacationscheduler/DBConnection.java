@@ -325,6 +325,46 @@ public static Connection getConnection(){
              
         }
     }
+    
+    public static Vector getAllGuests(){
+        Guest guestToAdd;
+        Vector guestVectorToReturn = new Vector();
+        String myQuery = "SELECT * FROM GUESTS";
+        Connection con = getConnection();
+        ResultSet rs;
+        Statement st;
+        
+        String emailAddress, firstName,lastName,phoneNumber;
+        int creditCardNumber,numberPreviousRentals;
+        
+        try{
+            
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+
+            while(rs.next()){
+                
+                emailAddress = rs.getString("Email");
+                firstName = rs.getString("First_Name");
+                lastName = rs.getString("Last_Name");
+                phoneNumber = rs.getString("Phone_Number");
+                creditCardNumber = rs.getInt("Credit_Card_Number");
+                numberPreviousRentals = rs.getInt("Previous_Rentals");
+
+                guestToAdd = new Guest(emailAddress, firstName, lastName, phoneNumber, creditCardNumber, numberPreviousRentals);
+                guestVectorToReturn.add(guestToAdd);
+                
+            }
+            return guestVectorToReturn;
+
+
+        }catch(Exception e){
+            
+             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+             return guestVectorToReturn;
+             
+        }
+    }
     public static Vector GetAllLocations(){
         Connection con;
         Statement st;
