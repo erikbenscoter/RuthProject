@@ -70,7 +70,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
             yearsAvailable.add(year+itterator);
         }
         
-        this.DateOfReservationYears.setModel(new DefaultComboBoxModel(yearsAvailable));
+        this.Combobox_Year.setModel(new DefaultComboBoxModel(yearsAvailable));
         
         
         this.TextBox_PointsRequired.getDocument().addDocumentListener(new DocumentListener(){
@@ -91,6 +91,12 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
             }
             
         });
+        
+        
+        
+        ParseConfirmationForm pcf = new ParseConfirmationForm(this);
+        pcf.setAlwaysOnTop(true);
+        
     }
     public void myInitComponents(){
         
@@ -163,12 +169,13 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         TextBox_UnitSize = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         Label_Email = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
-        jComboBox3 = new javax.swing.JComboBox();
-        DateOfReservationYears = new javax.swing.JComboBox();
+        Combobox_Month = new javax.swing.JComboBox();
+        Combobox_Day = new javax.swing.JComboBox();
+        Combobox_Year = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         Textbox_Location = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -195,6 +202,11 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         Label_NumberOfNights.setText("Number of Nights:");
 
         TextBox_NumberOfNights.setText("0");
+        TextBox_NumberOfNights.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextBox_NumberOfNightsActionPerformed(evt);
+            }
+        });
 
         Label_UnitSize.setText("Unit Size:");
 
@@ -270,6 +282,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
 
         jTextField3.setText("jTextField3");
 
+        TextBox_UnitSize.setEnabled(false);
         TextBox_UnitSize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextBox_UnitSizeActionPerformed(evt);
@@ -280,14 +293,19 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
 
         Label_Email.setText("--");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04","05","06","07","08","09","10","11","12" }));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01" ,"02" ,"03" ,"04" ,"05" ,"06" ,"07" ,"08" ,"09" ,"10" ,"11" ,"12" ,"13" ,"14" ,"15" ,"16" ,"17" ,"18" ,"19" ,"20" ,"21" ,"22" ,"23" ,"24" ,"25" ,"26" ,"27" ,"28" ,"29" ,"30" ,"31" }));
-
-        DateOfReservationYears.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        DateOfReservationYears.addActionListener(new java.awt.event.ActionListener() {
+        Combobox_Month.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04","05","06","07","08","09","10","11","12" }));
+        Combobox_Month.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DateOfReservationYearsActionPerformed(evt);
+                Combobox_MonthActionPerformed(evt);
+            }
+        });
+
+        Combobox_Day.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01" ,"02" ,"03" ,"04" ,"05" ,"06" ,"07" ,"08" ,"09" ,"10" ,"11" ,"12" ,"13" ,"14" ,"15" ,"16" ,"17" ,"18" ,"19" ,"20" ,"21" ,"22" ,"23" ,"24" ,"25" ,"26" ,"27" ,"28" ,"29" ,"30" ,"31" }));
+
+        Combobox_Year.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Combobox_Year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Combobox_YearActionPerformed(evt);
             }
         });
 
@@ -299,6 +317,13 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         });
 
         jLabel5.setText("Location");
+
+        jButton2.setText("Unit Size...");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -320,11 +345,11 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TextBox_NumberOfNights)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Combobox_Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Combobox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(DateOfReservationYears, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Combobox_Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,8 +424,11 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1))
                             .addComponent(TextBox_PointsRequired)
-                            .addComponent(TextBox_UnitSize)
-                            .addComponent(TextBox_ConfirmationNumber))))
+                            .addComponent(TextBox_ConfirmationNumber)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(TextBox_UnitSize)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -422,9 +450,9 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                             .addComponent(Label_availablePts))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Label_ReservationDate)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(DateOfReservationYears, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(Combobox_Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Combobox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Combobox_Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -433,7 +461,8 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Label_UnitSize)
-                            .addComponent(TextBox_UnitSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(TextBox_UnitSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Label_ConfirmationNumber)
@@ -533,9 +562,9 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         // TODO add your handling code here:
     }//GEN-LAST:event_TextBox_UnitSizeActionPerformed
 
-    private void DateOfReservationYearsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateOfReservationYearsActionPerformed
+    private void Combobox_YearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combobox_YearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_DateOfReservationYearsActionPerformed
+    }//GEN-LAST:event_Combobox_YearActionPerformed
 
     private void TextBox_PointsRequiredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextBox_PointsRequiredActionPerformed
        recalculatePointsAfter();
@@ -549,6 +578,18 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
        
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    private void Combobox_MonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combobox_MonthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Combobox_MonthActionPerformed
+
+    private void TextBox_NumberOfNightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextBox_NumberOfNightsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextBox_NumberOfNightsActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new PickUnitSize(this);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Cancel;
@@ -556,8 +597,10 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     private javax.swing.JCheckBox Checkbox_Discounted;
     private javax.swing.JCheckBox Checkbox_upgraded;
     private javax.swing.JComboBox ComboBox_GuestName;
-    private javax.swing.JComboBox ComboBox_Owner;
-    private javax.swing.JComboBox DateOfReservationYears;
+    public javax.swing.JComboBox ComboBox_Owner;
+    public javax.swing.JComboBox Combobox_Day;
+    public javax.swing.JComboBox Combobox_Month;
+    public javax.swing.JComboBox Combobox_Year;
     private javax.swing.JLabel Label_AmountPaid;
     private javax.swing.JLabel Label_CalculatedPointsAfter;
     private javax.swing.JLabel Label_ConfirmationNumber;
@@ -576,17 +619,16 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     private javax.swing.JLabel Label_Upgraded;
     private javax.swing.JLabel Label_User;
     private javax.swing.JLabel Label_availablePts;
-    private javax.swing.JTextField TextBox_ConfirmationNumber;
-    private javax.swing.JTextField TextBox_NumberOfNights;
+    public javax.swing.JTextField TextBox_ConfirmationNumber;
+    public javax.swing.JTextField TextBox_NumberOfNights;
     private javax.swing.JTextField TextBox_OtherPaymentMethod;
     private javax.swing.JTextField TextBox_PointsRequired;
-    private javax.swing.JTextField TextBox_UnitSize;
+    public javax.swing.JTextField TextBox_UnitSize;
     private javax.swing.JTextField Textbox_Location;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -356,4 +356,35 @@ public static Connection getConnection(){
         
         
     }
+    public static Vector GetAllUnitSizes(){
+        Connection con;
+        Statement st;
+        ResultSet rs;
+        String myQuery;
+        Vector returnVector;
+        String locationToAdd;
+        
+        
+        myQuery = "SELECT * FROM UNITSIZES";
+        returnVector =  new Vector();
+        
+        
+        try{
+            con = getConnection();
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+            
+            while(rs.next()){
+                locationToAdd = rs.getString("UnitSize");
+                returnVector.add(locationToAdd);
+            }
+            return returnVector;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "There was an error please try again\n" + e);
+            return new Vector();
+        }
+        
+        
+        
+    }
 }
