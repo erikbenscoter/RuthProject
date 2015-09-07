@@ -5,43 +5,95 @@
  */
 package vacationscheduler;
 
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  *
  * @author erikbenscoter
  */
 public class ScrapeWyndham {
-     public static void main(String[] args) {
+     public static Vector <Vector> getUserReservations(String p_username, String p_password) {
+
+        //Declarations
+        String webpageSrc;
+        Vector <Vector> response;
+        
+        //create A firefox window
+        WebDriver firefoxWindow = initializeWindow();
+        
+        //log into wyndham
+        logIn(p_username,p_password,firefoxWindow);
+
+        //move to wyndham member reservation confirmations
+         firefoxWindow.get( "https://www.myclubwyndham.com/ffr/secure/member/reservation_summary/reservationSummary.do" );
+         
+         //get the information on the page
+         webpageSrc = firefoxWindow.getPageSource();
+
+        //get all of the reservation information on the page
+        response = getAllReservationsOnPage(webpageSrc);
+        
+        int pageItterator = 1;
+        try{
+            while(true){
+                pageItterator++;
+                WebElement nextPage = firefoxWindow.findElement(By.linkText(Integer.toString(pageItterator)));
+                nextPage.click();
+                webpageSrc = firefoxWindow.getPageSource();
+                response = getAllReservationsOnPage(webpageSrc, response);
+                
+            }
+        }catch(Exception e){
+            
+        }
+         
+         System.out.println("from function = " + response.get(0).size());
+         return response;
+         
+    }
+     public static WebDriver initializeWindow(){
         WebDriver firefoxWindow = new FirefoxDriver();
         firefoxWindow.get( "https://www.myclubwyndham.com/ffr/index.do" );
-
+        return firefoxWindow;
+     }
+     public static void logIn(String p_userName, String p_password, WebDriver firefoxWindow){
         WebElement userNameElement;
         WebElement passwordElement;
         
-        String webpageSrc;
-        
-        String currentReservation;
-        
         userNameElement = firefoxWindow.findElement( By.name("userNamelabel") );
-        userNameElement.sendKeys( "CarolynBenscoter" );
+        userNameElement.sendKeys( p_userName );
 
         passwordElement = firefoxWindow.findElement( By.name("passwordlabel" ) );
-        passwordElement.sendKeys("sunnyboy1" );
+        passwordElement.sendKeys( p_password );
         passwordElement.submit();
-
-        firefoxWindow.get( "https://www.myclubwyndham.com/ffr/secure/member/reservation_summary/reservationSummary.do" );
-        webpageSrc = firefoxWindow.getPageSource();
-
+     }
+     public static Vector getAllReservationsOnPage(String p_webpageSrc){
+        Vector <Vector> allReservations = new Vector();
+        getAllReservationsOnPage(p_webpageSrc,allReservations);
+        return allReservations;
+     }
+     public static Vector getAllReservationsOnPage(String p_webpageSrc, Vector <Vector> p_vectorOfVectors){
+         
+         String currentReservation;
+         Vector currentReservationVector = new Vector();
+         
+        //for every reservation on the page get the information from it
         for(int reservationItterator = 1; reservationItterator <= 10; reservationItterator ++){
-            currentReservation = webpageSrc.split("name=\"selectedConfirmation\"")[reservationItterator];
-            parseReservation(currentReservation);
-            System.out.println("");
+             currentReservation = p_webpageSrc.split("name=\"selectedConfirmation\"")[reservationItterator];
+             currentReservationVector = parseReservation(currentReservation);
+             p_vectorOfVectors.add(currentReservationVector);
+             System.out.println("");
         }
-        
-    }
-    public static void parseReservation(String currentReservation){
+         System.err.println("here = " + p_vectorOfVectors.get(0).size());
+        return p_vectorOfVectors;
+     }
+    public static Vector parseReservation(String currentReservation){
         
         
         String confirmationNumber;
@@ -111,5 +163,20 @@ public class ScrapeWyndham {
         System.out.println( "booked date: " + bookedDate );
         System.out.println( "traveler: " + traveler );
         System.out.println( "upgrade state: " + upgradeState);
+        
+        Vector vectorToReturn = new Vector();
+        vectorToReturn.add(confirmationNumber);
+        vectorToReturn.add(checkInDate);
+        vectorToReturn.add(numNights);
+        vectorToReturn.add(resortName);
+        vectorToReturn.add(unitType);
+        vectorToReturn.add(bookedDate);
+        vectorToReturn.add(traveler);
+        vectorToReturn.add(upgradeState);
+        
+        return vectorToReturn;
+        
+        
+        
     }
 }

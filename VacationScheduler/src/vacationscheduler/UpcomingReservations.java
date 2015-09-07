@@ -5,6 +5,10 @@
  */
 package vacationscheduler;
 
+import java.util.Arrays;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author erikbenscoter
@@ -21,17 +25,19 @@ public class UpcomingReservations extends javax.swing.JPanel {
        
     }
     public void setUpTable(){
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Date", "Location", "Owner Name", "Cost","Number of Nights"
-            }
-        ));
+        Vector <Vector> response = ScrapeWyndham.getUserReservations("CarolynBenscoter", "sunnyboy1");
+
+        String headingArray[] = {"Confirmation Number", "Check-In-Date", 
+            "# Nights", "Resort", "Size", "Booked","Traveler","Upgrade"};
+        Vector headings = new Vector(Arrays.asList(headingArray));
+
+        jTable1.setModel(new DefaultTableModel(response, headings));
+        
+        System.out.println("headings size = " + headings.size());
+        System.out.println("response size = " + response.get(0).size());
+    }
+    public void convertVectorToArray(Vector p_inputVector){
+        
     }
 
     /**
