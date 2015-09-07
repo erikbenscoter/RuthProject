@@ -26,7 +26,8 @@ public class UpcomingReservations extends javax.swing.JPanel {
     }
     public void setUpTable(){
         Vector <Vector> response = ScrapeWyndham.getUserReservations("CarolynBenscoter", "sunnyboy1");
-
+        ScrapeWyndham.closeWindow();
+        
         String headingArray[] = {"Confirmation Number", "Check-In-Date", 
             "# Nights", "Resort", "Size", "Booked","Traveler","Upgrade"};
         Vector headings = new Vector(Arrays.asList(headingArray));
@@ -35,6 +36,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
         
         System.out.println("headings size = " + headings.size());
         System.out.println("response size = " + response.get(0).size());
+        
     }
     public void convertVectorToArray(Vector p_inputVector){
         

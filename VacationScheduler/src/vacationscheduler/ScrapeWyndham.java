@@ -20,6 +20,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
  * @author erikbenscoter
  */
 public class ScrapeWyndham {
+    static WebDriver firefoxWindow;
      public static Vector <Vector> getUserReservations(String p_username, String p_password) {
 
         //Declarations
@@ -27,7 +28,7 @@ public class ScrapeWyndham {
         Vector <Vector> response;
         
         //create A firefox window
-        WebDriver firefoxWindow = initializeWindow();
+        firefoxWindow = initializeWindow();
         
         //log into wyndham
         logIn(p_username,p_password,firefoxWindow);
@@ -55,6 +56,7 @@ public class ScrapeWyndham {
             
         }
          
+        
          System.out.println("from function = " + response.get(0).size());
          return response;
          
@@ -183,5 +185,8 @@ public class ScrapeWyndham {
         
         
         
+    }
+    public static void closeWindow(){
+        firefoxWindow.close();
     }
 }
