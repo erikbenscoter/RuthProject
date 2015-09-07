@@ -11,7 +11,9 @@ import java.util.regex.Pattern;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 /**
  *
@@ -58,7 +60,10 @@ public class ScrapeWyndham {
          
     }
      public static WebDriver initializeWindow(){
-        WebDriver firefoxWindow = new FirefoxDriver();
+         
+       WebDriver firefoxWindow = new FirefoxDriver();
+     //   WebDriver firefoxWindow = new ChromeDriver();
+     //   WebDriver firefoxWindow = new InternetExplorerDriver();
         firefoxWindow.get( "https://www.myclubwyndham.com/ffr/index.do" );
         return firefoxWindow;
      }
