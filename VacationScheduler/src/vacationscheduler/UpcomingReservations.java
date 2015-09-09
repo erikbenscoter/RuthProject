@@ -7,6 +7,7 @@ package vacationscheduler;
 
 import java.util.Arrays;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,18 +19,39 @@ public class UpcomingReservations extends javax.swing.JPanel {
     /**
      * Creates new form UpcomingReservations
      */
+    
+     Vector <Vector> response;
+     Vector <Owner> owners;
+     int reservationIndex;
+     
     public UpcomingReservations() {
         initComponents();
-        setUpTable();
+        setUpTableAndUpdateDB();
+        
         this.setVisible(true);
        
     }
-    public void setUpTable(){
-        Vector <Vector> response = ScrapeWyndham.getUserReservations("CarolynBenscoter", "sunnyboy1");
-        ScrapeWyndham.closeWindow();
+   
+    public void setUpTableAndUpdateDB(){
         
-        response.addAll ( ScrapeWyndham.getUserReservations("SunnyV", "sunnyboy1"));
-        ScrapeWyndham.closeWindow(); 
+        response = new Vector();
+        
+        reservationIndex = ScrapeWyndham.scrapedIndicies.CONFIRMATION_NUMBER.getIndex();
+        
+        owners = DBConnection.getAllOwners();
+        
+        for(int ownerItterator = 0; ownerItterator < owners.size(); ownerItterator ++){
+            Owner currentOwner = owners.get(ownerItterator);
+            String currentUserName = currentOwner.userName;
+            String currentUserPassword = currentOwner.password;
+            Vector currentUserReservations = ScrapeWyndham.getUserReservations(currentUserName, currentUserPassword);
+            syncDB(currentUserName, currentUserReservations);
+            
+            response.addAll(currentUserReservations);
+        }
+        
+        
+       
         
         String headingArray[] = {"Confirmation Number", "Check-In-Date", 
             "# Nights", "Resort", "Size", "Booked","Traveler","Upgrade"};
@@ -39,11 +61,29 @@ public class UpcomingReservations extends javax.swing.JPanel {
         
         System.out.println("headings size = " + headings.size());
         System.out.println("response size = " + response.get(0).size());
-     //   System.out.println("response size = " + response1.get(0).size());        
+        
+        System.out.println("closing window");
+        ScrapeWyndham.closeWindow();
+        
         
     }
-    public void convertVectorToArray(Vector p_inputVector){
+    
+    public void syncDB(String p_currentUserName, Vector <Vector> p_userReservations){
         
+        for(int currentVectorItterator = 0; currentVectorItterator < p_userReservations.size(); currentVectorItterator ++){
+            
+            
+            String confirmationNumberString = (String) p_userReservations.get(currentVectorItterator).get(reservationIndex);
+            boolean alreadyInDB = DBConnection.doesReservationExistInDB(confirmationNumberString);
+            
+            if(!alreadyInDB){
+                DBConnection.insertScrapedReservation(p_userReservations.get(currentVectorItterator), p_currentUserName);
+            }else{
+                //TODO: update
+                System.err.println("Already in DB");
+            }
+            
+        }
     }
 
     /**
@@ -55,8 +95,10 @@ public class UpcomingReservations extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,21 +113,33 @@ public class UpcomingReservations extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jScrollPane2.setViewportView(jScrollPane1);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Upcoming Reservations");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

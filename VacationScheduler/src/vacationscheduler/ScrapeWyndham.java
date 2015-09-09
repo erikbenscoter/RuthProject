@@ -8,6 +8,7 @@ package vacationscheduler;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,15 +22,34 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
  */
 public class ScrapeWyndham {
     static WebDriver firefoxWindow;
-     public static Vector <Vector> getUserReservations(String p_username, String p_password) {
-
-        //Declarations
+    
+    public enum scrapedIndicies{
+        CONFIRMATION_NUMBER (0),
+        CHECK_IN_DATE(1),
+        NUMBER_NIGHTS(2),
+        RESORT(3),
+        SIZE(4),
+        BOOKED(5),
+        TRAVELER(6),
+        UPGRADE(7)
+                ;
+        private final int index;
+      private scrapedIndicies(int input){
+          index = input;
+      }  
+      public int getIndex(){
+          return index;
+      }
+    };
+    
+    public static Vector <Vector> getUserReservations(String p_username, String p_password, Vector <Vector> p_startingVector){
+        
         String webpageSrc;
-        Vector <Vector> response;
-        
+
         //create A firefox window
-        firefoxWindow = initializeWindow();
-        
+        if (firefoxWindow == null){
+            firefoxWindow = initializeWindow();
+        }
         //log into wyndham
         logIn(p_username,p_password,firefoxWindow);
 
@@ -40,25 +60,41 @@ public class ScrapeWyndham {
          webpageSrc = firefoxWindow.getPageSource();
 
         //get all of the reservation information on the page
-        response = getAllReservationsOnPage(webpageSrc);
+        getAllReservationsOnPage(webpageSrc, p_startingVector);
         
         int pageItterator = 1;
         try{
             while(true){
                 pageItterator++;
+                System.out.println("clicking page " + pageItterator);
                 WebElement nextPage = firefoxWindow.findElement(By.linkText(Integer.toString(pageItterator)));
                 nextPage.click();
-                webpageSrc = firefoxWindow.getPageSource();
-                response = getAllReservationsOnPage(webpageSrc, response);
+                int oldSizeOfVector = p_startingVector.size();
+                int newSizeOfVector=-10;
+                do{
+                    webpageSrc = firefoxWindow.getPageSource();
+                    getAllReservationsOnPage(webpageSrc, p_startingVector);
+                    newSizeOfVector = p_startingVector.size();
+                }while(newSizeOfVector == oldSizeOfVector); //if the page didn't load quick enough
+                
                 
             }
         }catch(Exception e){
-            
+            System.out.println(e);
         }
          
         
-         System.out.println("from function = " + response.get(0).size());
-         return response;
+         System.out.println("from function = " + p_startingVector.size());
+         logout(firefoxWindow);
+         return p_startingVector;
+    }
+    public static Vector <Vector> getUserReservations(String p_username, String p_password) {
+
+        //Declarations
+        
+        Vector <Vector> response = new Vector();
+        response = getUserReservations(p_username, p_password, response);
+        return response;
          
     }
      public static WebDriver initializeWindow(){
@@ -73,12 +109,16 @@ public class ScrapeWyndham {
         WebElement userNameElement;
         WebElement passwordElement;
         
-        userNameElement = firefoxWindow.findElement( By.name("userNamelabel") );
-        userNameElement.sendKeys( p_userName );
+        try{
+            userNameElement = firefoxWindow.findElement( By.name("userNamelabel") );
+            userNameElement.sendKeys( p_userName );
 
-        passwordElement = firefoxWindow.findElement( By.name("passwordlabel" ) );
-        passwordElement.sendKeys( p_password );
-        passwordElement.submit();
+            passwordElement = firefoxWindow.findElement( By.name("passwordlabel" ) );
+            passwordElement.sendKeys( p_password );
+            passwordElement.submit();
+        }catch(Exception e){
+            logIn(p_userName, p_password, firefoxWindow);
+        }
      }
      public static Vector getAllReservationsOnPage(String p_webpageSrc){
         Vector <Vector> allReservations = new Vector();
@@ -89,15 +129,19 @@ public class ScrapeWyndham {
          
          String currentReservation;
          Vector currentReservationVector = new Vector();
+         int numReservations;
          
+        numReservations = p_webpageSrc.split("selectedConfirmation").length;
+        System.out.println("number of reservations detected = " + numReservations);
+        
         //for every reservation on the page get the information from it
-        for(int reservationItterator = 1; reservationItterator <= 10; reservationItterator ++){
+        for(int reservationItterator = 1; reservationItterator < numReservations; reservationItterator ++){
              currentReservation = p_webpageSrc.split("name=\"selectedConfirmation\"")[reservationItterator];
              currentReservationVector = parseReservation(currentReservation);
              p_vectorOfVectors.add(currentReservationVector);
              System.out.println("");
         }
-         System.err.println("here = " + p_vectorOfVectors.get(0).size());
+         System.err.println("reservations from page = " + p_vectorOfVectors.size());
         return p_vectorOfVectors;
      }
     public static Vector parseReservation(String currentReservation){
@@ -185,6 +229,10 @@ public class ScrapeWyndham {
         
         
         
+    }
+    public static void logout(WebDriver p_firefoxWindow){
+        WebElement logoutBtn = p_firefoxWindow.findElement(By.linkText("Logout"));
+        logoutBtn.click();
     }
     public static void closeWindow(){
         firefoxWindow.close();

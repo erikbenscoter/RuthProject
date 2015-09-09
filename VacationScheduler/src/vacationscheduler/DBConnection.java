@@ -63,6 +63,21 @@ public static Connection getConnection(){
         
        
     }
+    public static void insertSilent(String insertCommand){
+        try{
+            
+            Connection con = getConnection();
+            Statement statement = con.createStatement();
+            statement.execute(insertCommand);
+            
+            con.close();
+        }catch(Exception e){
+            System.out.println("trouble with the connection!!" + e);
+            JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+        }
+        
+       
+    }
     public void insert(Owner own){
         Vector inserts = new Vector();
         inserts.add(own.emailAddress);
@@ -140,6 +155,7 @@ public static Connection getConnection(){
         insert(command);
         
     }
+    
     public Vector getAllOwnerEmails(){
         Connection con = this.getConnection();
         try{
@@ -427,4 +443,60 @@ public static Connection getConnection(){
         
         
     }
+    
+    public static boolean doesReservationExistInDB(String p_confirmationNumber){
+        String myQuery;
+        Connection con;
+        Statement st;
+        ResultSet rs;
+        boolean isInDB = true;
+        
+        myQuery = "SELECT COUNT(*) FROM RESERVATIONS WHERE CONFIRMATION_NUMBER = '"+p_confirmationNumber+"'";
+        
+        try{
+        con = DBConnection.getConnection();
+        st = con.createStatement();
+        rs = st.executeQuery(myQuery);
+        
+        int numberOfMatches = rs.getInt(1);
+        rs.close();
+        
+        if(numberOfMatches == 0){
+            isInDB = false;
+        }else{
+            isInDB = true;
+        }
+        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "DB ERROR " + e);
+            System.exit(-1);
+        }
+        
+        return isInDB;
+        
+    }
+    
+    public static void insertScrapedReservation(Vector<String> p_vectorInput, String p_ownerUserName){
+        String myInsertCommand = "INSERT INTO RESERVATIONS"
+                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED,GUEST_EMAIL,WAS_UPGRADED) "
+                + "VALUES(";
+        String parametersString = "";
+        
+        parametersString += "'"+p_ownerUserName+"',";
+        for(int itterator = 0; itterator < p_vectorInput.size() - 1; itterator ++){
+            String currParam = p_vectorInput.get(itterator).replace("'", "");
+            parametersString += "'" + currParam + "', "; 
+        }
+        parametersString += "'1'";
+        
+        myInsertCommand += parametersString;
+        myInsertCommand += ")";
+        
+        System.out.println(myInsertCommand);
+        DBConnection.insertSilent(myInsertCommand);
+                
+        
+    }
+    
+    
 }
