@@ -77,6 +77,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             boolean alreadyInDB = DBConnection.doesReservationExistInDB(confirmationNumberString);
             
             if(!alreadyInDB){
+                Reservation 
                 DBConnection.insertScrapedReservation(p_userReservations.get(currentVectorItterator), p_currentUserName);
             }else{
                 //TODO: update
@@ -85,6 +86,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

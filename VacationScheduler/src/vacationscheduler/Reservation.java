@@ -6,6 +6,7 @@
 package vacationscheduler;
     
 import java.util.Date;
+import java.util.Vector;
 
 
 
@@ -20,11 +21,11 @@ public class Reservation {
     
     Owner owner;
     String location;
-    Date dateOfReservation;
+    String dateOfReservation;
     //Use Date
     int numberOfNights;
     String unitSize;
-    long confimationNumber;
+    String confimationNumber;
     int pointsRequiredForReservation;
     boolean wasDiscounted, wasUpgraded, isBuyerLinedUp;
     Guest guest;
@@ -32,9 +33,10 @@ public class Reservation {
     Date datePaid;
     PaymentMethod paymentMethod;
     double totalAmountRentedFor = 0;
+    String dateBooked;
     
-    public Reservation( Owner owner,String location,Date dateOfReservation,int numberOfNights,
-                        String unitSize,long confimationNumber,int pointsRequiredForReservation,
+    public Reservation( Owner owner,String location,String dateOfReservation,int numberOfNights,
+                        String unitSize,String confimationNumber,int pointsRequiredForReservation,
                         boolean wasDiscounted,boolean wasUpgraded, boolean isBuyerLinedUp,Guest guest,
                         double amountPaid, Date datePaid, PaymentMethod paymentMethod,double totalAmountRentedFor){
         this.owner = owner;
@@ -55,8 +57,8 @@ public class Reservation {
         this.totalAmountRentedFor = totalAmountRentedFor;
     }
     
-     public void totalReset( Owner owner,String location,Date dateOfReservation,int numberOfNights,
-                        String unitSize,long confimationNumber,int pointsRequiredForReservation,
+     public void totalReset( Owner owner,String location,String dateOfReservation,int numberOfNights,
+                        String unitSize,String confimationNumber,int pointsRequiredForReservation,
                         boolean wasDiscounted,boolean wasUpgraded, boolean isBuyerLinedUp,Guest guest,
                         double amountPaid, Date datePaid, PaymentMethod paymentMethod, double totalAmountRentedFor){
         this.owner = owner;
@@ -75,6 +77,14 @@ public class Reservation {
         this.datePaid = datePaid;
         this.paymentMethod = paymentMethod;
         this.totalAmountRentedFor = totalAmountRentedFor;
+    }
+     public convertVectorReservation(Vector <String> p_scrapedVector){
+        this.location = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.RESORT.getIndex());
+        this.dateOfReservation = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.CHECK_IN_DATE.getIndex());
+        this.numberOfNights = Integer.parseInt(p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.NUMBER_NIGHTS.getIndex()));
+        this.unitSize = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.SIZE.getIndex());
+        this.confimationNumber = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.CONFIRMATION_NUMBER.getIndex());
+        this.dateBooked = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.BOOKED.getIndex());
     }
     
     
