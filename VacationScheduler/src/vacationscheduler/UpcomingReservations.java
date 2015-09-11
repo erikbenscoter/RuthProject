@@ -5,8 +5,11 @@
  */
 package vacationscheduler;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.Vector;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,6 +25,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
     
      Vector <Vector> response;
      Vector <Owner> owners;
+     Vector <Reservation> reservations = new Vector();
      int reservationIndex;
      
     public UpcomingReservations() {
@@ -29,7 +33,38 @@ public class UpcomingReservations extends javax.swing.JPanel {
         setUpTableAndUpdateDB();
         
         this.setVisible(true);
-       
+        jtable_upcomingReservations.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int rowClicked = jtable_upcomingReservations.rowAtPoint(e.getPoint());
+                String confirmationNumberClicked = reservations.get(rowClicked).confimationNumber;
+                System.out.println("confirmation number = " + confirmationNumberClicked);
+                JFrame jf = new JFrame();
+                ReservationForm newReservation = new ReservationForm(jf,confirmationNumberClicked);
+                jf.setSize(600, 700);
+                jf.add(newReservation);
+                jf.invalidate();
+                jf.setVisible(true);
+                jf.setAlwaysOnTop(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
     }
    
     public void setUpTableAndUpdateDB(){
@@ -57,7 +92,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             "# Nights", "Resort", "Size", "Booked","Traveler","Upgrade"};
         Vector headings = new Vector(Arrays.asList(headingArray));
 
-        jTable1.setModel(new DefaultTableModel(response, headings));
+        jtable_upcomingReservations.setModel(new DefaultTableModel(response, headings));
         
         System.out.println("headings size = " + headings.size());
         System.out.println("response size = " + response.get(0).size());
@@ -77,6 +112,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             boolean alreadyInDB = DBConnection.doesReservationExistInDB(confirmationNumberString);
             Reservation currentReservation = new Reservation(p_userReservations.get(currentVectorItterator));
             currentReservation.ownerUserName = p_currentUserName;
+            reservations.add(currentReservation);
             
             if(!alreadyInDB){
                 DBConnection.insert(currentReservation);
@@ -101,10 +137,10 @@ public class UpcomingReservations extends javax.swing.JPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtable_upcomingReservations = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtable_upcomingReservations.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -115,7 +151,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtable_upcomingReservations);
 
         jScrollPane2.setViewportView(jScrollPane1);
 
@@ -144,6 +180,6 @@ public class UpcomingReservations extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtable_upcomingReservations;
     // End of variables declaration//GEN-END:variables
 }

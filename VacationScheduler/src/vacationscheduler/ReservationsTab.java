@@ -91,7 +91,7 @@ public class ReservationsTab extends javax.swing.JPanel {
             case "Make A New Reservation":
                JFrame jf = new JFrame();
                 newReservation = new ReservationForm(jf);
-                jf.setSize(600, 550);
+                jf.setSize(600, 700);
                 jf.add(newReservation);
                 jf.invalidate();
                 jf.setVisible(true);

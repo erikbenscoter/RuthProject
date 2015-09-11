@@ -47,6 +47,13 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     public ReservationForm() {
         CommonConstructor();
     }
+    public ReservationForm(JFrame jf, String confirmationNumber){
+        
+        this.jf = jf;
+        CommonConstructor();
+        TextBox_ConfirmationNumber.setText(confirmationNumber);
+        this.setVisible(true);
+    }
     public void CommonConstructor(){
         initComponents();
         myInitComponents();
@@ -108,8 +115,8 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         
         
         
-        ParseConfirmationForm pcf = new ParseConfirmationForm(this);
-        pcf.setAlwaysOnTop(true);
+        //ParseConfirmationForm pcf = new ParseConfirmationForm(this);
+        //pcf.setAlwaysOnTop(true);
         
     }
     public void myInitComponents(){

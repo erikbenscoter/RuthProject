@@ -22,7 +22,7 @@ public class DBConnection {
     
     //new code
     Connection conn = null;
-    static String host = "jdbc:sqlite:RuthDB";
+    static String host = "jdbc:sqlite:./RuthDB";
     
     //old code
     
