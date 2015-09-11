@@ -5,6 +5,8 @@
  */
 package vacationscheduler;
 
+import Connections.RuthDBConnection;
+import dao.OwnersFactory;
 import javax.swing.JFrame;
 
 /**
@@ -246,8 +248,8 @@ public class OwnerMaitenanceForm extends javax.swing.JPanel {
         own.reimbursementRate = Double.parseDouble(this.TextField_OwnerReimburseRate.getText());
         own.userName = this.TextField_UserName.getText();
         
-        DBConnection dbconnection = new DBConnection();
-        dbconnection.insert(own);
+ //       DBConnection dbconnection = new DBConnection();
+        OwnersFactory.insert(own);
         this.userTab.resetPanel();
         
         

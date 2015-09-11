@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
 
+import dao.OwnersFactory;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
@@ -67,7 +68,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
         
         reservationIndex = ScrapeWyndham.scrapedIndicies.CONFIRMATION_NUMBER.getIndex();
         
-        owners = DBConnection.getAllOwners();
+        owners = OwnersFactory.getAllOwners();
         
         for(int ownerItterator = 0; ownerItterator < owners.size(); ownerItterator ++){
             Owner currentOwner = owners.get(ownerItterator);

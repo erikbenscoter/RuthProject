@@ -1,5 +1,16 @@
 package dao;
 
+import Connections.RuthDBConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+/* import static DBConnection.getConnection;
+import static DBConnection.insert;
+*/
+import vacationscheduler.Owner;
+
 /* 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,9 +32,185 @@ import mil.navy.ssp23.sail.dbconnections.GetDbConnection;
 * </pre> 
 */
 public class OwnersFactory {
+/* 
+ *   insert into owner table
+*/
+    public void insert(Owner own){
+        Connection con = RuthDBConnection.getConnection();
+        Vector inserts = new Vector();
+        inserts.add(own.emailAddress);
+        inserts.add(own.firstName);
+        inserts.add(own.lastName);
+        inserts.add(own.phoneNumber);
+        inserts.add(own.userName);
+        inserts.add(own.password);
+        inserts.add(Integer.toString(own.pointsOwned));
+        inserts.add(Integer.toString(own.currentAvailablePts));
+        inserts.add(Double.toString(own.reimbursementRate));
+        
+        String command = "INSERT INTO OWNERS (EMAIL, FIRST_NAME, LAST_NAME,"
+                +"PHONE_NUMBER, USER_NAME, PASSWORD, POINTS_OWNED, "
+                +"CURRENT_POINTS, OWNER_REIMBURSEMENT_RATE) values(";
+        String parameters = "";
+        for (int i = 0; i< (inserts.size()-1); i++) {
+            if(i < inserts.size()-3)
+                parameters = parameters +"'"+inserts.get(i)+"'"+",";        //strings
+            else
+                parameters = parameters + inserts.get(i) + ",";             //not strings
 
-    /*
-    public static UICMasterBean getUICData(HttpSession mySession, String uic )
+        }
+        parameters = parameters + inserts.get(inserts.size()-1);
+        command = command + parameters + ")";
+        System.out.println(command);
+        insert(command);
+    }
+  /*
+   *          get emails of all owners
+  */
+     public Vector getAllOwnerEmails(){
+        Connection con = RuthDBConnection.getConnection();
+        try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT EMAIL FROM OWNERS");
+            
+            Vector output = new Vector();
+            
+            
+            while(rs.next()){
+                output.add(rs.getString("EMAIL"));
+            }
+            
+            return output;
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }   
+    }
+  /*
+  *             get available point for all owners   
+  */
+         public Vector getAvailablePts(){
+        Connection con = RuthDBConnection.getConnection();
+        try{
+            Vector avpts = new Vector();
+            
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT CURRENT_POINTS FROM OWNERS");
+            
+            while(rs.next()){
+                avpts.add(Double.toString(rs.getDouble("CURRENT_POINTS")));
+                System.out.println(rs.getDouble("CURRENT_POINTS"));
+            }
+            
+            return avpts;
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+ /*
+ *    Get all from owners based on email first name = email?
+ */
+    public static Owner get(String p_email){
+        Owner ownerToReturn;
+        String myQuery = "SELECT * FROM OWNERS WHERE First_Name = '"+p_email+"'";
+        Connection con = RuthDBConnection.getConnection();
+        ResultSet rs;
+        Statement st;
+        
+        String emailAddress;
+        String firstName;
+        String lastName;
+        String phoneNumber;
+        String userName;
+        String password;
+        int pointsOwned;
+        int currentAvailablePoints;
+        double reimbursementRate;
+        
+        
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+            
+            emailAddress = rs.getString("Email");
+            firstName = rs.getString("First_Name");
+            lastName = rs.getString("Last_Name");
+            phoneNumber = rs.getString("Phone_Number");
+            userName = rs.getString("User_Name");
+            password = rs.getString("Password");
+            pointsOwned = rs.getInt("Points_Owned");
+            currentAvailablePoints = rs.getInt("Current_Points");
+            reimbursementRate = rs.getDouble("Owner_Reimbursement_Rate");
+            
+            ownerToReturn = new Owner(emailAddress, firstName, lastName, phoneNumber, userName, password, pointsOwned, currentAvailablePoints, reimbursementRate);
+            return ownerToReturn;
+
+
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+             return new Owner();
+        }
+          
+    }
+ /*
+  *              Get all ownere in a vector
+ */   
+        public static Vector getAllOwners(){
+        Owner ownerToAdd;
+        Vector ownerVectorToReturn = new Vector();
+        String myQuery = "SELECT * FROM OWNERS";
+        Connection con = RuthDBConnection.getConnection();
+        ResultSet rs;
+        Statement st;
+        
+        String emailAddress;
+        String firstName;
+        String lastName;
+        String phoneNumber;
+        String userName;
+        String password;
+        int pointsOwned;
+        int currentAvailablePoints;
+        double reimbursementRate;
+        
+        
+        
+        
+        try{
+            
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+
+            while(rs.next()){
+                
+                emailAddress = rs.getString("Email");
+                firstName = rs.getString("First_Name");
+                lastName = rs.getString("Last_Name");
+                phoneNumber = rs.getString("Phone_Number");
+                userName = rs.getString("User_Name");
+                password = rs.getString("Password");
+                pointsOwned = rs.getInt("Points_Owned");
+                currentAvailablePoints = rs.getInt("Current_Points");
+                reimbursementRate = rs.getDouble("Owner_Reimbursement_Rate");
+
+                ownerToAdd = new Owner(emailAddress, firstName, lastName, phoneNumber, userName, password, pointsOwned, currentAvailablePoints, reimbursementRate);
+                ownerVectorToReturn.add(ownerToAdd);
+                
+            }
+            return ownerVectorToReturn;
+
+
+        }catch(Exception e){
+            
+             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+             return ownerVectorToReturn;
+             
+        }
+    }
+    
+         
+/*         public static UICMasterBean getUICData(HttpSession mySession, String uic )
 	{
                 //System.out.println("DEBUG START UICMasterFactory - getUICData");
                 Connection conn = null;
@@ -347,6 +534,10 @@ public class OwnersFactory {
     }// end getUsersRID
     
     */
+
+    private void insert(String command) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }// end class UICMasterFactory
 

@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
 
+import dao.OwnersFactory;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,7 +67,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         ownerIndexPicked = guestIndexPicked = 0;
         
         //set up owners info for combobox
-        owners = DBConnection.getAllOwners();
+        owners = OwnersFactory.getAllOwners();
         Vector ownerNames = new Vector();
             ownerNames.add(0,"");
         for(int itterator = 0; itterator < owners.size(); itterator++){

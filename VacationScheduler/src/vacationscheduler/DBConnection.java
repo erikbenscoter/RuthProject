@@ -5,6 +5,8 @@
  */
 package vacationscheduler;
 
+import Connections.RuthDBConnection;
+import dao.OwnersFactory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -34,7 +36,7 @@ public class DBConnection {
     String pass = "password";
     
     
-public static Connection getConnection(){
+/*public static Connection getConnection(){
        try{
                 Class.forName("org.sqlite.JDBC").newInstance();
                 Connection conn = DriverManager.getConnection(host);
@@ -48,10 +50,12 @@ public static Connection getConnection(){
        }
        
     }
+    */
+   
     public static void insert(String insertCommand){
         try{
             
-            Connection con = getConnection();
+            Connection con = RuthDBConnection.getConnection();
             Statement statement = con.createStatement();
             statement.execute(insertCommand);
             JOptionPane.showMessageDialog(null, "Thank you your changes have been made\n");
@@ -61,12 +65,12 @@ public static Connection getConnection(){
             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
         }
         
-       
+      
     }
     public static void insertSilent(String insertCommand){
         try{
             
-            Connection con = getConnection();
+            Connection con = RuthDBConnection.getConnection();
             Statement statement = con.createStatement();
             statement.execute(insertCommand);
             
@@ -78,6 +82,7 @@ public static Connection getConnection(){
         
        
     }
+    /*
     public void insert(Owner own){
         Vector inserts = new Vector();
         inserts.add(own.emailAddress);
@@ -107,6 +112,8 @@ public static Connection getConnection(){
         insert(command);
         
     }
+    
+    */
     public static void insert(Reservation reserve){
         Vector <String> paramVector = new Vector();
         String paramString = "";
@@ -167,9 +174,9 @@ public static Connection getConnection(){
         insert(command);
         
     }
-    
+ /*   
     public Vector getAllOwnerEmails(){
-        Connection con = this.getConnection();
+        Connection con = getConnection();
         try{
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT EMAIL FROM OWNERS");
@@ -187,8 +194,9 @@ public static Connection getConnection(){
             return null;
         }   
     }
+    */
     public Vector getAllNames(String tableName){
-        Connection con = this.getConnection();
+        Connection con = RuthDBConnection.getConnection();
         try{
             Vector output = new Vector();
             
@@ -206,7 +214,7 @@ public static Connection getConnection(){
         }
     }
     public Vector getAllEmails(String tableName){
-        Connection con = this.getConnection();
+        Connection con = RuthDBConnection.getConnection();
         try{
             Vector output = new Vector();
             
@@ -225,7 +233,7 @@ public static Connection getConnection(){
             return null;
         }
     }
-    
+  /*  
     public Vector getAvailablePts(){
         Connection con = this.getConnection();
         try{
@@ -245,17 +253,17 @@ public static Connection getConnection(){
             return null;
         }
     }
-    
+ */   
     
     public static void main(String[] args) {
         DBConnection db = new DBConnection();
-        Vector results = db.getAllOwnerEmails();
+        Vector results = OwnersFactory.getAllOwnerEmails();
         for(Object result : results){
             System.out.println(result);
         }
         
     }
-    
+    /*
     public static Owner get(String p_email){
         Owner ownerToReturn;
         String myQuery = "SELECT * FROM OWNERS WHERE First_Name = '"+p_email+"'";
@@ -300,7 +308,8 @@ public static Connection getConnection(){
         }
           
     }
-    
+    */
+ /*   
     public static Vector getAllOwners(){
         Owner ownerToAdd;
         Vector ownerVectorToReturn = new Vector();
@@ -353,12 +362,12 @@ public static Connection getConnection(){
              
         }
     }
-    
+    */
     public static Vector getAllGuests(){
         Guest guestToAdd;
         Vector guestVectorToReturn = new Vector();
         String myQuery = "SELECT * FROM GUESTS";
-        Connection con = getConnection();
+        Connection con = RuthDBConnection.getConnection();
         ResultSet rs;
         Statement st;
         
@@ -407,7 +416,7 @@ public static Connection getConnection(){
         
         
         try{
-            con = getConnection();
+            con = RuthDBConnection.getConnection();
             st = con.createStatement();
             rs = st.executeQuery(myQuery);
             
@@ -438,7 +447,7 @@ public static Connection getConnection(){
         
         
         try{
-            con = getConnection();
+            con = RuthDBConnection.getConnection();
             st = con.createStatement();
             rs = st.executeQuery(myQuery);
             
@@ -466,7 +475,7 @@ public static Connection getConnection(){
         myQuery = "SELECT COUNT(*) FROM RESERVATIONS WHERE CONFIRMATION_NUMBER = '"+p_confirmationNumber+"'";
         
         try{
-        con = DBConnection.getConnection();
+        con = RuthDBConnection.getConnection();
         st = con.createStatement();
         rs = st.executeQuery(myQuery);
         
