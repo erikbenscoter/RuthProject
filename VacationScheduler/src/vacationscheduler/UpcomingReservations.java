@@ -40,13 +40,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
                 int rowClicked = jtable_upcomingReservations.rowAtPoint(e.getPoint());
                 String confirmationNumberClicked = reservations.get(rowClicked).confimationNumber;
                 System.out.println("confirmation number = " + confirmationNumberClicked);
-                JFrame jf = new JFrame();
-                ReservationForm newReservation = new ReservationForm(jf,confirmationNumberClicked);
-                jf.setSize(600, 700);
-                jf.add(newReservation);
-                jf.invalidate();
-                jf.setVisible(true);
-                jf.setAlwaysOnTop(true);
+                new ReservationForm(confirmationNumberClicked);
             }
 
             @Override
@@ -163,7 +157,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(

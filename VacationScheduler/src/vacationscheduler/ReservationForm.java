@@ -47,12 +47,17 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     public ReservationForm() {
         CommonConstructor();
     }
-    public ReservationForm(JFrame jf, String confirmationNumber){
+    public ReservationForm(String confirmationNumber){
         
-        this.jf = jf;
+        jf = new JFrame();
+        jf.setSize(600, 700);
         CommonConstructor();
         TextBox_ConfirmationNumber.setText(confirmationNumber);
-        this.setVisible(true);
+        jf.add(this);
+        jf.invalidate();
+        jf.setVisible(true);
+        jf.setAlwaysOnTop(true);
+        jf.setLocation(700, 100);
     }
     public void CommonConstructor(){
         initComponents();
