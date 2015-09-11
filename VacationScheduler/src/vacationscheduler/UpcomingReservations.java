@@ -75,10 +75,12 @@ public class UpcomingReservations extends javax.swing.JPanel {
             
             String confirmationNumberString = (String) p_userReservations.get(currentVectorItterator).get(reservationIndex);
             boolean alreadyInDB = DBConnection.doesReservationExistInDB(confirmationNumberString);
+            Reservation currentReservation = new Reservation(p_userReservations.get(currentVectorItterator));
+            currentReservation.ownerUserName = p_currentUserName;
             
             if(!alreadyInDB){
-                Reservation 
-                DBConnection.insertScrapedReservation(p_userReservations.get(currentVectorItterator), p_currentUserName);
+                DBConnection.insert(currentReservation);
+                
             }else{
                 //TODO: update
                 System.err.println("Already in DB");

@@ -107,23 +107,35 @@ public static Connection getConnection(){
         insert(command);
         
     }
-    public void insert(Reservation reserve){
-        Vector inserts = new Vector();
-            inserts.add(reserve.owner);
-            inserts.add(reserve.location);
-            inserts.add(reserve.dateOfReservation);
-            //Use Date
-            inserts.add(reserve.numberOfNights );
-            inserts.add(reserve.unitSize );
-            inserts.add(reserve.confimationNumber );
-            inserts.add(reserve.pointsRequiredForReservation );
-            inserts.add(reserve.wasDiscounted );
-            inserts.add(reserve.wasUpgraded );
-            inserts.add(reserve.isBuyerLinedUp );
-            inserts.add(reserve.guest );
-            inserts.add(reserve.amountPaid );
-            inserts.add(reserve.datePaid );
-            inserts.add(reserve.paymentMethod );
+    public static void insert(Reservation reserve){
+        Vector <String> paramVector = new Vector();
+        String paramString = "";
+
+        
+        paramVector.add(reserve.ownerUserName);
+        paramVector.add(reserve.confimationNumber);
+        paramVector.add(reserve.dateOfReservation);
+        paramVector.add(Integer.toString(reserve.numberOfNights));
+        paramVector.add(reserve.location);
+        paramVector.add(reserve.unitSize);
+        paramVector.add(reserve.dateBooked);
+        
+        for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
+            paramString += "'"+ paramVector.get(paramItterator) + "', ";
+        }
+        paramString += "'"+ paramVector.get(paramVector.size() - 1)+ "'";
+        
+        
+        
+        
+        String myInsertCommand = "INSERT INTO RESERVATIONS"
+                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
+                + "VALUES(" + paramString +")";
+        String parametersString = "";
+        
+        System.out.println(myInsertCommand);
+        DBConnection.insertSilent(myInsertCommand);
+       
         
     }
     public void insert(Guest g){

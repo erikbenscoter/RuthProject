@@ -22,6 +22,7 @@ public class Reservation {
     Owner owner;
     String location;
     String dateOfReservation;
+    String ownerUserName;
     //Use Date
     int numberOfNights;
     String unitSize;
@@ -78,13 +79,22 @@ public class Reservation {
         this.paymentMethod = paymentMethod;
         this.totalAmountRentedFor = totalAmountRentedFor;
     }
-     public convertVectorReservation(Vector <String> p_scrapedVector){
+     public Reservation(Vector <String> p_scrapedVector){
         this.location = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.RESORT.getIndex());
         this.dateOfReservation = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.CHECK_IN_DATE.getIndex());
         this.numberOfNights = Integer.parseInt(p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.NUMBER_NIGHTS.getIndex()));
         this.unitSize = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.SIZE.getIndex());
         this.confimationNumber = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.CONFIRMATION_NUMBER.getIndex());
         this.dateBooked = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.BOOKED.getIndex());
+        
+        //take care of special characters
+        removeSpecialCharacters(this);
+        
+        
+    }
+    public static void removeSpecialCharacters(Reservation p_reservationInput){
+        p_reservationInput.location = p_reservationInput.location.replace("'", "");
+        
     }
     
     
