@@ -1,0 +1,1 @@
+select CONFIRMATION_NUMBER, DATE_OF_RESERVATION from reservations;
