@@ -6,11 +6,16 @@
 package dao;
 
 import Connections.RuthDBConnection;
+import generic.DateFormatUtility;
+import vacationscheduler.Reservation;
+import java.sql.PreparedStatement;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import vacationscheduler.DBConnection;
 
 /**
  *
@@ -18,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class reservationsFactory
 {
-    /*
+/*    
         public static void insert(Reservation reserve){
         Vector <String> paramVector = new Vector();
         String paramString = "";
@@ -50,8 +55,8 @@ public class reservationsFactory
        
         
     }
+  */  
     
-    */
     /* public void syncDB(String p_currentUserName, Vector <Vector> p_userReservations){
         
         for(int currentVectorItterator = 0; currentVectorItterator < p_userReservations.size(); currentVectorItterator ++){
@@ -110,7 +115,7 @@ public class reservationsFactory
             System.out.println("trouble with the connection!!" + e);
             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
         }
-        
+      
         } 
       public static boolean doesReservationExistInDB(String p_confirmationNumber){
         String myQuery;
@@ -142,7 +147,65 @@ public class reservationsFactory
         
         return isInDB;
         
-    }      
+    }
+    public static void UpdateCurrentReservation(Reservation current_scraped_reservation)
+  
+    {
+        System.out.println("at top of UpdateCurrentReservation = " + current_scraped_reservation);
+        try
+        {
+        Connection conn = RuthDBConnection.getConnection();
+        Vector <String> scrapedResVector = new Vector();
+        String paramString = "";
+        /*
+        scrapedResVector.add(current_scraped_reservation.ownerUserName);
+        scrapedResVector.add(current_scraped_reservation.confimationNumber);
+        scrapedResVector.add(DateFormatUtility.formatDateWyn(current_scraped_reservation.dateOfReservation));
+        scrapedResVector.add(Integer.toString(current_scraped_reservation.numberOfNights));
+        scrapedResVector.add(current_scraped_reservation.location);
+        scrapedResVector.add(current_scraped_reservation.unitSize);
+        scrapedResVector.add(current_scraped_reservation.dateBooked);
+    */
+    /*    
+        for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
+            paramString += "'"+ paramVector.get(paramItterator) + "', ";
+        }
+        paramString += "'"+ paramVector.get(paramVector.size() - 1)+ "'";
+    
+        
+        String myInsertCommand = "INSERT INTO RESERVATIONS"
+                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
+                + "VALUES(" + paramString +")";
+        */
+        
+        PreparedStatement stmt = conn.prepareStatement(
+                
+            " Update Reservations                  " +
+                "   Set Location   = 'Glenn'          " +
+                " Where Confirmation_Number = '087250'");
+        
+           int sqlerr;
+           sqlerr = stmt.executeUpdate();
+        
+    /*    
+        String parametersString = "";
+        
+        System.out.println(myInsertCommand);
+        DBConnection.insertSilent(myInsertCommand);
+     */
+        } 
+        catch (Exception e)
+                {
+                throw new RuntimeException (e);
+                }
+        System.out.println("at bottom of UpdateCurrentReservation" );
+        return;
+    }
+
+    @Override
+    public String toString() {
+        return "reservationsFactory{" + '}';
+    }
     public static String getReservationWithinDays(String Days )
     { 
         Connection con = RuthDBConnection.getConnection();

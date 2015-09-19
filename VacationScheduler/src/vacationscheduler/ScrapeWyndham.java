@@ -20,7 +20,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
  *
  * @author erikbenscoter
  */
-public class ScrapeWyndham {
+public class ScrapeWyndham
+{
     static WebDriver firefoxWindow;
     
     public enum scrapedIndicies{
@@ -34,10 +35,12 @@ public class ScrapeWyndham {
         UPGRADE(7)
                 ;
         private final int index;
-      private scrapedIndicies(int input){
+      private scrapedIndicies(int input)
+      {
           index = input;
       }  
-      public int getIndex(){
+      public int getIndex()
+      {
           return index;
       }
     };
@@ -226,8 +229,6 @@ public class ScrapeWyndham {
         vectorToReturn.add(upgradeState);
         
         return vectorToReturn;
-        
-        
         
     }
     public static void logout(WebDriver p_firefoxWindow){

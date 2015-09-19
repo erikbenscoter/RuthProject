@@ -114,8 +114,9 @@ public class UpcomingReservations extends javax.swing.JPanel {
                 DBConnection.insert(currentReservation);
                 
             }else{
-                //TODO: update
+                //TODO: update given confimation number
                 System.err.println("Already in DB");
+                reservationsFactory.UpdateCurrentReservation(currentReservation);
             }
             
         }
