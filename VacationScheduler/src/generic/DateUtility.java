@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package mil.navy.ssp23.sail.generic;
+package generic;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.text.ParseException;

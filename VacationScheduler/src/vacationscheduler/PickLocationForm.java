@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
 
+import dao.LocationsFactory;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 
@@ -33,7 +34,7 @@ public class PickLocationForm extends javax.swing.JFrame {
          initComponents();
         Locations.add("");
         
-        Vector tmp = DBConnection.GetAllLocations();
+        Vector tmp = LocationsFactory.GetAllLocations();
         Locations.addAll(tmp);
         
         
@@ -156,7 +157,7 @@ public class PickLocationForm extends javax.swing.JFrame {
         if(Textbox_Location.isEnabled()){
             String locationInput = Textbox_Location.getText();
             String myQuery = "INSERT INTO LOCATIONS(Location) VALUES('" + locationInput + "')";
-            DBConnection.insert(myQuery);
+            LocationsFactory.insert(myQuery);
             reservationForm.setLocation(locationInput);
         }else{
             String locationInput = Combobox_Location.getSelectedItem().toString();

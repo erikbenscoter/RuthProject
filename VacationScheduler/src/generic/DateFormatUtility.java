@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package mil.navy.ssp23.sail.generic;
+package generic;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,7 +17,9 @@ import java.util.Date;
  */
 public class DateFormatUtility {
     
-    public static String formatDate(String sDate){
+    public static String formatDate(String sDate)
+    {
+        System.out.println("at top of farmatDate"+sDate);
         if(sDate != null && !"".equals(sDate)){
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
@@ -25,8 +27,26 @@ public class DateFormatUtility {
                     date = formatter.parse(sDate);
                     sDate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(date);
                 }catch(ParseException pe){pe.printStackTrace();}
-        }  
+        } 
+        System.out.println(sDate);
+        System.out.println("at the bottom of fromatDate of  **********"  );
+        
         return sDate;
+    }
+    public static String formatDateWyn(String sDate){
+        System.out.println("at top of farmatDateWyn"+sDate);
+        if(sDate != null && !"".equals(sDate)){
+            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            Date date = new Date();
+                try{
+                    date = formatter.parse(sDate);
+                    sDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(date);
+                }catch(ParseException pe){pe.printStackTrace();}
+        } 
+        System.out.println(sDate);
+        System.out.println("at the bottom of fromatDateWyn of  **********"  );
+        
+        return sDate;    
     }
     public static String trimDate(String sDate){
         if(sDate != null && !"".equals(sDate)){

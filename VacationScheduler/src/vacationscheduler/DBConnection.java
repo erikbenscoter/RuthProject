@@ -7,6 +7,7 @@ package vacationscheduler;
 
 import Connections.RuthDBConnection;
 import dao.OwnersFactory;
+import generic.DateFormatUtility;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -121,7 +122,7 @@ public class DBConnection {
         
         paramVector.add(reserve.ownerUserName);
         paramVector.add(reserve.confimationNumber);
-        paramVector.add(reserve.dateOfReservation);
+        paramVector.add(DateFormatUtility.formatDateWyn(reserve.dateOfReservation));
         paramVector.add(Integer.toString(reserve.numberOfNights));
         paramVector.add(reserve.location);
         paramVector.add(reserve.unitSize);
@@ -131,9 +132,6 @@ public class DBConnection {
             paramString += "'"+ paramVector.get(paramItterator) + "', ";
         }
         paramString += "'"+ paramVector.get(paramVector.size() - 1)+ "'";
-        
-        
-        
         
         String myInsertCommand = "INSERT INTO RESERVATIONS"
                 + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
@@ -195,6 +193,7 @@ public class DBConnection {
         }   
     }
     */
+    /*
     public Vector getAllNames(String tableName){
         Connection con = RuthDBConnection.getConnection();
         try{
@@ -213,6 +212,8 @@ public class DBConnection {
             return null;
         }
     }
+    */
+    /*
     public Vector getAllEmails(String tableName){
         Connection con = RuthDBConnection.getConnection();
         try{
@@ -233,6 +234,7 @@ public class DBConnection {
             return null;
         }
     }
+    */
   /*  
     public Vector getAvailablePts(){
         Connection con = this.getConnection();
@@ -363,6 +365,7 @@ public class DBConnection {
         }
     }
     */
+   /*
     public static Vector getAllGuests(){
         Guest guestToAdd;
         Vector guestVectorToReturn = new Vector();
@@ -402,6 +405,8 @@ public class DBConnection {
              
         }
     }
+    */
+    /*
     public static Vector GetAllLocations(){
         Connection con;
         Statement st;
@@ -433,6 +438,8 @@ public class DBConnection {
         
         
     }
+    */
+    /*
     public static Vector GetAllUnitSizes(){
         Connection con;
         Statement st;
@@ -464,6 +471,8 @@ public class DBConnection {
         
         
     }
+    */
+    /*
     
     public static boolean doesReservationExistInDB(String p_confirmationNumber){
         String myQuery;
@@ -496,7 +505,8 @@ public class DBConnection {
         return isInDB;
         
     }
-    
+    */
+  /*  
     public static void insertScrapedReservation(Vector<String> p_vectorInput, String p_ownerUserName){
         String myInsertCommand = "INSERT INTO RESERVATIONS"
                 + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED,GUEST_EMAIL,WAS_UPGRADED) "
@@ -519,5 +529,6 @@ public class DBConnection {
         
     }
     
+   */
     
 }

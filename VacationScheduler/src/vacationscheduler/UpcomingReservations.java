@@ -6,6 +6,7 @@
 package vacationscheduler;
 
 import dao.OwnersFactory;
+import dao.reservationsFactory;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
@@ -104,7 +105,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             
             
             String confirmationNumberString = (String) p_userReservations.get(currentVectorItterator).get(reservationIndex);
-            boolean alreadyInDB = DBConnection.doesReservationExistInDB(confirmationNumberString);
+            boolean alreadyInDB = reservationsFactory.doesReservationExistInDB(confirmationNumberString);
             Reservation currentReservation = new Reservation(p_userReservations.get(currentVectorItterator));
             currentReservation.ownerUserName = p_currentUserName;
             reservations.add(currentReservation);

@@ -41,7 +41,7 @@ public class OwnersFactory {
         parameters = parameters + inserts.get(inserts.size()-1);
         command = command + parameters + ")";
         System.out.println(command);
-        DBConnection.insert(command);
+        OwnersFactory.insert(command);
     }
   /*
    *          get emails of all owners
@@ -90,7 +90,8 @@ public class OwnersFactory {
  /*
  *    Get all from owners based on email first name = email?
  */
-    public static Owner get(String p_email){
+    public static Owner get(String p_email)
+    {
         Owner ownerToReturn;
         String myQuery = "SELECT * FROM OWNERS WHERE First_Name = '"+p_email+"'";
         Connection con = RuthDBConnection.getConnection();
@@ -187,7 +188,59 @@ public class OwnersFactory {
              
         }
     }
-    
+      public Vector getAllNames(){
+        Connection con = RuthDBConnection.getConnection();
+        try{
+            Vector output = new Vector();
+            
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT FIRST_NAME,LAST_NAME FROM Owners");
+            
+            while(rs.next()){
+                output.add(rs.getString("FIRST_NAME") + " " + rs.getString("LAST_NAME"));
+            }
+            
+            return output;
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public Vector getAllEmails(){
+        Connection con = RuthDBConnection.getConnection();
+        try{
+            Vector output = new Vector();
+            
+            Statement st = con.createStatement();
+            System.out.println("SELECT EMAIL FROM OWNERS" );
+            ResultSet rs = st.executeQuery("SELECT EMAIL FROM OWNERS");
+            
+            while(rs.next()){
+                output.add(rs.getString("EMAIL"));
+                System.out.println(rs.getString("EMAIL"));
+            }
+            
+            return output;
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public static void insert(String insertCommand){
+        try{
+            
+            Connection con = RuthDBConnection.getConnection();
+            Statement statement = con.createStatement();
+            statement.execute(insertCommand);
+            JOptionPane.showMessageDialog(null, "Thank you your changes have been made\n");
+            con.close();
+        }catch(Exception e){
+            System.out.println("trouble with the connection!!" + e);
+            JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+        }
+        
+      
+    }     
  
 
    

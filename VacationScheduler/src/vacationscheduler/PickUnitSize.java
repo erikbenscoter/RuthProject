@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
 
+import dao.UnitSizeFactory;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -32,7 +33,7 @@ public class PickUnitSize extends javax.swing.JFrame {
         initComponents();
         UnitSizes.add("");
         
-        Vector insideDatabase = DBConnection.GetAllUnitSizes();
+        Vector insideDatabase = UnitSizeFactory.GetAllUnitSizes();
         UnitSizes.addAll(insideDatabase);
         
         UnitSizes.add("Other...");
@@ -164,7 +165,7 @@ public class PickUnitSize extends javax.swing.JFrame {
         
         if(Textbox_other.isEnabled()){
             String input = Textbox_other.getText();
-            DBConnection.insert("INSERT INTO UNITSIZES(UnitSize) VALUES('"+input+"')");
+            UnitSizeFactory.insert("INSERT INTO UNITSIZES(UnitSize) VALUES('"+input+"')");
             myReservationForm.TextBox_UnitSize.setText(input);
         }else{
             myReservationForm.TextBox_UnitSize.setText((String)Combobox_UnitSize.getSelectedItem());
