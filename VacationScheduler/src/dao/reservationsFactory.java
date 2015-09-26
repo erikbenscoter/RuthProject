@@ -9,6 +9,7 @@ import Connections.RuthDBConnection;
 import generic.DateFormatUtility;
 import vacationscheduler.Reservation;
 import java.sql.PreparedStatement;
+import dataobjs.reservationsBean;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -57,29 +58,9 @@ public class reservationsFactory
     }
   */  
     
-    /* public void syncDB(String p_currentUserName, Vector <Vector> p_userReservations){
-        
-        for(int currentVectorItterator = 0; currentVectorItterator < p_userReservations.size(); currentVectorItterator ++){
-            
-            
-            String confirmationNumberString = (String) p_userReservations.get(currentVectorItterator).get(reservationIndex);
-            boolean alreadyInDB = DBConnection.doesReservationExistInDB(confirmationNumberString);
-            Reservation currentReservation = new Reservation(p_userReservations.get(currentVectorItterator));
-            currentReservation.ownerUserName = p_currentUserName;
-            reservations.add(currentReservation);
-            
-            if(!alreadyInDB){
-                DBConnection.insert(currentReservation);
-                
-            }else{
-                //TODO: update
-                System.err.println("Already in DB");
-            }
-            
-        }
-    }
+
     
-    */
+   
     
        public static void insertScrapedReservation(Vector<String> p_vectorInput, String p_ownerUserName){
         String myInsertCommand = "INSERT INTO RESERVATIONS"
@@ -178,16 +159,27 @@ public class reservationsFactory
                 + "VALUES(" + paramString +")";
         */
         
+  
+      String resconfimationNumber;
+        resconfimationNumber= current_scraped_reservation.getConfimationNumber();
+
+        System.out.println("Confirmation number = " + resconfimationNumber);
         PreparedStatement stmt = conn.prepareStatement(
-                
-            " Update Reservations                  " +
-                "   Set Location   = 'Glenn'          " +
-                " Where Confirmation_Number = '087250'");
+                "Update reservations           "
+               +"    set Unit_Size = ?         "
+          /*     +"         set Guest = ?        "  */
+               +"  where CONFIRMATION_NUMBER = ?");
         
-           int sqlerr;
-           sqlerr = stmt.executeUpdate();
+           stmt.setString(1,current_scraped_reservation.getUnitSize());
+       /*    stmt.setString(2,current_scraped_reservation.getGuest());  */
+           stmt.setString(2,current_scraped_reservation.getConfimationNumber());      
+          
+           stmt.executeUpdate();
+           stmt.close();
+           
+        System.out.println("after Update" );
+     /*   
         
-    /*    
         String parametersString = "";
         
         System.out.println(myInsertCommand);
@@ -195,7 +187,7 @@ public class reservationsFactory
      */
         } 
         catch (Exception e)
-                {
+                {System.out.println("Exception*****" + e );
                 throw new RuntimeException (e);
                 }
         System.out.println("at bottom of UpdateCurrentReservation" );

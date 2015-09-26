@@ -87,6 +87,8 @@ public class UpcomingReservations extends javax.swing.JPanel {
         String headingArray[] = {"Confirmation Number", "Check-In-Date", 
             "# Nights", "Resort", "Size", "Booked","Traveler","Upgrade"};
         Vector headings = new Vector(Arrays.asList(headingArray));
+        
+        System.out.println("in setup table and update database ********* just before table");
 
         jtable_upcomingReservations.setModel(new DefaultTableModel(response, headings));
         
@@ -107,6 +109,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             String confirmationNumberString = (String) p_userReservations.get(currentVectorItterator).get(reservationIndex);
             boolean alreadyInDB = reservationsFactory.doesReservationExistInDB(confirmationNumberString);
             Reservation currentReservation = new Reservation(p_userReservations.get(currentVectorItterator));
+
             currentReservation.ownerUserName = p_currentUserName;
             reservations.add(currentReservation);
             

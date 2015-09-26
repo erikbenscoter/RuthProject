@@ -96,6 +96,142 @@ public class Reservation {
         p_reservationInput.location = p_reservationInput.location.replace("'", "");
         
     }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDateOfReservation() {
+        return dateOfReservation;
+    }
+
+    public void setDateOfReservation(String dateOfReservation) {
+        this.dateOfReservation = dateOfReservation;
+    }
+
+    public String getOwnerUserName() {
+        return ownerUserName;
+    }
+
+    public void setOwnerUserName(String ownerUserName) {
+        this.ownerUserName = ownerUserName;
+    }
+
+    public int getNumberOfNights() {
+        return numberOfNights;
+    }
+
+    public void setNumberOfNights(int numberOfNights) {
+        this.numberOfNights = numberOfNights;
+    }
+
+    public String getUnitSize() {
+        return unitSize;
+    }
+
+    public void setUnitSize(String unitSize) {
+        this.unitSize = unitSize;
+    }
+
+    public String getConfimationNumber() {
+        return confimationNumber;
+    }
+
+    public void setConfimationNumber(String confimationNumber) {
+        this.confimationNumber = confimationNumber;
+    }
+
+    public int getPointsRequiredForReservation() {
+        return pointsRequiredForReservation;
+    }
+
+    public void setPointsRequiredForReservation(int pointsRequiredForReservation) {
+        this.pointsRequiredForReservation = pointsRequiredForReservation;
+    }
+
+    public boolean isWasDiscounted() {
+        return wasDiscounted;
+    }
+
+    public void setWasDiscounted(boolean wasDiscounted) {
+        this.wasDiscounted = wasDiscounted;
+    }
+
+    public boolean isWasUpgraded() {
+        return wasUpgraded;
+    }
+
+    public void setWasUpgraded(boolean wasUpgraded) {
+        this.wasUpgraded = wasUpgraded;
+    }
+
+    public boolean isIsBuyerLinedUp() {
+        return isBuyerLinedUp;
+    }
+
+    public void setIsBuyerLinedUp(boolean isBuyerLinedUp) {
+        this.isBuyerLinedUp = isBuyerLinedUp;
+    }
+
+    public Guest getGuest() {
+        return guest;
+    }
+
+    public void setGuest(Guest guest) {
+        this.guest = guest;
+    }
+
+    public double getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(double amountPaid) {
+        this.amountPaid = amountPaid;
+    }
+
+    public Date getDatePaid() {
+        return datePaid;
+    }
+
+    public void setDatePaid(Date datePaid) {
+        this.datePaid = datePaid;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public double getTotalAmountRentedFor() {
+        return totalAmountRentedFor;
+    }
+
+    public void setTotalAmountRentedFor(double totalAmountRentedFor) {
+        this.totalAmountRentedFor = totalAmountRentedFor;
+    }
+
+    public String getDateBooked() {
+        return dateBooked;
+    }
+
+    public void setDateBooked(String dateBooked) {
+        this.dateBooked = dateBooked;
+    }
     
     
 }
