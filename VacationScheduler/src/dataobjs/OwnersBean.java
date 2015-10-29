@@ -5,10 +5,6 @@
 
 package dataobjs;
 
-/**
- *
- * @author donald.campagna
- */
 public class OwnersBean {
 
        private String Email;

@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  *
- * @author scott.manship
+ * @author erikbenscoter
  */
 public class DateFormatUtility {
     

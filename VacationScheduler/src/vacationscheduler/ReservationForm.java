@@ -7,6 +7,7 @@ package vacationscheduler;
 
 import dao.OwnersFactory;
 import dao.GuestFactory;
+import dataobjs.Guest;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,7 +81,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         Vector guestNames = new Vector();
             guestNames.add(0,"");
         for(int itterator = 0; itterator < guests.size(); itterator++){
-            guestNames.add(((Guest) guests.get(itterator)).firstName + " "+ ((Guest)guests.get(itterator)).lastName);
+            guestNames.add(((Guest) guests.get(itterator)).getFirstName() + " "+ ((Guest)guests.get(itterator)).getLastName());
         }
         
         
@@ -669,7 +670,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
             Guest selectedGuest = (Guest) guests.get(indexSelected);
             
             //set the confirmation email label
-            Label_confirmGuestEmail.setText( selectedGuest.emailAddress.toString() );
+            Label_confirmGuestEmail.setText( selectedGuest.getEmailAddress().toString() );
             
             
         }else{

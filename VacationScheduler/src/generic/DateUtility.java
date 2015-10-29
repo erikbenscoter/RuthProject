@@ -11,11 +11,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 /**
  *
- * @author donald.campagna
+ * @author erik.benscoter
  */
 public class DateUtility {
 
-    /***************************************************************/
+/***************************************************************/
 /*          Get the current time                         */
 /***************************************************************/
 public static String getTimeNow() {

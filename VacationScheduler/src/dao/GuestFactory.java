@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import dataobjs.Guestx;
+import dataobjs.Guest;
 
 /**
  *
@@ -20,7 +20,7 @@ import dataobjs.Guestx;
 public class GuestFactory 
 {
   public static Vector getAllGuests(){
-        Guestx guestToAdd;
+        Guest guestToAdd;
         Vector guestVectorToReturn = new Vector();
         String myQuery = "SELECT * FROM GUESTS";
         Connection con = RuthDBConnection.getConnection();
@@ -44,7 +44,7 @@ public class GuestFactory
                 creditCardNumber = rs.getInt("Credit_Card_Number");
                 numberPreviousRentals = rs.getInt("Previous_Rentals");
 
-                guestToAdd = new Guestx(emailAddress, firstName, lastName, phoneNumber, creditCardNumber, numberPreviousRentals);
+                guestToAdd = new Guest(emailAddress, firstName, lastName, phoneNumber, creditCardNumber, numberPreviousRentals);
                 guestVectorToReturn.add(guestToAdd);
                 
             }

@@ -27,6 +27,7 @@ public class reservationsBean
     private String TOTAL_RENTING_FOR;
     private String DATE_BOOKED;
 
+    
     public String getOWNER_USER_NAME() {
         return OWNER_USER_NAME;
     }

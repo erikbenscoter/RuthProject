@@ -7,6 +7,7 @@ package vacationscheduler;
 
 import Connections.RuthDBConnection;
 import dao.OwnersFactory;
+import dataobjs.Guest;
 import generic.DateFormatUtility;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -145,12 +146,12 @@ public class DBConnection {
     }
     public void insert(Guest g){
         Vector inserts = new Vector();
-            inserts.add(g.emailAddress );
-            inserts.add(g.firstName ) ;
-            inserts.add(g.lastName ) ;
-            inserts.add(g.phoneNumber ) ;
-            inserts.add(g.creditCardNumber ) ;
-            inserts.add(g.numberPreviousRentals ) ; 
+            inserts.add(g.getEmailAddress() );
+            inserts.add(g.getFirstName() ) ;
+            inserts.add(g.getLastName() ) ;
+            inserts.add(g.getPhoneNumber() ) ;
+            inserts.add(g.getCreditCardNumber()) ;
+            inserts.add(g.getNumberPreviousRentals() ) ; 
         
         String command = "INSERT INTO GUESTS (EMAIL,FIRST_NAME,"
                 +"LAST_NAME,PHONE_NUMBER,CREDIT_CARD_NUMBER,"

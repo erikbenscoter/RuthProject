@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
     
+import dataobjs.Guest;
 import java.util.Date;
 import java.util.Vector;
 

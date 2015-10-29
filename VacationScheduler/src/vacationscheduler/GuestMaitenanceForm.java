@@ -5,6 +5,8 @@
  */
 package vacationscheduler;
 
+import dataobjs.Guest;
+
 /**
  *
  * @author erikbenscoter

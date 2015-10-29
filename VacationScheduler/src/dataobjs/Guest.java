@@ -9,11 +9,11 @@ package dataobjs;
  *
  * @author erikbenscoter
  */
-public class Guestx {
+public class Guest {
     String emailAddress, firstName,lastName,phoneNumber;
     int creditCardNumber,numberPreviousRentals;
     
-    public Guestx(String ea, String fn, String ln, String pn, int ccn, int npr){
+    public Guest(String ea, String fn, String ln, String pn, int ccn, int npr){
         emailAddress =ea;
         firstName = fn;
         lastName = ln;
@@ -30,4 +30,30 @@ public class Guestx {
         creditCardNumber = ccn;
         numberPreviousRentals = npr;        
     }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public int getCreditCardNumber() {
+        return creditCardNumber;
+    }
+
+    public int getNumberPreviousRentals() {
+        return numberPreviousRentals;
+    }
+    
+    
 }
