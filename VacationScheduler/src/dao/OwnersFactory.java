@@ -8,7 +8,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import vacationscheduler.DBConnection;
 
-import vacationscheduler.Owner;
+import dataobjs.Owner;
 
 public class OwnersFactory {
 /* 

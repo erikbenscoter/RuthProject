@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vacationscheduler;
+package dataobjs;
     
+import dataobjs.Owner;
 import dataobjs.Guest;
 import java.util.Date;
 import java.util.Vector;
+import vacationscheduler.ScrapeWyndham;
 
 
 
@@ -15,6 +17,8 @@ import java.util.Vector;
  *
  * @author erikbenscoter
  */
+
+
 public class Reservation {
     public enum PaymentMethod{
         CASH,CREDIT,OTHER
@@ -36,7 +40,9 @@ public class Reservation {
     PaymentMethod paymentMethod;
     double totalAmountRentedFor = 0;
     String dateBooked;
-    
+    public Reservation(){
+        
+    }
     public Reservation( Owner owner,String location,String dateOfReservation,int numberOfNights,
                         String unitSize,String confimationNumber,int pointsRequiredForReservation,
                         boolean wasDiscounted,boolean wasUpgraded, boolean isBuyerLinedUp,Guest guest,

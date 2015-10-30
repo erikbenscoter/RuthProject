@@ -5,9 +5,12 @@
  */
 package vacationscheduler;
 
+import dataobjs.Owner;
 import dao.OwnersFactory;
 import dao.GuestFactory;
+import dao.reservationsFactory;
 import dataobjs.Guest;
+import dataobjs.Reservation;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +19,7 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
@@ -55,7 +59,33 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         jf = new JFrame();
         jf.setSize(600, 700);
         CommonConstructor();
-        TextBox_ConfirmationNumber.setText(confirmationNumber);
+        
+        //get Reservation from Database
+        Reservation reservationToModify = reservationsFactory.get(confirmationNumber);
+        
+        TextBox_ConfirmationNumber.setText(reservationToModify.getConfimationNumber());
+        TextBox_NumberOfNights.setText(Integer.toString(reservationToModify.getNumberOfNights()));     
+        TextBox_UnitSize.setText(reservationToModify.getUnitSize());
+        Textbox_Location.setText(reservationToModify.getLocation());
+        
+        String dateOfReservation = reservationToModify.getDateOfReservation();
+        Combobox_Year.setSelectedItem( dateOfReservation.split("-")[0] );
+        Combobox_Month.setSelectedItem( dateOfReservation.split("-")[1] );
+        Combobox_Day.setSelectedItem( dateOfReservation.split("-")[2].split(" ")[0] );
+        
+        //set editable to false
+        Combobox_Day.setEnabled(false);
+        Combobox_Year.setEnabled(false);
+        Combobox_Month.setEnabled(false);
+        TextBox_ConfirmationNumber.setEditable(false);
+        TextBox_NumberOfNights.setEditable(false);
+        TextBox_UnitSize.setEditable(false);
+        Textbox_Location.setEditable(false);
+        Button_Location.setEnabled(false);
+        Button_UnitSize.setEnabled(false);
+        
+        
+        
         jf.add(this);
         jf.invalidate();
         jf.setVisible(true);
@@ -200,10 +230,10 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         Combobox_Month = new javax.swing.JComboBox();
         Combobox_Day = new javax.swing.JComboBox();
         Combobox_Year = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        Button_Location = new javax.swing.JButton();
         Textbox_Location = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        Button_UnitSize = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         Label_confirmGuestEmail = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
@@ -216,7 +246,6 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
 
         setBackground(new java.awt.Color(254, 254, 254));
 
-        ComboBox_Owner.setBackground(new java.awt.Color(255, 255, 255));
         ComboBox_Owner.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboBox_Owner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,19 +374,19 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
             }
         });
 
-        jButton1.setText("Location...");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Button_Location.setText("Location...");
+        Button_Location.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                Button_LocationActionPerformed(evt);
             }
         });
 
         jLabel5.setText("Location");
 
-        jButton2.setText("Unit Size...");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Button_UnitSize.setText("Unit Size...");
+        Button_UnitSize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                Button_UnitSizeActionPerformed(evt);
             }
         });
 
@@ -452,13 +481,13 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Textbox_Location)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
+                                .addComponent(Button_Location))
                             .addComponent(TextBox_PointsRequired)
                             .addComponent(TextBox_ConfirmationNumber)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(TextBox_UnitSize)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))))
+                                .addComponent(Button_UnitSize))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Label_PaymentMethod)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -517,7 +546,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Label_UnitSize)
                             .addComponent(TextBox_UnitSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))))
+                            .addComponent(Button_UnitSize))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Label_ConfirmationNumber)
@@ -528,7 +557,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                     .addComponent(TextBox_PointsRequired, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addComponent(Button_Location)
                     .addComponent(Textbox_Location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -636,9 +665,9 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
        recalculatePointsAfter();
     }//GEN-LAST:event_TextBox_PointsRequiredActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void Button_LocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LocationActionPerformed
         PickLocationForm plf = new PickLocationForm(this);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_Button_LocationActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
        
@@ -652,9 +681,9 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         // TODO add your handling code here:
     }//GEN-LAST:event_TextBox_NumberOfNightsActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void Button_UnitSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UnitSizeActionPerformed
         new PickUnitSize(this);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_Button_UnitSizeActionPerformed
 
     private void ComboBox_GuestNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_GuestNameActionPerformed
         
@@ -682,6 +711,8 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Cancel;
     private javax.swing.JButton Btn_Okay;
+    private javax.swing.JButton Button_Location;
+    private javax.swing.JButton Button_UnitSize;
     private javax.swing.JCheckBox Checkbox_Discounted;
     private javax.swing.JCheckBox Checkbox_upgraded;
     private javax.swing.JComboBox ComboBox_GuestName;
@@ -714,8 +745,6 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     private javax.swing.JTextField TextBox_PointsRequired;
     public javax.swing.JTextField TextBox_UnitSize;
     private javax.swing.JTextField Textbox_Location;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;

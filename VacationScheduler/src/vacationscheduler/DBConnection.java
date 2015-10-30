@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
 
+import dataobjs.Reservation;
 import Connections.RuthDBConnection;
 import dao.OwnersFactory;
 import dataobjs.Guest;
@@ -121,13 +122,13 @@ public class DBConnection {
         String paramString = "";
 
         
-        paramVector.add(reserve.ownerUserName);
-        paramVector.add(reserve.confimationNumber);
-        paramVector.add(DateFormatUtility.formatDateWyn(reserve.dateOfReservation));
-        paramVector.add(Integer.toString(reserve.numberOfNights));
-        paramVector.add(reserve.location);
-        paramVector.add(reserve.unitSize);
-        paramVector.add(reserve.dateBooked);
+        paramVector.add(reserve.getOwnerUserName());
+        paramVector.add(reserve.getConfimationNumber());
+        paramVector.add(DateFormatUtility.formatDateWyn(reserve.getDateOfReservation()));
+        paramVector.add(Integer.toString(reserve.getNumberOfNights()));
+        paramVector.add(reserve.getLocation());
+        paramVector.add(reserve.getUnitSize());
+        paramVector.add(reserve.getDateBooked());
         
         for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
             paramString += "'"+ paramVector.get(paramItterator) + "', ";

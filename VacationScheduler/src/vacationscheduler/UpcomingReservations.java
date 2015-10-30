@@ -5,6 +5,8 @@
  */
 package vacationscheduler;
 
+import dataobjs.Reservation;
+import dataobjs.Owner;
 import dao.OwnersFactory;
 import dao.reservationsFactory;
 import java.awt.event.MouseEvent;
@@ -40,7 +42,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int rowClicked = jtable_upcomingReservations.rowAtPoint(e.getPoint());
-                String confirmationNumberClicked = reservations.get(rowClicked).confimationNumber;
+                String confirmationNumberClicked = reservations.get(rowClicked).getConfimationNumber();
                 System.out.println("confirmation number = " + confirmationNumberClicked);
                 new ReservationForm(confirmationNumberClicked);
             }
@@ -110,7 +112,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             boolean alreadyInDB = reservationsFactory.doesReservationExistInDB(confirmationNumberString);
             Reservation currentReservation = new Reservation(p_userReservations.get(currentVectorItterator));
 
-            currentReservation.ownerUserName = p_currentUserName;
+            currentReservation.setOwnerUserName(p_currentUserName);
             reservations.add(currentReservation);
             
             if(!alreadyInDB){

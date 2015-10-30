@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
 
+import dataobjs.Owner;
 import Connections.RuthDBConnection;
 import dao.OwnersFactory;
 import javax.swing.JFrame;

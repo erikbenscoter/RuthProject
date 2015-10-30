@@ -6,37 +6,40 @@
 package dao;
 
 import Connections.RuthDBConnection;
+import dataobjs.Guest;
+import dataobjs.Owner;
 import generic.DateFormatUtility;
-import vacationscheduler.Reservation;
+import dataobjs.Reservation;
 import java.sql.PreparedStatement;
 import dataobjs.reservationsBean;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import vacationscheduler.DBConnection;
 
 /**
  *
- * @author Glenn Benscoter
+ * @author Erik Benscoter
  */
 public class reservationsFactory
 {
-/*    
-        public static void insert(Reservation reserve){
+    
+    public static void insert(Reservation reserve){
         Vector <String> paramVector = new Vector();
         String paramString = "";
 
         
-        paramVector.add(reserve.ownerUserName);
-        paramVector.add(reserve.confimationNumber);
-        paramVector.add(reserve.dateOfReservation);
-        paramVector.add(Integer.toString(reserve.numberOfNights));
-        paramVector.add(reserve.location);
-        paramVector.add(reserve.unitSize);
-        paramVector.add(reserve.dateBooked);
+        paramVector.add(reserve.getOwnerUserName());
+        paramVector.add(reserve.getConfimationNumber());
+        paramVector.add(reserve.getDateOfReservation());
+        paramVector.add(Integer.toString(reserve.getNumberOfNights()));
+        paramVector.add(reserve.getLocation());
+        paramVector.add(reserve.getUnitSize());
+        paramVector.add(reserve.getDateBooked());
         
         for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
             paramString += "'"+ paramVector.get(paramItterator) + "', ";
@@ -56,7 +59,7 @@ public class reservationsFactory
        
         
     }
-  */  
+    
     
 
     
@@ -202,5 +205,64 @@ public class reservationsFactory
     { 
         Connection con = RuthDBConnection.getConnection();
         return Days;
+    }
+    
+    public static Reservation get(String confirmationNumber){
+        Connection con = RuthDBConnection.getConnection();
+
+        String myQuery = "SELECT * FROM Reservations where CONFIRMATION_NUMBER = '"+confirmationNumber + "' LIMIT 1";
+
+        try{
+            Statement statement= con.createStatement();
+            ResultSet rs = statement.executeQuery(myQuery);
+            
+            String ownerUserName;
+            Owner owner;
+            String location;
+            String dateOfReservation;
+            //Use Date
+            int numberOfNights;
+            String unitSize;
+            String confimationNumber;
+            int pointsRequiredForReservation;
+            boolean wasDiscounted, wasUpgraded, isBuyerLinedUp;
+            Guest guest;
+            double amountPaid = 0;
+            Date datePaid;
+            Reservation.PaymentMethod paymentMethod;
+            double totalAmountRentedFor = 0;
+            String dateBooked;
+            
+            Reservation r = new Reservation();
+            
+            rs.next();
+            
+            r.setOwnerUserName(rs.getString("Owner_User_Name"));
+            r.setLocation(rs.getString("Location"));
+            r.setDateOfReservation(rs.getString("Date_Of_Reservation"));
+            r.setNumberOfNights(rs.getInt("Number_Of_Nights"));
+            r.setUnitSize(rs.getString("UNIT_SIZE"));
+
+            r.setConfimationNumber(rs.getString("CONFIRMATION_NUMBER"));
+            r.setPointsRequiredForReservation(rs.getInt("POINTS_REQUIRED_FOR_RESERVATION"));
+            r.setWasDiscounted(rs.getBoolean("WAS_DISCOUNTED"));
+            r.setWasUpgraded(rs.getBoolean("WAS_UPGRADED"));
+            r.setIsBuyerLinedUp(rs.getBoolean("IS_BUYER_LINED_UP"));
+            //r.setGuest(rs.getString("GUEST_EMAIL"));
+            r.setAmountPaid(rs.getDouble("AMOUNT_PAID"));
+            //r.setPaymentMethod(rs.getString("PAYMENT_METHOD"));
+            r.setTotalAmountRentedFor(rs.getDouble("TOTAL_RENTING_FOR"));
+            r.setDateBooked(rs.getString("DATE_BOOKED"));
+            
+            return r;
+            
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        
+        return new Reservation();
+        
     }
 }

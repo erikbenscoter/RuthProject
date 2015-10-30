@@ -132,14 +132,14 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="Textbox_Location" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <Component id="Button_Location" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="TextBox_PointsRequired" max="32767" attributes="0"/>
                           <Component id="TextBox_ConfirmationNumber" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="TextBox_UnitSize" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="Button_UnitSize" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -215,7 +215,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="Label_UnitSize" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="TextBox_UnitSize" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Button_UnitSize" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -231,7 +231,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="Button_Location" min="-2" max="-2" attributes="0"/>
                   <Component id="Textbox_Location" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -584,12 +584,12 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="Button_Location">
       <Properties>
         <Property name="text" type="java.lang.String" value="Location..."/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_LocationActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="Textbox_Location">
@@ -599,12 +599,12 @@
         <Property name="text" type="java.lang.String" value="Location"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="Button_UnitSize">
       <Properties>
         <Property name="text" type="java.lang.String" value="Unit Size..."/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_UnitSizeActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
