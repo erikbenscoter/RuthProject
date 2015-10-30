@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
 
+import dao.GuestFactory;
 import dataobjs.Guest;
 
 /**
@@ -186,7 +187,7 @@ public class GuestMaitenanceForm extends javax.swing.JPanel {
         
         Guest g = new Guest(email, first, last, phoneNumber, ccn, prev);
         DBConnection dbcon = new DBConnection();
-            dbcon.insert(g);
+        GuestFactory.insert(g);
         userTab.resetPanel();
         
         

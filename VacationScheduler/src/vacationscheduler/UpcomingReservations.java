@@ -27,7 +27,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
      * Creates new form UpcomingReservations
      */
     
-     Vector <Vector> response;
+     Vector <Reservation> response;
      Vector <Owner> owners;
      Vector <Reservation> reservations = new Vector();
      int reservationIndex;
@@ -67,9 +67,9 @@ public class UpcomingReservations extends javax.swing.JPanel {
    
     public void setUpTableAndUpdateDB(){
         
-        response = new Vector();
+        response = new Vector<Reservation>();
         
-        reservationIndex = ScrapeWyndham.scrapedIndicies.CONFIRMATION_NUMBER.getIndex();
+        reservationIndex = Reservation.scrapedIndicies.CONFIRMATION_NUMBER.getIndex();
         
         owners = OwnersFactory.getAllOwners();
         
@@ -84,7 +84,10 @@ public class UpcomingReservations extends javax.swing.JPanel {
         }
         
         
-       
+       Vector <Vector> tableBody = new Vector();
+        for (int i = 0; i < response.size(); i++) {
+            tableBody.add( ((Reservation) response.get(i)).toVector() );
+        }
         
         String headingArray[] = {"Confirmation Number", "Check-In-Date", 
             "# Nights", "Resort", "Size", "Booked","Traveler","Upgrade"};
@@ -92,10 +95,10 @@ public class UpcomingReservations extends javax.swing.JPanel {
         
         System.out.println("in setup table and update database ********* just before table");
 
-        jtable_upcomingReservations.setModel(new DefaultTableModel(response, headings));
+        jtable_upcomingReservations.setModel(new DefaultTableModel(tableBody, headings));
         
         System.out.println("headings size = " + headings.size());
-        System.out.println("response size = " + response.get(0).size());
+        System.out.println("response size = " + tableBody.get(0).size());
         
         System.out.println("closing window");
         ScrapeWyndham.closeWindow();
@@ -103,20 +106,20 @@ public class UpcomingReservations extends javax.swing.JPanel {
         
     }
     
-    public void syncDB(String p_currentUserName, Vector <Vector> p_userReservations){
+    public void syncDB(String p_currentUserName, Vector <Reservation> p_userReservations){
         
         for(int currentVectorItterator = 0; currentVectorItterator < p_userReservations.size(); currentVectorItterator ++){
             
             
-            String confirmationNumberString = (String) p_userReservations.get(currentVectorItterator).get(reservationIndex);
+            String confirmationNumberString = (String) p_userReservations.get(currentVectorItterator).getConfimationNumber();
             boolean alreadyInDB = reservationsFactory.doesReservationExistInDB(confirmationNumberString);
-            Reservation currentReservation = new Reservation(p_userReservations.get(currentVectorItterator));
+            Reservation currentReservation =p_userReservations.get(currentVectorItterator);
 
             currentReservation.setOwnerUserName(p_currentUserName);
             reservations.add(currentReservation);
             
             if(!alreadyInDB){
-                DBConnection.insert(currentReservation);
+                reservationsFactory.insert(currentReservation);
                 
             }else{
                 //TODO: update given confimation number

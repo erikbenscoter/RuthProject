@@ -44,7 +44,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
     int ownerIndexPicked, guestIndexPicked;
     
     
-    Vector owners = new Vector();
+    Vector ownersVector = new Vector();
     Vector guests = new Vector();
         
     public ReservationForm(JFrame jf) {
@@ -67,11 +67,18 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         TextBox_NumberOfNights.setText(Integer.toString(reservationToModify.getNumberOfNights()));     
         TextBox_UnitSize.setText(reservationToModify.getUnitSize());
         Textbox_Location.setText(reservationToModify.getLocation());
+        Checkbox_upgraded.setSelected(reservationToModify.isWasUpgraded()==1);
         
         String dateOfReservation = reservationToModify.getDateOfReservation();
         Combobox_Year.setSelectedItem( dateOfReservation.split("-")[0] );
         Combobox_Month.setSelectedItem( dateOfReservation.split("-")[1] );
         Combobox_Day.setSelectedItem( dateOfReservation.split("-")[2].split(" ")[0] );
+        ComboBox_Owner.setSelectedItem(reservationToModify.getOwnerUserName());
+        
+        
+       
+        
+        
         
         //set editable to false
         Combobox_Day.setEnabled(false);
@@ -83,7 +90,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         Textbox_Location.setEditable(false);
         Button_Location.setEnabled(false);
         Button_UnitSize.setEnabled(false);
-        
+        Checkbox_upgraded.setEnabled(false);
         
         
         jf.add(this);
@@ -99,11 +106,11 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         ownerIndexPicked = guestIndexPicked = 0;
         
         //set up owners info for combobox
-        owners = OwnersFactory.getAllOwners();
+        ownersVector = OwnersFactory.getAllOwners();
         Vector ownerNames = new Vector();
             ownerNames.add(0,"");
-        for(int itterator = 0; itterator < owners.size(); itterator++){
-            ownerNames.add(((Owner) owners.get(itterator)).firstName + " " + ((Owner) owners.get(itterator)).lastName);  
+        for(int itterator = 0; itterator < ownersVector.size(); itterator++){
+            ownerNames.add(((Owner) ownersVector.get(itterator)).getUserName());  
         }
         
         //set up guests info for combobox
@@ -239,6 +246,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         jComboBox2 = new javax.swing.JComboBox();
         jComboBox3 = new javax.swing.JComboBox();
         jComboBox4 = new javax.swing.JComboBox();
+        Button_ViewOwner = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -400,6 +408,13 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        Button_ViewOwner.setText("view owner info");
+        Button_ViewOwner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_ViewOwnerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -440,15 +455,18 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                                     .addComponent(jCheckBox1))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(Label_Discounted)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Label_Discounted)
+                            .addComponent(Button_ViewOwner))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
                                         .addComponent(jLabel4)
-                                        .addGap(91, 91, 91)
+                                        .addGap(81, 81, 81)
                                         .addComponent(Label_Email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,8 +475,9 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(Label_CalculatedPointsAfter))
                                             .addGroup(layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
                                                 .addComponent(Label_PointsAvailableText)
-                                                .addGap(18, 18, 18)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(Label_availablePts)))
                                         .addGap(128, 128, 128))))
                             .addGroup(layout.createSequentialGroup()
@@ -523,22 +542,24 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
                     .addComponent(ComboBox_Owner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Label_User))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(Label_Email))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(Label_Email))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Label_PointsAvailableText)
-                            .addComponent(Label_availablePts))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Label_ReservationDate)
-                            .addComponent(Combobox_Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Combobox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Combobox_Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(Label_availablePts)))
+                    .addComponent(Button_ViewOwner, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Label_ReservationDate)
+                        .addComponent(Combobox_Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Combobox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Combobox_Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+                        .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Label_NumberOfNights)
                             .addComponent(TextBox_NumberOfNights, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -649,8 +670,8 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         }
         
         ownerIndexPicked = ownerIndexPicked -1; //adjust for the empty default option
-        this.Label_availablePts.setText(Integer.toString(((Owner) owners.get(ownerIndexPicked)).pointsOwned));
-        this.Label_Email.setText( ((Owner) owners.get(ownerIndexPicked)).emailAddress.toString() );
+        this.Label_availablePts.setText(Integer.toString(((Owner) ownersVector.get(ownerIndexPicked)).pointsOwned));
+        this.Label_Email.setText(((Owner) ownersVector.get(ownerIndexPicked)).emailAddress.toString() );
     }//GEN-LAST:event_ComboBox_OwnerActionPerformed
 
     private void TextBox_UnitSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextBox_UnitSizeActionPerformed
@@ -707,12 +728,23 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         }
     }//GEN-LAST:event_ComboBox_GuestNameActionPerformed
 
+    private void Button_ViewOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ViewOwnerActionPerformed
+        String userName = ComboBox_Owner.getSelectedItem().toString();
+        JFrame jf = new JFrame();
+        jf.setSize(740,272); //size of jpanel
+        jf.add(new OwnerMaitenanceForm(userName, jf));
+        jf.setVisible(true);
+        
+        
+    }//GEN-LAST:event_Button_ViewOwnerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Cancel;
     private javax.swing.JButton Btn_Okay;
     private javax.swing.JButton Button_Location;
     private javax.swing.JButton Button_UnitSize;
+    private javax.swing.JButton Button_ViewOwner;
     private javax.swing.JCheckBox Checkbox_Discounted;
     private javax.swing.JCheckBox Checkbox_upgraded;
     private javax.swing.JComboBox ComboBox_GuestName;

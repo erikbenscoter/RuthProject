@@ -117,63 +117,63 @@ public class DBConnection {
     }
     
     */
-    public static void insert(Reservation reserve){
-        Vector <String> paramVector = new Vector();
-        String paramString = "";
-
+//    public static void insert(Reservation reserve){
+//        Vector <String> paramVector = new Vector();
+//        String paramString = "";
+//
+//        
+//        paramVector.add(reserve.getOwnerUserName());
+//        paramVector.add(reserve.getConfimationNumber());
+//        paramVector.add(DateFormatUtility.formatDateWyn(reserve.getDateOfReservation()));
+//        paramVector.add(Integer.toString(reserve.getNumberOfNights()));
+//        paramVector.add(reserve.getLocation());
+//        paramVector.add(reserve.getUnitSize());
+//        paramVector.add(reserve.getDateBooked());
+//        
+//        for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
+//            paramString += "'"+ paramVector.get(paramItterator) + "', ";
+//        }
+//        paramString += "'"+ paramVector.get(paramVector.size() - 1)+ "'";
+//        
+//        String myInsertCommand = "INSERT INTO RESERVATIONS"
+//                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
+//                + "VALUES(" + paramString +")";
+//        String parametersString = "";
+//        
+//        System.out.println(myInsertCommand);
+//        DBConnection.insertSilent(myInsertCommand);
+//       
         
-        paramVector.add(reserve.getOwnerUserName());
-        paramVector.add(reserve.getConfimationNumber());
-        paramVector.add(DateFormatUtility.formatDateWyn(reserve.getDateOfReservation()));
-        paramVector.add(Integer.toString(reserve.getNumberOfNights()));
-        paramVector.add(reserve.getLocation());
-        paramVector.add(reserve.getUnitSize());
-        paramVector.add(reserve.getDateBooked());
-        
-        for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
-            paramString += "'"+ paramVector.get(paramItterator) + "', ";
-        }
-        paramString += "'"+ paramVector.get(paramVector.size() - 1)+ "'";
-        
-        String myInsertCommand = "INSERT INTO RESERVATIONS"
-                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
-                + "VALUES(" + paramString +")";
-        String parametersString = "";
-        
-        System.out.println(myInsertCommand);
-        DBConnection.insertSilent(myInsertCommand);
-       
-        
-    }
-    public void insert(Guest g){
-        Vector inserts = new Vector();
-            inserts.add(g.getEmailAddress() );
-            inserts.add(g.getFirstName() ) ;
-            inserts.add(g.getLastName() ) ;
-            inserts.add(g.getPhoneNumber() ) ;
-            inserts.add(g.getCreditCardNumber()) ;
-            inserts.add(g.getNumberPreviousRentals() ) ; 
-        
-        String command = "INSERT INTO GUESTS (EMAIL,FIRST_NAME,"
-                +"LAST_NAME,PHONE_NUMBER,CREDIT_CARD_NUMBER,"
-                +"PREVIOUS_RENTALS) VALUES(";
-        
-        String parameters= "";
-        
-        for(int i=0; i<inserts.size()-1;i++){
-            if(i < inserts.size()-2)                            //string
-                parameters = parameters +"'"+inserts.get(i) + "',";
-            else                                                //not string
-                parameters = parameters + inserts.get(i) + ",";
-
-        }
-        parameters = parameters + inserts.get(inserts.size()-1);
-        
-        command = command + parameters + ")";
-        
-        insert(command);
-        
-    }
+   // }
+//    public void insert(Guest g){
+//        Vector inserts = new Vector();
+//            inserts.add(g.getEmailAddress() );
+//            inserts.add(g.getFirstName() ) ;
+//            inserts.add(g.getLastName() ) ;
+//            inserts.add(g.getPhoneNumber() ) ;
+//            inserts.add(g.getCreditCardNumber()) ;
+//            inserts.add(g.getNumberPreviousRentals() ) ; 
+//        
+//        String command = "INSERT INTO GUESTS (EMAIL,FIRST_NAME,"
+//                +"LAST_NAME,PHONE_NUMBER,CREDIT_CARD_NUMBER,"
+//                +"PREVIOUS_RENTALS) VALUES(";
+//        
+//        String parameters= "";
+//        
+//        for(int i=0; i<inserts.size()-1;i++){
+//            if(i < inserts.size()-2)                            //string
+//                parameters = parameters +"'"+inserts.get(i) + "',";
+//            else                                                //not string
+//                parameters = parameters + inserts.get(i) + ",";
+//
+//        }
+//        parameters = parameters + inserts.get(inserts.size()-1);
+//        
+//        command = command + parameters + ")";
+//        
+//        insert(command);
+//        
+//    }
  /*   
     public Vector getAllOwnerEmails(){
         Connection con = getConnection();

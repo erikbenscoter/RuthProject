@@ -33,19 +33,28 @@ public class Reservation {
     String unitSize;
     String confimationNumber;
     int pointsRequiredForReservation;
-    boolean wasDiscounted, wasUpgraded, isBuyerLinedUp;
+    boolean wasDiscounted, isBuyerLinedUp;
+    int wasUpgraded;
+    String upgradeState;
     Guest guest;
     double amountPaid = 0;
     Date datePaid;
     PaymentMethod paymentMethod;
     double totalAmountRentedFor = 0;
+
+   
     String dateBooked;
     public Reservation(){
+        location = "";
+        dateOfReservation = "";
+        ownerUserName = "";
+        unitSize = "";
+        confimationNumber = "";
         
     }
     public Reservation( Owner owner,String location,String dateOfReservation,int numberOfNights,
                         String unitSize,String confimationNumber,int pointsRequiredForReservation,
-                        boolean wasDiscounted,boolean wasUpgraded, boolean isBuyerLinedUp,Guest guest,
+                        boolean wasDiscounted,int wasUpgraded, boolean isBuyerLinedUp,Guest guest,
                         double amountPaid, Date datePaid, PaymentMethod paymentMethod,double totalAmountRentedFor){
         this.owner = owner;
         this.location = location;
@@ -67,7 +76,7 @@ public class Reservation {
     
      public void totalReset( Owner owner,String location,String dateOfReservation,int numberOfNights,
                         String unitSize,String confimationNumber,int pointsRequiredForReservation,
-                        boolean wasDiscounted,boolean wasUpgraded, boolean isBuyerLinedUp,Guest guest,
+                        boolean wasDiscounted,int wasUpgraded, boolean isBuyerLinedUp,Guest guest,
                         double amountPaid, Date datePaid, PaymentMethod paymentMethod, double totalAmountRentedFor){
         this.owner = owner;
         this.location = location;
@@ -86,16 +95,58 @@ public class Reservation {
         this.paymentMethod = paymentMethod;
         this.totalAmountRentedFor = totalAmountRentedFor;
     }
+     
+     public enum scrapedIndicies{
+        CONFIRMATION_NUMBER (0),
+        CHECK_IN_DATE(1),
+        NUMBER_NIGHTS(2),
+        RESORT(3),
+        SIZE(4),
+        BOOKED(5),
+        TRAVELER(6),
+        UPGRADE(7)
+                ;
+        private final int index;
+      private scrapedIndicies(int input)
+      {
+          index = input;
+      }  
+      public int getIndex()
+      {
+          return index;
+      }
+    };
+     
+     
      public Reservation(Vector <String> p_scrapedVector){
-        this.location = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.RESORT.getIndex());
-        this.dateOfReservation = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.CHECK_IN_DATE.getIndex());
-        this.numberOfNights = Integer.parseInt(p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.NUMBER_NIGHTS.getIndex()));
-        this.unitSize = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.SIZE.getIndex());
-        this.confimationNumber = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.CONFIRMATION_NUMBER.getIndex());
-        this.dateBooked = p_scrapedVector.get((int) ScrapeWyndham.scrapedIndicies.BOOKED.getIndex());
+        this.location = p_scrapedVector.get((int) scrapedIndicies.RESORT.getIndex());
+        this.dateOfReservation = p_scrapedVector.get((int) scrapedIndicies.CHECK_IN_DATE.getIndex());
+        this.numberOfNights = Integer.parseInt(p_scrapedVector.get((int) scrapedIndicies.NUMBER_NIGHTS.getIndex()));
+        this.unitSize = p_scrapedVector.get((int) scrapedIndicies.SIZE.getIndex());
+        this.confimationNumber = p_scrapedVector.get((int) scrapedIndicies.CONFIRMATION_NUMBER.getIndex());
+        this.dateBooked = p_scrapedVector.get((int) scrapedIndicies.BOOKED.getIndex());
         
         //take care of special characters
         removeSpecialCharacters(this);
+        
+        
+    }
+     
+    public Vector <String> toVector(){
+        Vector <String> rtnVal = new Vector();
+        rtnVal.add(scrapedIndicies.CONFIRMATION_NUMBER.getIndex(),confimationNumber);
+        rtnVal.add(scrapedIndicies.CHECK_IN_DATE.getIndex(), dateOfReservation);
+        rtnVal.add(scrapedIndicies.NUMBER_NIGHTS.getIndex(), Integer.toString(numberOfNights));
+        rtnVal.add(scrapedIndicies.RESORT.getIndex(), location);
+        rtnVal.add(scrapedIndicies.SIZE.getIndex(),unitSize);
+        rtnVal.add(scrapedIndicies.BOOKED.getIndex(),dateBooked);
+        rtnVal.add(scrapedIndicies.TRAVELER.getIndex(),guest.firstName + " " + guest.lastName);
+        rtnVal.add(scrapedIndicies.UPGRADE.getIndex(),upgradeState);
+
+        
+        return rtnVal;
+                
+        
         
         
     }
@@ -110,6 +161,7 @@ public class Reservation {
 
     public void setOwner(Owner owner) {
         this.owner = owner;
+        removeSpecialCharacters(this);
     }
 
     public String getLocation() {
@@ -118,6 +170,7 @@ public class Reservation {
 
     public void setLocation(String location) {
         this.location = location;
+        removeSpecialCharacters(this);
     }
 
     public String getDateOfReservation() {
@@ -126,6 +179,8 @@ public class Reservation {
 
     public void setDateOfReservation(String dateOfReservation) {
         this.dateOfReservation = dateOfReservation;
+                removeSpecialCharacters(this);
+
     }
 
     public String getOwnerUserName() {
@@ -134,6 +189,8 @@ public class Reservation {
 
     public void setOwnerUserName(String ownerUserName) {
         this.ownerUserName = ownerUserName;
+                removeSpecialCharacters(this);
+
     }
 
     public int getNumberOfNights() {
@@ -142,6 +199,8 @@ public class Reservation {
 
     public void setNumberOfNights(int numberOfNights) {
         this.numberOfNights = numberOfNights;
+                removeSpecialCharacters(this);
+
     }
 
     public String getUnitSize() {
@@ -150,6 +209,8 @@ public class Reservation {
 
     public void setUnitSize(String unitSize) {
         this.unitSize = unitSize;
+                removeSpecialCharacters(this);
+
     }
 
     public String getConfimationNumber() {
@@ -158,6 +219,8 @@ public class Reservation {
 
     public void setConfimationNumber(String confimationNumber) {
         this.confimationNumber = confimationNumber;
+                removeSpecialCharacters(this);
+
     }
 
     public int getPointsRequiredForReservation() {
@@ -166,6 +229,8 @@ public class Reservation {
 
     public void setPointsRequiredForReservation(int pointsRequiredForReservation) {
         this.pointsRequiredForReservation = pointsRequiredForReservation;
+                removeSpecialCharacters(this);
+
     }
 
     public boolean isWasDiscounted() {
@@ -174,14 +239,18 @@ public class Reservation {
 
     public void setWasDiscounted(boolean wasDiscounted) {
         this.wasDiscounted = wasDiscounted;
+                removeSpecialCharacters(this);
+
     }
 
-    public boolean isWasUpgraded() {
+    public int isWasUpgraded() {
         return wasUpgraded;
     }
 
-    public void setWasUpgraded(boolean wasUpgraded) {
+    public void setWasUpgraded(int wasUpgraded) {
         this.wasUpgraded = wasUpgraded;
+                removeSpecialCharacters(this);
+
     }
 
     public boolean isIsBuyerLinedUp() {
@@ -190,6 +259,8 @@ public class Reservation {
 
     public void setIsBuyerLinedUp(boolean isBuyerLinedUp) {
         this.isBuyerLinedUp = isBuyerLinedUp;
+                removeSpecialCharacters(this);
+
     }
 
     public Guest getGuest() {
@@ -198,6 +269,8 @@ public class Reservation {
 
     public void setGuest(Guest guest) {
         this.guest = guest;
+                removeSpecialCharacters(this);
+
     }
 
     public double getAmountPaid() {
@@ -206,6 +279,8 @@ public class Reservation {
 
     public void setAmountPaid(double amountPaid) {
         this.amountPaid = amountPaid;
+                removeSpecialCharacters(this);
+
     }
 
     public Date getDatePaid() {
@@ -214,6 +289,8 @@ public class Reservation {
 
     public void setDatePaid(Date datePaid) {
         this.datePaid = datePaid;
+                removeSpecialCharacters(this);
+
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -222,6 +299,8 @@ public class Reservation {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+                removeSpecialCharacters(this);
+
     }
 
     public double getTotalAmountRentedFor() {
@@ -230,6 +309,8 @@ public class Reservation {
 
     public void setTotalAmountRentedFor(double totalAmountRentedFor) {
         this.totalAmountRentedFor = totalAmountRentedFor;
+                removeSpecialCharacters(this);
+
     }
 
     public String getDateBooked() {
@@ -238,6 +319,26 @@ public class Reservation {
 
     public void setDateBooked(String dateBooked) {
         this.dateBooked = dateBooked;
+                removeSpecialCharacters(this);
+
+    }
+    
+     public String getUpgradeState() {
+        return upgradeState;
+    }
+
+    public void setUpgradeState(String upgradeState) {
+        if(!(upgradeState.contains("Reservation Upgraded") || upgradeState.contains("Not In Upgrade Window"))){
+            upgradeState = "upgrades may be available";
+        }
+        if(upgradeState.contains("Reservation Upgraded")){
+            this.wasUpgraded = 1;
+        }else{
+            this.wasUpgraded = 0;
+        }
+        this.upgradeState = upgradeState;
+        removeSpecialCharacters(this);
+
     }
     
     

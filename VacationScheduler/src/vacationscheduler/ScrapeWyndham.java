@@ -5,6 +5,8 @@
  */
 package vacationscheduler;
 
+import dataobjs.Guest;
+import dataobjs.Reservation;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,28 +26,9 @@ public class ScrapeWyndham
 {
     static WebDriver firefoxWindow;
     
-    public enum scrapedIndicies{
-        CONFIRMATION_NUMBER (0),
-        CHECK_IN_DATE(1),
-        NUMBER_NIGHTS(2),
-        RESORT(3),
-        SIZE(4),
-        BOOKED(5),
-        TRAVELER(6),
-        UPGRADE(7)
-                ;
-        private final int index;
-      private scrapedIndicies(int input)
-      {
-          index = input;
-      }  
-      public int getIndex()
-      {
-          return index;
-      }
-    };
     
-    public static Vector <Vector> getUserReservations(String p_username, String p_password, Vector <Vector> p_startingVector){
+    
+    public static Vector <Reservation> getUserReservations(String p_username, String p_password, Vector <Reservation> p_startingVector){
         
         String webpageSrc;
 
@@ -91,11 +74,11 @@ public class ScrapeWyndham
          logout(firefoxWindow);
          return p_startingVector;
     }
-    public static Vector <Vector> getUserReservations(String p_username, String p_password) {
+    public static Vector <Reservation> getUserReservations(String p_username, String p_password) {
 
         //Declarations
         
-        Vector <Vector> response = new Vector();
+        Vector <Reservation> response = new Vector();
         response = getUserReservations(p_username, p_password, response);
         return response;
          
@@ -124,14 +107,15 @@ public class ScrapeWyndham
         }
      }
      public static Vector getAllReservationsOnPage(String p_webpageSrc){
-        Vector <Vector> allReservations = new Vector();
+        Vector <Reservation> allReservations = new Vector();
         getAllReservationsOnPage(p_webpageSrc,allReservations);
         return allReservations;
      }
-     public static Vector getAllReservationsOnPage(String p_webpageSrc, Vector <Vector> p_vectorOfVectors){
+     public static Vector getAllReservationsOnPage(String p_webpageSrc, Vector <Reservation> p_vectorOfReservations){
          
          String currentReservation;
-         Vector currentReservationVector = new Vector();
+         //Vector currentReservationVector = new Vector();
+         Reservation reservationObject;
          int numReservations;
          
         numReservations = p_webpageSrc.split("selectedConfirmation").length;
@@ -140,14 +124,15 @@ public class ScrapeWyndham
         //for every reservation on the page get the information from it
         for(int reservationItterator = 1; reservationItterator < numReservations; reservationItterator ++){
              currentReservation = p_webpageSrc.split("name=\"selectedConfirmation\"")[reservationItterator];
-             currentReservationVector = parseReservation(currentReservation);
-             p_vectorOfVectors.add(currentReservationVector);
+             
+             reservationObject = parseReservation(currentReservation);
+             p_vectorOfReservations.add(reservationObject);
              System.out.println("");
         }
-         System.err.println("reservations from page = " + p_vectorOfVectors.size());
-        return p_vectorOfVectors;
+         System.err.println("reservations from page = " + p_vectorOfReservations.size());
+        return p_vectorOfReservations;
      }
-    public static Vector parseReservation(String currentReservation){
+    public static Reservation parseReservation(String currentReservation){
         
         
         String confirmationNumber;
@@ -200,6 +185,13 @@ public class ScrapeWyndham
         Matcher travelerMatcher = travelerPattern.matcher(traveler);
         travelerMatcher.find();
         traveler = travelerMatcher.group(0);
+        
+        
+        Pattern guestOrOwnerPattern = Pattern.compile("Guest:");
+        Matcher guestMatcher = guestOrOwnerPattern.matcher(traveler);
+        boolean isThereAGuestCertificate = guestMatcher.find();
+        
+        
        
         
         upgradeState = currentReservation.split(traveler)[1];
@@ -218,17 +210,58 @@ public class ScrapeWyndham
         System.out.println( "traveler: " + traveler );
         System.out.println( "upgrade state: " + upgradeState);
         
-        Vector vectorToReturn = new Vector();
-        vectorToReturn.add(confirmationNumber);
-        vectorToReturn.add(checkInDate);
-        vectorToReturn.add(numNights);
-        vectorToReturn.add(resortName);
-        vectorToReturn.add(unitType);
-        vectorToReturn.add(bookedDate);
-        vectorToReturn.add(traveler);
-        vectorToReturn.add(upgradeState);
+//        Vector vectorToReturn = new Vector();
+//        vectorToReturn.add(confirmationNumber);
+//        vectorToReturn.add(checkInDate);
+//        vectorToReturn.add(numNights);
+//        vectorToReturn.add(resortName);
+//        vectorToReturn.add(unitType);
+//        vectorToReturn.add(bookedDate);
+//        vectorToReturn.add(traveler);
+//        vectorToReturn.add(upgradeState);
         
-        return vectorToReturn;
+        Reservation rsrv = new Reservation();
+        rsrv.setConfimationNumber(confirmationNumber);
+        rsrv.setDateOfReservation(checkInDate);
+        rsrv.setNumberOfNights(Integer.parseInt(numNights));
+        rsrv.setLocation(resortName);
+        rsrv.setUnitSize(unitType);
+        rsrv.setDateBooked(bookedDate);
+        rsrv.setUpgradeState(upgradeState);
+        rsrv.setIsBuyerLinedUp(isThereAGuestCertificate);
+        
+        if(isThereAGuestCertificate){
+            Guest guest = new Guest();
+            String guestName = (traveler.split("Guest:")[1]);
+            String guestFirstName = guestName.split(" ")[1];
+            String guestLastName = guestName.split(" ")[2];
+                System.err.println("First Name = " + guestFirstName);
+                System.err.println("Last Name = " + guestLastName);
+            if(guestFirstName == null){
+                guestFirstName = "";
+            }
+            if(guestLastName == null){
+                guestLastName = "";
+            }
+
+            
+            guest.setFirstName(guestFirstName);
+            guest.setLastName(guestLastName);
+            
+            rsrv.setGuest(guest);
+
+        }
+        else{
+            Guest guest = new Guest();
+            guest.setFirstName("_OWNER_");
+            guest.setLastName(traveler);
+            rsrv.setGuest(guest);
+        }
+        
+        
+        
+        
+        return rsrv;
         
     }
     public static void logout(WebDriver p_firefoxWindow){

@@ -35,7 +35,8 @@ public class reservationsFactory
         
         paramVector.add(reserve.getOwnerUserName());
         paramVector.add(reserve.getConfimationNumber());
-        paramVector.add(reserve.getDateOfReservation());
+        paramVector.add(Integer.toString(reserve.isWasUpgraded()));
+        paramVector.add(DateFormatUtility.formatDateWyn(reserve.getDateOfReservation()));
         paramVector.add(Integer.toString(reserve.getNumberOfNights()));
         paramVector.add(reserve.getLocation());
         paramVector.add(reserve.getUnitSize());
@@ -50,7 +51,7 @@ public class reservationsFactory
         
         
         String myInsertCommand = "INSERT INTO RESERVATIONS"
-                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
+                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,WAS_UPGRADED,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
                 + "VALUES(" + paramString +")";
         String parametersString = "";
         
@@ -246,13 +247,20 @@ public class reservationsFactory
             r.setConfimationNumber(rs.getString("CONFIRMATION_NUMBER"));
             r.setPointsRequiredForReservation(rs.getInt("POINTS_REQUIRED_FOR_RESERVATION"));
             r.setWasDiscounted(rs.getBoolean("WAS_DISCOUNTED"));
-            r.setWasUpgraded(rs.getBoolean("WAS_UPGRADED"));
+            r.setWasUpgraded(rs.getInt("WAS_UPGRADED"));
             r.setIsBuyerLinedUp(rs.getBoolean("IS_BUYER_LINED_UP"));
-            //r.setGuest(rs.getString("GUEST_EMAIL"));
+            
             r.setAmountPaid(rs.getDouble("AMOUNT_PAID"));
             //r.setPaymentMethod(rs.getString("PAYMENT_METHOD"));
             r.setTotalAmountRentedFor(rs.getDouble("TOTAL_RENTING_FOR"));
             r.setDateBooked(rs.getString("DATE_BOOKED"));
+            
+           
+            String guestEmail = rs.getString("GUEST_EMAIL");
+            Guest reservationGuest = new Guest();
+                reservationGuest.setEmailAddress(guestEmail);
+            r.setGuest(reservationGuest);
+            
             
             return r;
             

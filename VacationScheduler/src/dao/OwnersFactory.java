@@ -240,7 +240,50 @@ public class OwnersFactory {
         }
         
       
-    }     
+    } 
+    
+    public static Owner getByUserName(String userName)
+    {
+        Owner ownerToReturn;
+        String myQuery = "SELECT * FROM OWNERS WHERE User_Name = '"+userName+"'";
+        Connection con = RuthDBConnection.getConnection();
+        ResultSet rs;
+        Statement st;
+        
+        String emailAddress;
+        String firstName;
+        String lastName;
+        String phoneNumber;
+        String password;
+        int pointsOwned;
+        int currentAvailablePoints;
+        double reimbursementRate;
+        
+        
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+            
+            emailAddress = rs.getString("Email");
+            firstName = rs.getString("First_Name");
+            lastName = rs.getString("Last_Name");
+            phoneNumber = rs.getString("Phone_Number");
+            userName = rs.getString("User_Name");
+            password = rs.getString("Password");
+            pointsOwned = rs.getInt("Points_Owned");
+            currentAvailablePoints = rs.getInt("Current_Points");
+            reimbursementRate = rs.getDouble("Owner_Reimbursement_Rate");
+            
+            ownerToReturn = new Owner(emailAddress, firstName, lastName, phoneNumber, userName, password, pointsOwned, currentAvailablePoints, reimbursementRate);
+            return ownerToReturn;
+
+
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+             return new Owner();
+        }
+          
+    }
  
 
    

@@ -79,15 +79,19 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="Label_Discounted" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="Label_Discounted" min="-2" max="-2" attributes="0"/>
+                          <Component id="Button_ViewOwner" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                                       <Component id="Label_Email" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -98,8 +102,9 @@
                                               <Component id="Label_CalculatedPointsAfter" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                               <Component id="Label_PointsAvailableText" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
                                               <Component id="Label_availablePts" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -187,26 +192,29 @@
                   <Component id="Label_User" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Label_Email" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_Email" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Label_PointsAvailableText" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_PointsAvailableText" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="Label_availablePts" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Label_ReservationDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Combobox_Month" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Combobox_Day" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Combobox_Year" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  </Group>
+                  <Component id="Button_ViewOwner" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="Label_ReservationDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Combobox_Month" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Combobox_Day" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Combobox_Year" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="Label_NumberOfNights" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="TextBox_NumberOfNights" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -642,6 +650,14 @@
           </StringArray>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="Button_ViewOwner">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="view owner info"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_ViewOwnerActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

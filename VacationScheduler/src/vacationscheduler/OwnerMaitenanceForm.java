@@ -21,12 +21,35 @@ public class OwnerMaitenanceForm extends javax.swing.JPanel {
      */
     Owner own;
     UsersTab userTab;
+    boolean isInTab = true;
+    JFrame jf;
+    
     public OwnerMaitenanceForm(UsersTab userTab){
         this.userTab = userTab;
         InCommonConstructor();
     }
     public OwnerMaitenanceForm() {
         InCommonConstructor();
+    }
+    public OwnerMaitenanceForm(String userName, JFrame jf){
+        InCommonConstructor();
+        
+        //set up all information for particular user
+        Owner ownerToEdit = OwnersFactory.getByUserName(userName);
+        TextField_Email.setText(ownerToEdit.getEmailAddress());
+        TextField_FirstName.setText(ownerToEdit.getFirstName());
+        TextField_LastName.setText(ownerToEdit.getLastName());
+        TextField_OwnerReimburseRate.setText(Double.toString(ownerToEdit.getReimbursementRate()));
+        TextField_Password.setText(ownerToEdit.getPassword());
+        TextField_PhoneNumber.setText(ownerToEdit.getPhoneNumber());
+        TextField_PointsOwned.setText(Integer.toString(ownerToEdit.getPointsOwned()));
+        TextField_UserName.setText(ownerToEdit.getUserName());
+        
+        isInTab = false;
+        this.jf = jf;
+        
+        
+        
     }
     public void InCommonConstructor(){
         initComponents();
@@ -152,7 +175,7 @@ public class OwnerMaitenanceForm extends javax.swing.JPanel {
                                         .addComponent(TextField_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1)
-                                .addGap(0, 134, Short.MAX_VALUE)))
+                                .addGap(0, 117, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,7 +222,7 @@ public class OwnerMaitenanceForm extends javax.swing.JPanel {
                         .addComponent(TextField_PhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1))
                     .addComponent(Label_PhoneNumber))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TextField_UserName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Label_UserName, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -232,7 +255,11 @@ public class OwnerMaitenanceForm extends javax.swing.JPanel {
     }//GEN-LAST:event_TextField_PointsOwnedActionPerformed
 
     private void Button_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_CancelActionPerformed
-        this.userTab.resetPanel();
+        if(isInTab){
+            this.userTab.resetPanel();
+        }else{
+            jf.dispose();
+        }
     }//GEN-LAST:event_Button_CancelActionPerformed
 
     private void TextField_PhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_PhoneNumberActionPerformed

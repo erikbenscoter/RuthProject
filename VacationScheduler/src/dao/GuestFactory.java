@@ -58,6 +58,45 @@ public class GuestFactory
              
         }
     }
+    public static Vector getGuest(String p_firstName, String p_lastName){
+        Guest guestToAdd;
+        Vector guestVectorToReturn = new Vector();
+        String myQuery = "SELECT * FROM GUESTS WHERE First_Name = '"+p_firstName+"' AND Last_Name= '" + p_lastName +"' LIMIT 1";
+        Connection con = RuthDBConnection.getConnection();
+        ResultSet rs;
+        Statement st;
+        
+        String emailAddress, firstName,lastName,phoneNumber;
+        int creditCardNumber,numberPreviousRentals;
+        
+        try{
+            
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+
+            while(rs.next()){
+                
+                emailAddress = rs.getString("Email");
+                firstName = rs.getString("First_Name");
+                lastName = rs.getString("Last_Name");
+                phoneNumber = rs.getString("Phone_Number");
+                creditCardNumber = rs.getInt("Credit_Card_Number");
+                numberPreviousRentals = rs.getInt("Previous_Rentals");
+
+                guestToAdd = new Guest(emailAddress, firstName, lastName, phoneNumber, creditCardNumber, numberPreviousRentals);
+                guestVectorToReturn.add(guestToAdd);
+                
+            }
+            return guestVectorToReturn;
+
+
+        }catch(Exception e){
+            
+             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+             return guestVectorToReturn;
+             
+        }
+    }
   public Vector getAllNames(){
         Connection con = RuthDBConnection.getConnection();
         try{
@@ -96,15 +135,15 @@ public class GuestFactory
             return null;
         }
     }
-  /*
-  public void insert(Guestx g){
+  
+  public static void insert(Guest g){
         Vector inserts = new Vector();
-            inserts.add(g.emailAddress );
-            inserts.add(g.firstName ) ;
-            inserts.add(g.lastName ) ;
-            inserts.add(g.phoneNumber ) ;
-            inserts.add(g.creditCardNumber ) ;
-            inserts.add(g.numberPreviousRentals ) ; 
+            inserts.add(g.getEmailAddress() );
+            inserts.add(g.getFirstName() ) ;
+            inserts.add(g.getLastName() ) ;
+            inserts.add(g.getPhoneNumber() ) ;
+            inserts.add(g.getCreditCardNumber() ) ;
+            inserts.add(g.getNumberPreviousRentals() ) ; 
         
         String command = "INSERT INTO GUESTS (EMAIL,FIRST_NAME,"
                 +"LAST_NAME,PHONE_NUMBER,CREDIT_CARD_NUMBER,"
@@ -126,7 +165,7 @@ public class GuestFactory
         insert(command);
         
     }
-    /*
+    
       public static void insert(String insertCommand)
       {
         try{
@@ -141,6 +180,6 @@ public class GuestFactory
             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
         }
       }    
-  */
+  
   
 }
