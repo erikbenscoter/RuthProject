@@ -41,6 +41,8 @@ public class reservationsFactory
         paramVector.add(reserve.getLocation());
         paramVector.add(reserve.getUnitSize());
         paramVector.add(reserve.getDateBooked());
+        paramVector.add(reserve.getUpgradeState());
+        paramVector.add(reserve.getNameOnGuestCert());
         
         for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
             paramString += "'"+ paramVector.get(paramItterator) + "', ";
@@ -51,7 +53,7 @@ public class reservationsFactory
         
         
         String myInsertCommand = "INSERT INTO RESERVATIONS"
-                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,WAS_UPGRADED,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
+                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,WAS_UPGRADED,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED,UPGRADE_STATUS,GUEST_CERTIF) "
                 + "VALUES(" + paramString +")";
         String parametersString = "";
         
@@ -254,6 +256,8 @@ public class reservationsFactory
             //r.setPaymentMethod(rs.getString("PAYMENT_METHOD"));
             r.setTotalAmountRentedFor(rs.getDouble("TOTAL_RENTING_FOR"));
             r.setDateBooked(rs.getString("DATE_BOOKED"));
+            r.setUpgradeState(rs.getString("UPGRADE_STATUS"));
+            r.setNameOnGuestCert(rs.getString("GUEST_CERTIF"));
             
            
             String guestEmail = rs.getString("GUEST_EMAIL");
@@ -271,6 +275,75 @@ public class reservationsFactory
         
         
         return new Reservation();
+        
+    }
+    public static Vector<Reservation> getAll(String myQuery){
+        Connection con = RuthDBConnection.getConnection();
+
+        try{
+            Statement statement= con.createStatement();
+            ResultSet rs = statement.executeQuery(myQuery);
+            Vector rtnVec = new Vector();
+            
+            String ownerUserName;
+            Owner owner;
+            String location;
+            String dateOfReservation;
+            //Use Date
+            int numberOfNights;
+            String unitSize;
+            String confimationNumber;
+            int pointsRequiredForReservation;
+            boolean wasDiscounted, wasUpgraded, isBuyerLinedUp;
+            Guest guest;
+            double amountPaid = 0;
+            Date datePaid;
+            Reservation.PaymentMethod paymentMethod;
+            double totalAmountRentedFor = 0;
+            String dateBooked;
+            
+            
+            while(rs.next()){            
+                
+                Reservation r = new Reservation();
+                r.setOwnerUserName(rs.getString("Owner_User_Name"));
+                r.setLocation(rs.getString("Location"));
+                r.setDateOfReservation(rs.getString("Date_Of_Reservation"));
+                r.setNumberOfNights(rs.getInt("Number_Of_Nights"));
+                r.setUnitSize(rs.getString("UNIT_SIZE"));
+
+                r.setConfimationNumber(rs.getString("CONFIRMATION_NUMBER"));
+                r.setPointsRequiredForReservation(rs.getInt("POINTS_REQUIRED_FOR_RESERVATION"));
+                r.setWasDiscounted(rs.getBoolean("WAS_DISCOUNTED"));
+                r.setWasUpgraded(rs.getInt("WAS_UPGRADED"));
+                r.setIsBuyerLinedUp(rs.getBoolean("IS_BUYER_LINED_UP"));
+
+                r.setAmountPaid(rs.getDouble("AMOUNT_PAID"));
+                //r.setPaymentMethod(rs.getString("PAYMENT_METHOD"));
+                r.setTotalAmountRentedFor(rs.getDouble("TOTAL_RENTING_FOR"));
+                r.setDateBooked(rs.getString("DATE_BOOKED"));
+                r.setUpgradeState(rs.getString("UPGRADE_STATUS"));
+                r.setNameOnGuestCert(rs.getString("GUEST_CERTIF"));
+
+
+                String guestEmail = rs.getString("GUEST_EMAIL");
+                Guest reservationGuest = new Guest();
+                    reservationGuest.setEmailAddress(guestEmail);
+                r.setGuest(reservationGuest);
+                
+                rtnVec.add(r);
+                
+            }
+            
+            return rtnVec;
+            
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        
+        return new Vector();
         
     }
 }

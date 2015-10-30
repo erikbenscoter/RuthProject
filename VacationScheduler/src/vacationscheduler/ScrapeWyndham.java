@@ -249,6 +249,7 @@ public class ScrapeWyndham
             guest.setLastName(guestLastName);
             
             rsrv.setGuest(guest);
+            rsrv.setNameOnGuestCert(guestFirstName + " " + guestLastName);
 
         }
         else{
@@ -256,6 +257,8 @@ public class ScrapeWyndham
             guest.setFirstName("_OWNER_");
             guest.setLastName(traveler);
             rsrv.setGuest(guest);
+            rsrv.setNameOnGuestCert(guest.getFirstName() + " " + guest.getLastName());
+            
         }
         
         

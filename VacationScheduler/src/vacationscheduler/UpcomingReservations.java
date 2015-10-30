@@ -15,7 +15,9 @@ import java.util.Arrays;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -34,7 +36,8 @@ public class UpcomingReservations extends javax.swing.JPanel {
      
     public UpcomingReservations() {
         initComponents();
-        setUpTableAndUpdateDB();
+        UpdateDataSet();
+        makeTable("Select * From Reservations");
         
         this.setVisible(true);
         jtable_upcomingReservations.addMouseListener(new MouseListener() {
@@ -65,7 +68,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
         });
     }
    
-    public void setUpTableAndUpdateDB(){
+    public void UpdateDataSet(){
         
         response = new Vector<Reservation>();
         
@@ -79,31 +82,9 @@ public class UpcomingReservations extends javax.swing.JPanel {
             String currentUserPassword = currentOwner.password;
             Vector currentUserReservations = ScrapeWyndham.getUserReservations(currentUserName, currentUserPassword);
             syncDB(currentUserName, currentUserReservations);
-            
-            response.addAll(currentUserReservations);
         }
         
-        
-       Vector <Vector> tableBody = new Vector();
-        for (int i = 0; i < response.size(); i++) {
-            tableBody.add( ((Reservation) response.get(i)).toVector() );
-        }
-        
-        String headingArray[] = {"Confirmation Number", "Check-In-Date", 
-            "# Nights", "Resort", "Size", "Booked","Traveler","Upgrade"};
-        Vector headings = new Vector(Arrays.asList(headingArray));
-        
-        System.out.println("in setup table and update database ********* just before table");
-
-        jtable_upcomingReservations.setModel(new DefaultTableModel(tableBody, headings));
-        
-        System.out.println("headings size = " + headings.size());
-        System.out.println("response size = " + tableBody.get(0).size());
-        
-        System.out.println("closing window");
-        ScrapeWyndham.closeWindow();
-        
-        
+        ScrapeWyndham.closeWindow();   
     }
     
     public void syncDB(String p_currentUserName, Vector <Reservation> p_userReservations){
@@ -129,6 +110,27 @@ public class UpcomingReservations extends javax.swing.JPanel {
             
         }
     }
+    public void makeTable(String p_query){
+        Vector<Reservation> vectorReservation = reservationsFactory.getAll(p_query);
+        Vector<Vector> tableBody = new Vector();
+        Vector<String> tableHeadings = new Vector();
+        
+        for (int i = 0; i < vectorReservation.size(); i++) {
+            tableBody.add(vectorReservation.get(i).toVector());
+        }
+        
+        String stringHeadings[] ={"Confirmation Number","Check-In-Date","#Nights",
+                "Resort", "Size", "Booked", "Traveler", "Upgrade"};
+        
+        tableHeadings = new Vector(Arrays.asList(stringHeadings));
+                
+        
+        jtable_upcomingReservations.setModel(new DefaultTableModel(tableBody, tableHeadings));
+        
+        
+        this.invalidate();
+    }
+    
     
 
     /**

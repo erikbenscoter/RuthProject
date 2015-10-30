@@ -41,6 +41,7 @@ public class Reservation {
     Date datePaid;
     PaymentMethod paymentMethod;
     double totalAmountRentedFor = 0;
+    String nameOnGuestCert = "";
 
    
     String dateBooked;
@@ -140,7 +141,7 @@ public class Reservation {
         rtnVal.add(scrapedIndicies.RESORT.getIndex(), location);
         rtnVal.add(scrapedIndicies.SIZE.getIndex(),unitSize);
         rtnVal.add(scrapedIndicies.BOOKED.getIndex(),dateBooked);
-        rtnVal.add(scrapedIndicies.TRAVELER.getIndex(),guest.firstName + " " + guest.lastName);
+        rtnVal.add(scrapedIndicies.TRAVELER.getIndex(),getNameOnGuestCert());
         rtnVal.add(scrapedIndicies.UPGRADE.getIndex(),upgradeState);
 
         
@@ -339,6 +340,14 @@ public class Reservation {
         this.upgradeState = upgradeState;
         removeSpecialCharacters(this);
 
+    }
+
+    public String getNameOnGuestCert() {
+        return nameOnGuestCert;
+    }
+
+    public void setNameOnGuestCert(String nameOnGuestCert) {
+        this.nameOnGuestCert = nameOnGuestCert;
     }
     
     
