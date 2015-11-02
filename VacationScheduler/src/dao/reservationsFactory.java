@@ -135,69 +135,56 @@ public class reservationsFactory
         return isInDB;
         
     }
-    public static void UpdateCurrentReservation(Reservation current_scraped_reservation)
-  
+    public static void UpdateScrapedInfo(Reservation p_rsrv)
     {
-        System.out.println("at top of UpdateCurrentReservation = " + current_scraped_reservation);
-        try
-        {
-        Connection conn = RuthDBConnection.getConnection();
-        Vector <String> scrapedResVector = new Vector();
-        String paramString = "";
-        /*
-        scrapedResVector.add(current_scraped_reservation.ownerUserName);
-        scrapedResVector.add(current_scraped_reservation.confimationNumber);
-        scrapedResVector.add(DateFormatUtility.formatDateWyn(current_scraped_reservation.dateOfReservation));
-        scrapedResVector.add(Integer.toString(current_scraped_reservation.numberOfNights));
-        scrapedResVector.add(current_scraped_reservation.location);
-        scrapedResVector.add(current_scraped_reservation.unitSize);
-        scrapedResVector.add(current_scraped_reservation.dateBooked);
-    */
-    /*    
-        for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
-            paramString += "'"+ paramVector.get(paramItterator) + "', ";
-        }
-        paramString += "'"+ paramVector.get(paramVector.size() - 1)+ "'";
-    
-        
-        String myInsertCommand = "INSERT INTO RESERVATIONS"
-                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED) "
-                + "VALUES(" + paramString +")";
-        */
-        
-  
-      String resconfimationNumber;
-        resconfimationNumber= current_scraped_reservation.getConfimationNumber();
+        Vector <String> paramVector = new Vector();
+        Vector <String> columnNames = new Vector();
+        String confirmationNumber = p_rsrv.getConfimationNumber();
 
-        System.out.println("Confirmation number = " + resconfimationNumber);
-        PreparedStatement stmt = conn.prepareStatement(
-                "Update reservations           "
-               +"    set Unit_Size = ?         "
-          /*     +"         set Guest = ?        "  */
-               +"  where CONFIRMATION_NUMBER = ?");
+
         
-           stmt.setString(1,current_scraped_reservation.getUnitSize());
-       /*    stmt.setString(2,current_scraped_reservation.getGuest());  */
-           stmt.setString(2,current_scraped_reservation.getConfimationNumber());      
-          
-           stmt.executeUpdate();
-           stmt.close();
-           
-        System.out.println("after Update" );
-     /*   
+        paramVector.add(p_rsrv.getOwnerUserName());
+        paramVector.add(p_rsrv.getLocation());
+        paramVector.add(DateFormatUtility.formatDateWyn(p_rsrv.getDateOfReservation()));
+        paramVector.add(Integer.toString(p_rsrv.getNumberOfNights()));
+        paramVector.add(p_rsrv.getUnitSize());
+        paramVector.add(Integer.toString(p_rsrv.isWasUpgraded()));
+        paramVector.add(p_rsrv.getDateBooked());
+        paramVector.add(p_rsrv.getUpgradeState());
+        paramVector.add(p_rsrv.getNameOnGuestCert());
         
-        String parametersString = "";
+		columnNames.add( "OWNER_USER_NAME" );
+		columnNames.add( "LOCATION" );
+		columnNames.add( "DATE_OF_RESERVATION" );
+		columnNames.add( "NUMBER_OF_NIGHTS" );
+		columnNames.add( "UNIT_SIZE" );
+		columnNames.add( "WAS_UPGRADED" );
+		columnNames.add( "DATE_BOOKED" );
+		columnNames.add( "UPGRADE_STATUS" );
+		columnNames.add( "GUEST_CERTIF" );
+
+		String myUpdateCommand = "UPDATE RESERVATIONS SET ";
+
+		for (int i = 0; i<columnNames.size(); i++ ) {
+			
+			//get the values we want as a pair
+			String colName = columnNames.get(i);
+			String value = paramVector.get(i);
+
+			if(i != 0){
+				myUpdateCommand += ", ";
+			}
+
+			myUpdateCommand += colName + " = '" + value + "'";
+
+		}
+
+		myUpdateCommand += " WHERE Confirmation_Number = '" + confirmationNumber + "'";
+
         
-        System.out.println(myInsertCommand);
-        DBConnection.insertSilent(myInsertCommand);
-     */
-        } 
-        catch (Exception e)
-                {System.out.println("Exception*****" + e );
-                throw new RuntimeException (e);
-                }
-        System.out.println("at bottom of UpdateCurrentReservation" );
-        return;
+        System.err.print("UPDATE QUERY:: ");
+        System.err.println(myUpdateCommand);
+        DBConnection.insertSilent(myUpdateCommand);
     }
 
     @Override

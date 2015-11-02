@@ -162,7 +162,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             myQuery = "select * from reservations";
         }
         
-        System.err.println(myQuery);
+        //System.err.println(myQuery);
         makeTable(myQuery);
         
         
@@ -186,7 +186,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
             }else{
                 //TODO: update given confimation number
                 System.err.println("Already in DB");
-                reservationsFactory.UpdateCurrentReservation(currentReservation);
+                reservationsFactory.UpdateScrapedInfo(currentReservation);
             }
             
         }
