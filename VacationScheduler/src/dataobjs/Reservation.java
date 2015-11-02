@@ -329,9 +329,11 @@ public class Reservation {
     }
 
     public void setUpgradeState(String upgradeState) {
-        if(!(upgradeState.contains("Reservation Upgraded") || upgradeState.contains("Not In Upgrade Window"))){
+        //System.err.println(upgradeState);
+        if(!(upgradeState.contains("Reservation Upgraded") || upgradeState.contains("Not in Upgrade Window"))){
             upgradeState = "upgrades may be available";
         }
+        
         if(upgradeState.contains("Reservation Upgraded")){
             this.wasUpgraded = 1;
         }else{
