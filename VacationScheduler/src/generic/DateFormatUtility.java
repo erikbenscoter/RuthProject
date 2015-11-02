@@ -40,7 +40,7 @@ public class DateFormatUtility {
             Date date = new Date();
                 try{
                     date = formatter.parse(sDate);
-                    sDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(date);
+                    sDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
                 }catch(ParseException pe){pe.printStackTrace();}
         } 
         System.out.println(sDate);
