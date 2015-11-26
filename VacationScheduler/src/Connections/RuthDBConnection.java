@@ -7,6 +7,8 @@ package Connections;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -41,6 +43,36 @@ public static Connection getConnection(){
            System.out.println(e);
            return null;
        }
+       
+    }
+public static void insert(String insertCommand){
+        try{
+            
+            Connection con = RuthDBConnection.getConnection();
+            Statement statement = con.createStatement();
+            statement.execute(insertCommand);
+            JOptionPane.showMessageDialog(null, "Thank you your changes have been made\n");
+            con.close();
+        }catch(Exception e){
+            System.out.println("trouble with the connection!!" + e);
+            JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+        }
+        
+      
+    }
+    public static void insertSilent(String insertCommand){
+        try{
+            
+            Connection con = RuthDBConnection.getConnection();
+            Statement statement = con.createStatement();
+            statement.execute(insertCommand);
+            
+            con.close();
+        }catch(Exception e){
+            System.out.println("trouble with the connection!!" + e);
+            JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+        }
+        
        
     }
 }

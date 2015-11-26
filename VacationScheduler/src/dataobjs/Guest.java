@@ -10,8 +10,8 @@ package dataobjs;
  * @author erikbenscoter
  */
 public class Guest {
-    String emailAddress, firstName,lastName,phoneNumber;
-    int creditCardNumber,numberPreviousRentals;
+    String emailAddress, firstName,lastName,phoneNumber, creditCardNumber;
+    int numberPreviousRentals;
     
     public Guest(){
         emailAddress = "";
@@ -21,7 +21,7 @@ public class Guest {
         
     }
     
-    public Guest(String ea, String fn, String ln, String pn, int ccn, int npr){
+    public Guest(String ea, String fn, String ln, String pn, String ccn, int npr){
         emailAddress =ea;
         firstName = fn;
         lastName = ln;
@@ -30,7 +30,7 @@ public class Guest {
         numberPreviousRentals = npr;
        
     }
-    public void totalReset(String ea, String fn, String ln, String pn, int ccn, int npr){
+    public void totalReset(String ea, String fn, String ln, String pn, String ccn, int npr){
         emailAddress =ea;
         firstName = fn;
         lastName = ln;
@@ -55,7 +55,7 @@ public class Guest {
         return phoneNumber;
     }
 
-    public int getCreditCardNumber() {
+    public String getCreditCardNumber() {
         return creditCardNumber;
     }
 
@@ -79,7 +79,7 @@ public class Guest {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setCreditCardNumber(int creditCardNumber) {
+    public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
 
@@ -87,5 +87,15 @@ public class Guest {
         this.numberPreviousRentals = numberPreviousRentals;
     }
     
-    
+    private void p(String s){
+        System.out.println(s);
+    }
+    public void print(){
+        p("Email: " + emailAddress);
+        p("FirstName: " + firstName);
+        p("LastName: "+ lastName);
+        p("PhoneNumber: " + phoneNumber);
+        p("CreditCardNumber: " + creditCardNumber);
+        p("NumberPreviousRentals" + Integer.toString(numberPreviousRentals));
+    }
 }

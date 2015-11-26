@@ -5,8 +5,10 @@
  */
 package vacationscheduler;
 
+import Connections.RuthDBConnection;
 import dao.GuestFactory;
 import dataobjs.Guest;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,16 +19,48 @@ public class GuestMaitenanceForm extends javax.swing.JPanel {
     /**
      * Creates new form GuestMaitenanceForm
      */
+    
+    boolean isUpdate = false;
     UsersTab  userTab;
+
+    ReservationForm rf;
+    JFrame jf;
     public GuestMaitenanceForm(UsersTab userTab){
         this.userTab = userTab;
-        initComponents();
+        commonConstructor();
     }
     public GuestMaitenanceForm() {
-        initComponents();
+       commonConstructor();
         
     }
+    public GuestMaitenanceForm(String emailAddress){
+        commonConstructor();
+        Guest appropriateGuest = GuestFactory.getGuests(emailAddress);
+        System.err.println("\n");
+        appropriateGuest.print();
+        TextPane_FirstName.setText(appropriateGuest.getFirstName());
+        TextPane_LastName.setText(appropriateGuest.getLastName());
+        TextPane_Email.setText(appropriateGuest.getEmailAddress());
+        TextPane_CreditCardNumber.setText( appropriateGuest.getCreditCardNumber() );
+        TextPane_PhoneNumber.setText(appropriateGuest.getPhoneNumber());
+        TextPane_PreviousRentals.setText(Integer.toString(appropriateGuest.getNumberPreviousRentals()));
+        
+        isUpdate = true;
+        
+    }
+    public void commonConstructor(){
+        initComponents();
+    }
+    
+    public void setJf(JFrame jf) {
+        this.jf = jf;
+    }
 
+    public void setRf(ReservationForm rf) {
+        this.rf = rf;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,7 +118,7 @@ public class GuestMaitenanceForm extends javax.swing.JPanel {
         jScrollPane6.setViewportView(TextPane_PreviousRentals);
 
         Button_okay.setBackground(new java.awt.Color(81, 255, 0));
-        Button_okay.setText("Okay");
+        Button_okay.setText("Apply");
         Button_okay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_okayActionPerformed(evt);
@@ -123,7 +157,7 @@ public class GuestMaitenanceForm extends javax.swing.JPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -157,7 +191,7 @@ public class GuestMaitenanceForm extends javax.swing.JPanel {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -178,7 +212,7 @@ public class GuestMaitenanceForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_okayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_okayActionPerformed
-        int ccn = Integer.parseInt(this.TextPane_CreditCardNumber.getText());
+        String ccn = this.TextPane_CreditCardNumber.getText();
         String email = this.TextPane_Email.getText();
         String first = this.TextPane_FirstName.getText();
         String last = this.TextPane_LastName.getText();
@@ -186,15 +220,35 @@ public class GuestMaitenanceForm extends javax.swing.JPanel {
         int prev = Integer.parseInt(this.TextPane_PreviousRentals.getText());
         
         Guest g = new Guest(email, first, last, phoneNumber, ccn, prev);
-        DBConnection dbcon = new DBConnection();
-        GuestFactory.insert(g);
-        userTab.resetPanel();
+        if(!isUpdate){
+            GuestFactory.insert(g);
+        }else{
+            GuestFactory.update(g);
+        }
+        if(userTab != null){
+            userTab.resetPanel();
+        }
+        if(rf != null){
+            rf.refresh();
+        }
+        if(jf != null){
+            jf.dispose();
+        }
         
         
     }//GEN-LAST:event_Button_okayActionPerformed
 
     private void Button_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_CancelActionPerformed
-       userTab.resetPanel();
+       if(userTab != null){
+            userTab.resetPanel();
+       }
+       if(rf != null){
+           rf.refresh();
+       }
+       if(jf != null){
+           jf.dispose();
+       }
+       
     }//GEN-LAST:event_Button_CancelActionPerformed
 
 

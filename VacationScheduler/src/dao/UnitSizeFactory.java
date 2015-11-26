@@ -39,6 +39,7 @@ public class UnitSizeFactory {
                 locationToAdd = rs.getString("UnitSize");
                 returnVector.add(locationToAdd);
             }
+            con.close();
             return returnVector;
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "There was an error please try again\n" + e);

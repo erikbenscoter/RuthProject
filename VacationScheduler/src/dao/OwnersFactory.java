@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import vacationscheduler.DBConnection;
 
 import dataobjs.Owner;
 
@@ -58,6 +57,7 @@ public class OwnersFactory {
             while(rs.next()){
                 output.add(rs.getString("EMAIL"));
             }
+            con.close();
             
             return output;
         }catch(Exception e){
@@ -80,7 +80,7 @@ public class OwnersFactory {
                 avpts.add(Double.toString(rs.getDouble("CURRENT_POINTS")));
                 System.out.println(rs.getDouble("CURRENT_POINTS"));
             }
-            
+            con.close();
             return avpts;
         }catch(Exception e){
             System.out.println(e);
@@ -124,6 +124,7 @@ public class OwnersFactory {
             reimbursementRate = rs.getDouble("Owner_Reimbursement_Rate");
             
             ownerToReturn = new Owner(emailAddress, firstName, lastName, phoneNumber, userName, password, pointsOwned, currentAvailablePoints, reimbursementRate);
+            con.close();
             return ownerToReturn;
 
 
@@ -178,6 +179,7 @@ public class OwnersFactory {
                 ownerVectorToReturn.add(ownerToAdd);
                 
             }
+            con.close();
             return ownerVectorToReturn;
 
 
@@ -199,6 +201,7 @@ public class OwnersFactory {
             while(rs.next()){
                 output.add(rs.getString("FIRST_NAME") + " " + rs.getString("LAST_NAME"));
             }
+            con.close();
             
             return output;
         }catch(Exception e){
@@ -219,6 +222,7 @@ public class OwnersFactory {
                 output.add(rs.getString("EMAIL"));
                 System.out.println(rs.getString("EMAIL"));
             }
+            con.close();
             
             return output;
         }catch(Exception e){
@@ -275,6 +279,7 @@ public class OwnersFactory {
             reimbursementRate = rs.getDouble("Owner_Reimbursement_Rate");
             
             ownerToReturn = new Owner(emailAddress, firstName, lastName, phoneNumber, userName, password, pointsOwned, currentAvailablePoints, reimbursementRate);
+            con.close();
             return ownerToReturn;
 
 

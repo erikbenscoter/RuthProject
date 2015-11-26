@@ -27,8 +27,8 @@ public class GuestFactory
         ResultSet rs;
         Statement st;
         
-        String emailAddress, firstName,lastName,phoneNumber;
-        int creditCardNumber,numberPreviousRentals;
+        String emailAddress, firstName,lastName,phoneNumber,creditCardNumber;
+        int numberPreviousRentals;
         
         try{
             
@@ -41,13 +41,14 @@ public class GuestFactory
                 firstName = rs.getString("First_Name");
                 lastName = rs.getString("Last_Name");
                 phoneNumber = rs.getString("Phone_Number");
-                creditCardNumber = rs.getInt("Credit_Card_Number");
+                creditCardNumber = rs.getString("Credit_Card_Number");
                 numberPreviousRentals = rs.getInt("Previous_Rentals");
 
                 guestToAdd = new Guest(emailAddress, firstName, lastName, phoneNumber, creditCardNumber, numberPreviousRentals);
                 guestVectorToReturn.add(guestToAdd);
                 
             }
+            con.close();
             return guestVectorToReturn;
 
 
@@ -55,6 +56,53 @@ public class GuestFactory
             
              JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
              return guestVectorToReturn;
+             
+        }
+    }
+  public static Guest getGuests(String email){
+        Guest guestToReturn;
+        String myQuery = "SELECT * FROM GUESTS WHERE EMAIL = '"+ email +"'";
+        Connection con = RuthDBConnection.getConnection();
+        ResultSet rs;
+        Statement st;
+        
+        String emailAddress, firstName,lastName,phoneNumber, creditCardNumber;
+        int numberPreviousRentals;
+        
+        try{
+            
+            st = con.createStatement();
+            rs = st.executeQuery(myQuery);
+
+            rs.next();
+                
+            emailAddress = rs.getString("Email");
+            firstName = rs.getString("First_Name");
+            lastName = rs.getString("Last_Name");
+            phoneNumber = rs.getString("Phone_Number");
+            creditCardNumber = rs.getString("Credit_Card_Number");
+            numberPreviousRentals = rs.getInt("Previous_Rentals");
+
+            guestToReturn = new Guest();
+                guestToReturn.setEmailAddress(emailAddress);
+                guestToReturn.setFirstName(firstName);
+                guestToReturn.setLastName(lastName);
+                guestToReturn.setPhoneNumber(phoneNumber);
+                guestToReturn.setCreditCardNumber(creditCardNumber);
+                guestToReturn.setNumberPreviousRentals(numberPreviousRentals);
+                
+            con.close();
+            
+            System.err.println(myQuery);
+            
+            guestToReturn.print();
+            
+            return guestToReturn;
+
+        }catch(Exception e){
+            
+             JOptionPane.showMessageDialog(null, "There was an error, please try again \n" + e);
+             return new Guest();
              
         }
     }
@@ -66,8 +114,8 @@ public class GuestFactory
         ResultSet rs;
         Statement st;
         
-        String emailAddress, firstName,lastName,phoneNumber;
-        int creditCardNumber,numberPreviousRentals;
+        String emailAddress, firstName,lastName,phoneNumber, creditCardNumber;
+        int numberPreviousRentals;
         
         try{
             
@@ -80,13 +128,14 @@ public class GuestFactory
                 firstName = rs.getString("First_Name");
                 lastName = rs.getString("Last_Name");
                 phoneNumber = rs.getString("Phone_Number");
-                creditCardNumber = rs.getInt("Credit_Card_Number");
+                creditCardNumber = rs.getString("Credit_Card_Number");
                 numberPreviousRentals = rs.getInt("Previous_Rentals");
 
                 guestToAdd = new Guest(emailAddress, firstName, lastName, phoneNumber, creditCardNumber, numberPreviousRentals);
                 guestVectorToReturn.add(guestToAdd);
                 
             }
+            con.close();
             return guestVectorToReturn;
 
 
@@ -108,7 +157,7 @@ public class GuestFactory
             while(rs.next()){
                 output.add(rs.getString("FIRST_NAME") + " " + rs.getString("LAST_NAME"));
             }
-            
+            con.close();
             return output;
         }catch(Exception e){
             System.out.println(e);
@@ -128,7 +177,7 @@ public class GuestFactory
                 output.add(rs.getString("EMAIL"));
                 System.out.println(rs.getString("EMAIL"));
             }
-            
+            con.close();
             return output;
         }catch(Exception e){
             System.out.println(e);
@@ -164,6 +213,47 @@ public class GuestFactory
         
         insert(command);
         
+        
+    }
+  
+    public static void update(Guest g){
+        Vector <String> columnNames = new Vector();
+        Vector <String> values = new Vector();
+        String myUpdateCommand = "Update Guests Set ";
+        
+        //add all the column names
+            //columnNames.add( "EMAIL" );               //email is primary key for ther where clause
+        columnNames.add( "FIRST_NAME" );
+        columnNames.add( "LAST_NAME" );
+        columnNames.add( "PHONE_NUMBER" );
+        columnNames.add( "CREDIT_CARD_NUMBER" );
+        columnNames.add( "PREVIOUS_RENTALS" );
+
+        //add all the values
+            //values.add(g.getEmailAddress());         //email is primary key for the werhere clause
+        values.add(g.getFirstName());
+        values.add(g.getLastName());
+        values.add(g.getPhoneNumber());
+        values.add(g.getCreditCardNumber());
+        values.add( Integer.toString( g.getNumberPreviousRentals() ) );
+        
+        //create the query
+        for(int i = 0; i < columnNames.size(); i++){
+            String columnName = columnNames.get(i);
+            String value = values.get(i);
+            
+            if(i != 0){
+                myUpdateCommand = myUpdateCommand + ", ";
+            }
+            
+            myUpdateCommand = myUpdateCommand + columnName + " = '" + value + "' ";
+        }
+        
+        myUpdateCommand = myUpdateCommand + " WHERE EMAIL = '" + g.getEmailAddress() + "'";
+        
+        System.err.println(myUpdateCommand);
+        
+        insert(myUpdateCommand);
     }
     
       public static void insert(String insertCommand)

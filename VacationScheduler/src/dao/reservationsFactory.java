@@ -19,7 +19,6 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import vacationscheduler.DBConnection;
 
 /**
  *
@@ -28,37 +27,71 @@ import vacationscheduler.DBConnection;
 public class reservationsFactory
 {
     
-    public static void insert(Reservation reserve){
-        Vector <String> paramVector = new Vector();
-        String paramString = "";
+    public static void insert(Reservation p_rsrv){
+        String myInsertCommand = "INSERT INTO RESERVATIONS( ";
+        Vector <String> columnNames = new <String> Vector();
+        Vector <String> values = new <String> Vector();
+
+        columnNames.add( "OWNER_USER_NAME" );
+        columnNames.add( "LOCATION" );
+        columnNames.add( "DATE_OF_RESERVATION" );
+        columnNames.add( "NUMBER_OF_NIGHTS" );
+        columnNames.add( "UNIT_SIZE" );
+        columnNames.add( "CONFIRMATION_NUMBER" );
+        columnNames.add( "POINTS_REQUIRED_FOR_RESERVATION" );
+        columnNames.add( "WAS_DISCOUNTED" );
+        columnNames.add( "WAS_UPGRADED" );
+        columnNames.add( "IS_BUYER_LINED_UP" );
+        columnNames.add( "GUEST_EMAIL" );
+        columnNames.add( "AMOUNT_PAID" );
+        //columnNames.add( "PAYMENT_METHOD" );
+        columnNames.add( "TOTAL_RENTING_FOR" );
+        columnNames.add( "DATE_BOOKED" );
+        columnNames.add( "UPGRADE_STATUS" );
+        columnNames.add( "GUEST_CERTIF" );
+        
+        values.add(p_rsrv.getOwnerUserName());
+        values.add(p_rsrv.getLocation());
+        values.add(DateFormatUtility.formatDateWyn(p_rsrv.getDateOfReservation()));
+        values.add(Integer.toString(p_rsrv.getNumberOfNights()));
+        values.add(p_rsrv.getUnitSize());
+        values.add(p_rsrv.getConfimationNumber());
+        values.add(Integer.toString(p_rsrv.getPointsRequiredForReservation()));
+        values.add(Boolean.toString(p_rsrv.isWasDiscounted()));
+        values.add(Integer.toString(p_rsrv.isWasUpgraded()));
+        values.add(Boolean.toString(p_rsrv.isIsBuyerLinedUp()));
+        values.add(p_rsrv.getGuest().getEmailAddress());
+        values.add(Double.toString(p_rsrv.getAmountPaid()));
+        //values.add(PaymentMethod)
+        values.add(Double.toString(p_rsrv.getTotalAmountRentedFor()));
+        values.add(DateFormatUtility.formatDateWyn(p_rsrv.getDateBooked()));
+        values.add(p_rsrv.getUpgradeState());
+        values.add(p_rsrv.getNameOnGuestCert());
+        
+        
+        for(int i = 0; i<columnNames.size(); i++){
+            if(i != 0){
+                myInsertCommand += ", ";
+            }
+            myInsertCommand = myInsertCommand + columnNames.get(i);
+        }
+        
+        myInsertCommand += " ) VALUES( ";
+        
+        for( int i = 0; i < values.size(); i++){
+            if(i!=0){
+                myInsertCommand += ", ";
+            }
+            
+            myInsertCommand = myInsertCommand + "'" + values.get(i) + "'";
+        }
+
+        myInsertCommand += " )";
 
         
-        paramVector.add(reserve.getOwnerUserName());
-        paramVector.add(reserve.getConfimationNumber());
-        paramVector.add(Integer.toString(reserve.isWasUpgraded()));
-        paramVector.add(DateFormatUtility.formatDateWyn(reserve.getDateOfReservation()));
-        paramVector.add(Integer.toString(reserve.getNumberOfNights()));
-        paramVector.add(reserve.getLocation());
-        paramVector.add(reserve.getUnitSize());
-        paramVector.add(reserve.getDateBooked());
-        paramVector.add(reserve.getUpgradeState());
-        paramVector.add(reserve.getNameOnGuestCert());
         
-        for(int paramItterator = 0; paramItterator < paramVector.size() - 1; paramItterator++){
-            paramString += "'"+ paramVector.get(paramItterator) + "', ";
-        }
-        paramString += "'"+ paramVector.get(paramVector.size() - 1)+ "'";
-        
-        
-        
-        
-        String myInsertCommand = "INSERT INTO RESERVATIONS"
-                + "(OWNER_USER_NAME,CONFIRMATION_NUMBER,WAS_UPGRADED,DATE_OF_RESERVATION,NUMBER_OF_NIGHTS,LOCATION,UNIT_SIZE,DATE_BOOKED,UPGRADE_STATUS,GUEST_CERTIF) "
-                + "VALUES(" + paramString +")";
-        String parametersString = "";
-        
-        System.out.println(myInsertCommand);
-        DBConnection.insertSilent(myInsertCommand);
+        System.err.println(myInsertCommand);
+        RuthDBConnection.insertSilent(myInsertCommand);
        
         
     }
@@ -126,12 +159,12 @@ public class reservationsFactory
         }else{
             isInDB = true;
         }
-        
+        con.close();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "DB ERROR " + e);
             System.exit(-1);
         }
-        
+       
         return isInDB;
         
     }
@@ -149,7 +182,7 @@ public class reservationsFactory
         paramVector.add(Integer.toString(p_rsrv.getNumberOfNights()));
         paramVector.add(p_rsrv.getUnitSize());
         paramVector.add(Integer.toString(p_rsrv.isWasUpgraded()));
-        paramVector.add(p_rsrv.getDateBooked());
+        paramVector.add(DateFormatUtility.formatDateWyn(p_rsrv.getDateBooked()));
         paramVector.add(p_rsrv.getUpgradeState());
         paramVector.add(p_rsrv.getNameOnGuestCert());
         
@@ -184,8 +217,76 @@ public class reservationsFactory
         
         System.err.print("UPDATE QUERY:: ");
         System.err.println(myUpdateCommand);
-        DBConnection.insertSilent(myUpdateCommand);
+        RuthDBConnection.insertSilent(myUpdateCommand);
     }
+public static void update(Reservation p_rsrv)
+    {   
+        Vector <String> paramVector = new Vector();
+        Vector <String> columnNames = new Vector();
+        String confirmationNumber = p_rsrv.getConfimationNumber();
+
+
+        
+        paramVector.add(p_rsrv.getOwnerUserName());
+        paramVector.add(p_rsrv.getLocation());
+        paramVector.add(p_rsrv.getDateOfReservation());
+        paramVector.add(Integer.toString(p_rsrv.getNumberOfNights()));
+        paramVector.add(p_rsrv.getUnitSize());
+        paramVector.add(Integer.toString(p_rsrv.getPointsRequiredForReservation()));
+        paramVector.add(Boolean.toString(p_rsrv.isWasDiscounted()));
+                paramVector.add(Integer.toString(p_rsrv.isWasUpgraded()));
+                paramVector.add(Boolean.toString(p_rsrv.isIsBuyerLinedUp()));
+                paramVector.add(p_rsrv.getGuest().getEmailAddress());
+                paramVector.add(Double.toString(p_rsrv.getAmountPaid()));
+                //payment method
+                paramVector.add(Double.toString(p_rsrv.getTotalAmountRentedFor()));
+        paramVector.add(p_rsrv.getDateBooked());
+        paramVector.add(p_rsrv.getUpgradeState());
+        paramVector.add(p_rsrv.getNameOnGuestCert());
+        
+        columnNames.add( "OWNER_USER_NAME" );
+        columnNames.add( "LOCATION" );
+        columnNames.add( "DATE_OF_RESERVATION" );
+        columnNames.add( "NUMBER_OF_NIGHTS" );
+        columnNames.add( "UNIT_SIZE" );
+        columnNames.add( "POINTS_REQUIRED_FOR_RESERVATION" );
+        columnNames.add( "WAS_DISCOUNTED" );
+        columnNames.add( "WAS_UPGRADED" );
+        columnNames.add( "IS_BUYER_LINED_UP" );
+        columnNames.add( "GUEST_EMAIL" );
+        columnNames.add( "AMOUNT_PAID" );
+        //columnNames.add( "PAYMENT_METHOD" );
+        columnNames.add( "TOTAL_RENTING_FOR" );
+        columnNames.add( "DATE_BOOKED" );
+        columnNames.add( "UPGRADE_STATUS" );
+        columnNames.add( "GUEST_CERTIF" );
+
+        String myUpdateCommand = "UPDATE RESERVATIONS SET ";
+
+        for (int i = 0; i<columnNames.size(); i++ ) {
+            
+            //get the values we want as a pair
+            String colName = columnNames.get(i);
+            String value = paramVector.get(i);
+
+            if(i != 0){
+                myUpdateCommand += ", ";
+            }
+
+            myUpdateCommand += colName + " = '" + value + "'";
+
+        }
+
+        myUpdateCommand += " WHERE Confirmation_Number = '" + confirmationNumber + "'";
+
+        
+        System.err.print("UPDATE QUERY:: ");
+        System.err.println(myUpdateCommand);
+        RuthDBConnection.insertSilent(myUpdateCommand);
+
+
+        
+        }
 
     @Override
     public String toString() {
@@ -252,7 +353,7 @@ public class reservationsFactory
                 reservationGuest.setEmailAddress(guestEmail);
             r.setGuest(reservationGuest);
             
-            
+            con.close();
             return r;
             
             
@@ -321,7 +422,7 @@ public class reservationsFactory
                 rtnVec.add(r);
                 
             }
-            
+            con.close();
             return rtnVec;
             
             
