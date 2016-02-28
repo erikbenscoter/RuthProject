@@ -80,15 +80,15 @@ public class StartUp {
             }
             @Override
             public void run() {
-                System.out.println("here");
-                while(loading.x < loading.getWidth()) 
-                    try{
-                        Thread.sleep(20);
-                    }catch(Exception e){
-                        System.out.println("couldn't sleep");
-                    }
-               
-                addButton(loading);
+//                System.out.println("here");
+//                while(loading.x < loading.getWidth()) 
+//                    try{
+//                        Thread.sleep(20);
+//                    }catch(Exception e){
+//                        System.out.println("couldn't sleep");
+//                    }
+//               
+//                addButton(loading);
             }   
        }
         new Thread(new WaitToAddButton(this)).start();

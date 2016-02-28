@@ -44,7 +44,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
      
     public UpcomingReservations() {
         initComponents();
-        //UpdateDataSet();
+        UpdateDataSet();
         makeTable("Select * From Reservations");
         
         
@@ -141,7 +141,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
         }
         if(!withinNumberDays.equals("")){
             if(stillEmpty == true){
-                 myQuery = "select * from reservations where Date_of_reservation < date('now','+"+ withinNumberDays +" days')";
+                 myQuery = "select * from reservations where Date_of_reservation < date('now','+"+ withinNumberDays +" days') AND Date_of_reservation > date('now', '0 days')";
                  stillEmpty = false;
             }else{
                 myQuery += "AND Date_of_reservation < date('now','+"+ withinNumberDays +" days')";
