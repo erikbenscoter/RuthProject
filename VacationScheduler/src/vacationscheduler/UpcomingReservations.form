@@ -34,6 +34,8 @@
                   <Component id="jLabel4" max="32767" attributes="0"/>
                   <Component id="ComboBox_UpgradeStateFilter" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jButton_exportToExcel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -53,9 +55,10 @@
                   <Component id="Combobox_UserNameFilter" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="TextField_DayFilter" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ComboBox_UpgradeStateFilter" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton_exportToExcel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="411" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="410" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -145,6 +148,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ComboBox_UpgradeStateFilterActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton_exportToExcel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Export Table"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_exportToExcelActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
