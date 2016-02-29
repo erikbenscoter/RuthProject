@@ -7,6 +7,7 @@ package vacationscheduler;
 
 import Connections.RuthDBConnection;
 import static com.google.gson.internal.bind.TypeAdapters.URI;
+import dao.LocationsFactory;
 import dataobjs.Reservation;
 import dataobjs.Owner;
 import dao.OwnersFactory;
@@ -19,6 +20,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -68,23 +72,50 @@ public class UpcomingReservations extends javax.swing.JPanel {
         }
         
         Combobox_UserNameFilter.setModel(new DefaultComboBoxModel(userNames));
- 
+        
+        ////////////////////////////////////////////////////////////////////////
+        //              FIll Up Locations combo box
+        ////////////////////////////////////////////////////////////////////////
+        Vector <String> allResorts = new <String> Vector();
+        allResorts.add("");
+        allResorts.addAll( LocationsFactory.GetAllLocations() );
+        
+        Set <String> uniqueResorts = new HashSet<String>();
+            uniqueResorts.addAll(allResorts);
+            
+        
+        ComboBox_ResortFilter.setModel(new DefaultComboBoxModel(uniqueResorts.toArray()));
+        ComboBox_ResortFilter.setSelectedItem("");
+        
         ////////////////////////////////////////////////////////////////////////
         //              FIll Up Upgrade Status combo box
         ////////////////////////////////////////////////////////////////////////
-        Vector <String> allUpgradeStates;
-        allUpgradeStates = new Vector();
+        Vector <String> allUpgradeStates = new <String> Vector();
         
         allUpgradeStates.add("");
-        for (int i = 0; i<reservations.size(); i++){
-            allUpgradeStates.add(reservations.get(i).getUpgradeState());
+        
+        String queryToGetAllUpgradeStates = "Select Upgrade_Status from reservations";
+        
+        Connection con = RuthDBConnection.getConnection();
+        try{
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(queryToGetAllUpgradeStates);
+            
+            while(rs.next()){
+                allUpgradeStates.add(rs.getString("Upgrade_Status"));
+            }
+            con.close();
+            
+           
+        }catch(Exception e){
+            System.out.println(e);
+
         }
         
         Set<String> uniqueUpgrades = new HashSet<String>();
             uniqueUpgrades.addAll(allUpgradeStates);
             
         ComboBox_UpgradeStateFilter.setModel(new DefaultComboBoxModel(uniqueUpgrades.toArray()));
-        
         
         
         this.setVisible(true);
@@ -114,6 +145,8 @@ public class UpcomingReservations extends javax.swing.JPanel {
             public void mouseExited(MouseEvent e) {
             }
         });
+        
+        updateUsingFilters();
     }
    
     public void UpdateDataSet(){
@@ -138,9 +171,12 @@ public class UpcomingReservations extends javax.swing.JPanel {
         String selectedUser = "";
         String withinNumberDays = "";
         String upgradeState = "";
+        String locationState = "";
             selectedUser= (String) Combobox_UserNameFilter.getSelectedItem();
             withinNumberDays= TextField_DayFilter.getText();
             upgradeState = (String) ComboBox_UpgradeStateFilter.getSelectedItem();
+            locationState = (String) ComboBox_ResortFilter.getSelectedItem();
+            
         String myQuery = "";
         boolean stillEmpty = true;
         
@@ -150,10 +186,10 @@ public class UpcomingReservations extends javax.swing.JPanel {
         }
         if(!withinNumberDays.equals("")){
             if(stillEmpty == true){
-                 myQuery = "select * from reservations where Date_of_reservation < date('now','+"+ withinNumberDays +" days') AND Date_of_reservation > date('now', '0 days')";
+                 myQuery = "select * from reservations where Date_of_reservation < date('now','+"+ withinNumberDays +" days') AND Date_of_reservation >= date('now', '0 days')";
                  stillEmpty = false;
             }else{
-                myQuery += "AND Date_of_reservation < date('now','+"+ withinNumberDays +" days') AND Date_of_reservation > date('now', '0 days')";
+                myQuery += "AND Date_of_reservation < date('now','+"+ withinNumberDays +" days') AND Date_of_reservation >= date('now', '0 days')";
             }
         }
          if(!upgradeState.equals("")){
@@ -164,14 +200,26 @@ public class UpcomingReservations extends javax.swing.JPanel {
                 myQuery += "AND Upgrade_status = '" + upgradeState + "'";
             }
         }
+        if(!locationState.equals("")){
+            if(stillEmpty == true){
+                 myQuery = "select * from reservations where Location = '" + locationState + "'";
+                 stillEmpty = false;
+            }else{
+                myQuery += "AND Location = '" + locationState + "'";
+            }
+        }
         
         
         
         if(stillEmpty){
-            myQuery = "select * from reservations";
+            myQuery = "select * from reservations WHERE TOUCHED = date('now' , '0 days')";
+        }else{
+            myQuery += " AND TOUCHED = date('now','0 days')";
         }
         
-        //System.err.println(myQuery);
+        
+        
+        System.err.println(myQuery);
         makeTable(myQuery);
         
         
@@ -279,6 +327,8 @@ public class UpcomingReservations extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         ComboBox_UpgradeStateFilter = new javax.swing.JComboBox();
         jButton_exportToExcel = new javax.swing.JButton();
+        ComboBox_ResortFilter = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
         jtable_upcomingReservations.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -332,11 +382,20 @@ public class UpcomingReservations extends javax.swing.JPanel {
             }
         });
 
+        ComboBox_ResortFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboBox_ResortFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBox_ResortFilterActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Resort:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -351,25 +410,35 @@ public class UpcomingReservations extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ComboBox_UpgradeStateFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton_exportToExcel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ComboBox_ResortFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton_exportToExcel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Combobox_UserNameFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TextField_DayFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboBox_UpgradeStateFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_exportToExcel))
+                    .addComponent(jButton_exportToExcel)
+                    .addComponent(ComboBox_ResortFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
         );
@@ -392,8 +461,13 @@ public class UpcomingReservations extends javax.swing.JPanel {
         jTableToExcel();
     }//GEN-LAST:event_jButton_exportToExcelActionPerformed
 
+    private void ComboBox_ResortFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_ResortFilterActionPerformed
+        updateUsingFilters();
+    }//GEN-LAST:event_ComboBox_ResortFilterActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBox_ResortFilter;
     private javax.swing.JComboBox ComboBox_UpgradeStateFilter;
     private javax.swing.JComboBox Combobox_UserNameFilter;
     private javax.swing.JTextField TextField_DayFilter;
@@ -402,6 +476,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jtable_upcomingReservations;

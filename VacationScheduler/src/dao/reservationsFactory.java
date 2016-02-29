@@ -49,6 +49,7 @@ public class reservationsFactory
         columnNames.add( "DATE_BOOKED" );
         columnNames.add( "UPGRADE_STATUS" );
         columnNames.add( "GUEST_CERTIF" );
+        columnNames.add( "TOUCHED" );
         
         values.add(p_rsrv.getOwnerUserName());
         values.add(p_rsrv.getLocation());
@@ -67,6 +68,7 @@ public class reservationsFactory
         values.add(DateFormatUtility.formatDateWyn(p_rsrv.getDateBooked()));
         values.add(p_rsrv.getUpgradeState());
         values.add(p_rsrv.getNameOnGuestCert());
+        values.add("date('now','0 days')");
         
         
         for(int i = 0; i<columnNames.size(); i++){
@@ -185,6 +187,7 @@ public class reservationsFactory
         paramVector.add(DateFormatUtility.formatDateWyn(p_rsrv.getDateBooked()));
         paramVector.add(p_rsrv.getUpgradeState());
         paramVector.add(p_rsrv.getNameOnGuestCert());
+        paramVector.add("date('now','0 days')");
         
 		columnNames.add( "OWNER_USER_NAME" );
 		columnNames.add( "LOCATION" );
@@ -195,10 +198,11 @@ public class reservationsFactory
 		columnNames.add( "DATE_BOOKED" );
 		columnNames.add( "UPGRADE_STATUS" );
 		columnNames.add( "GUEST_CERTIF" );
+                columnNames.add( "TOUCHED" );
 
 		String myUpdateCommand = "UPDATE RESERVATIONS SET ";
 
-		for (int i = 0; i<columnNames.size(); i++ ) {
+		for (int i = 0; i<columnNames.size()-1; i++ ) {
 			
 			//get the values we want as a pair
 			String colName = columnNames.get(i);
@@ -211,7 +215,7 @@ public class reservationsFactory
 			myUpdateCommand += colName + " = '" + value + "'";
 
 		}
-
+                myUpdateCommand += ", TOUCHED = " + "date ('now','0 days') ";
 		myUpdateCommand += " WHERE Confirmation_Number = '" + confirmationNumber + "'";
 
         

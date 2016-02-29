@@ -27,7 +27,7 @@ public class LocationsFactory
         String locationToAdd;
         
         
-        myQuery = "SELECT * FROM LOCATIONS";
+        myQuery = "SELECT * FROM RESERVATIONS";
         returnVector =  new Vector();
         
         
