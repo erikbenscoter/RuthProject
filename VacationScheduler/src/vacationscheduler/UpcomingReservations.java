@@ -212,7 +212,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
         
         
         if(stillEmpty){
-            myQuery = "select * from reservations WHERE TOUCHED = date('now' , '0 days')";
+            myQuery = "select * from reservations WHERE TOUCHED = date('now','0 days')";
         }else{
             myQuery += " AND TOUCHED = date('now','0 days')";
         }
