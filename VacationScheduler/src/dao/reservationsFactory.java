@@ -80,13 +80,15 @@ public class reservationsFactory
         
         myInsertCommand += " ) VALUES( ";
         
-        for( int i = 0; i < values.size(); i++){
+        for( int i = 0; i < values.size()-1; i++){
             if(i!=0){
                 myInsertCommand += ", ";
             }
             
             myInsertCommand = myInsertCommand + "'" + values.get(i) + "'";
         }
+        
+        myInsertCommand += " , " + values.get(values.size()-1);
 
         myInsertCommand += " )";
 
