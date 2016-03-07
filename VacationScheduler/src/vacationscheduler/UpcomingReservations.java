@@ -258,7 +258,7 @@ public class UpcomingReservations extends javax.swing.JPanel {
         }
         
         String stringHeadings[] ={"Confirmation Number","Check-In-Date","#Nights",
-                "Resort", "Size", "Booked", "Traveler", "Upgrade"};
+                "Resort", "Size", "Booked", "Traveler", "Upgrade", "Points"};
         
         tableHeadings = new Vector(Arrays.asList(stringHeadings));
                 

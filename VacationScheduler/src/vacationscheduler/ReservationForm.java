@@ -79,6 +79,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance();
         TextBox_UnitSize.setText(reservationToModify.getUnitSize());
         Textbox_Location.setText(reservationToModify.getLocation());
         Checkbox_upgraded.setSelected(reservationToModify.isWasUpgraded()==1);
+        TextBox_PointsRequired.setText(Integer.toString(reservationToModify.getPointsRequiredForReservation()));
         
         String dateOfReservation = reservationToModify.getDateOfReservation();
         Combobox_Year.setSelectedItem( dateOfReservation.split("-")[0] );

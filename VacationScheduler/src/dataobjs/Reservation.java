@@ -105,7 +105,8 @@ public class Reservation {
         SIZE(4),
         BOOKED(5),
         TRAVELER(6),
-        UPGRADE(7)
+        UPGRADE(7),
+        POINTS(8)
                 ;
         private final int index;
       private scrapedIndicies(int input)
@@ -143,6 +144,7 @@ public class Reservation {
         rtnVal.add(scrapedIndicies.BOOKED.getIndex(),dateBooked);
         rtnVal.add(scrapedIndicies.TRAVELER.getIndex(),getNameOnGuestCert());
         rtnVal.add(scrapedIndicies.UPGRADE.getIndex(),upgradeState);
+        rtnVal.add(scrapedIndicies.POINTS.getIndex(), Integer.toString(pointsRequiredForReservation));
 
         
         return rtnVal;

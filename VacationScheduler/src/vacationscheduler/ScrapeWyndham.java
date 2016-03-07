@@ -8,6 +8,9 @@ package vacationscheduler;
 import dataobjs.Guest;
 import dataobjs.Reservation;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -126,6 +129,14 @@ public class ScrapeWyndham
              currentReservation = p_webpageSrc.split("name=\"selectedConfirmation\"")[reservationItterator];
              
              reservationObject = parseReservation(currentReservation);
+           
+             
+             System.out.println("++++++++++Starting to pick apart the points");
+             int pointsRequired = getPointsRequired(reservationObject.getConfimationNumber());
+             reservationObject.setPointsRequiredForReservation(pointsRequired);
+             System.out.println("++++++++++Done picking apart the points");
+             
+             
              p_vectorOfReservations.add(reservationObject);
              System.out.println("");
         }
@@ -267,6 +278,59 @@ public class ScrapeWyndham
         return rsrv;
         
     }
+    public static int getPointsRequired(String p_confirmationNumber){
+        
+        int pointsRequired = 0;
+        
+        System.out.println("+++++++ confirmation number " + p_confirmationNumber);
+        
+        WebElement confirmationLink = firefoxWindow.findElement(By.linkText(p_confirmationNumber));
+        confirmationLink.click();
+        
+        try {
+            //wait
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ScrapeWyndham.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String webpageSrc = firefoxWindow.getPageSource();
+        pointsRequired = parsePointsRequired( webpageSrc );
+        
+        firefoxWindow.navigate().back();
+        
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ScrapeWyndham.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        firefoxWindow.getPageSource();
+        
+        
+        
+        return pointsRequired;
+    }
+    
+    public static int parsePointsRequired(String p_webpageSrc){
+        
+        int pointsRequired = 0;
+        
+        String stringForParsing = "";
+        
+        stringForParsing = p_webpageSrc.split("Points Used:")[1];
+        stringForParsing = stringForParsing.split("</strong>")[1];
+        stringForParsing = stringForParsing.split("</p>")[0];
+        stringForParsing = stringForParsing.trim();
+        
+        pointsRequired = (int) Integer.parseInt(stringForParsing);
+        
+        
+        System.out.println("POINTS ::: " + pointsRequired);
+        
+        return pointsRequired;
+    }
+    
+    
     public static void logout(WebDriver p_firefoxWindow){
         WebElement logoutBtn = p_firefoxWindow.findElement(By.linkText("Logout"));
         logoutBtn.click();

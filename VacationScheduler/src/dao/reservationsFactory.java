@@ -189,6 +189,7 @@ public class reservationsFactory
         paramVector.add(DateFormatUtility.formatDateWyn(p_rsrv.getDateBooked()));
         paramVector.add(p_rsrv.getUpgradeState());
         paramVector.add(p_rsrv.getNameOnGuestCert());
+        paramVector.add(Integer.toString(p_rsrv.getPointsRequiredForReservation()));
         paramVector.add("date('now','0 days')");
         
 		columnNames.add( "OWNER_USER_NAME" );
@@ -200,7 +201,9 @@ public class reservationsFactory
 		columnNames.add( "DATE_BOOKED" );
 		columnNames.add( "UPGRADE_STATUS" );
 		columnNames.add( "GUEST_CERTIF" );
+                columnNames.add( "POINTS_REQUIRED_FOR_RESERVATION" );
                 columnNames.add( "TOUCHED" );
+                
 
 		String myUpdateCommand = "UPDATE RESERVATIONS SET ";
 
