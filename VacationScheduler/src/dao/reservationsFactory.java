@@ -27,6 +27,53 @@ import javax.swing.JOptionPane;
 public class reservationsFactory
 {
     
+    static boolean wereConfirmationNumbersPulled = false;
+    static Vector<String> confirmationNumbers = new Vector();
+    
+    public static boolean wasReservationAlreadyPulled(String p_confirmationNumber){
+        
+        boolean wasReservationAlreadyPulled = false;
+        
+        getAllConfirmationNumbers();
+        if( confirmationNumbers.contains(p_confirmationNumber) ){
+            wasReservationAlreadyPulled = true;
+        }else{
+            wasReservationAlreadyPulled = false;
+        }
+        
+        
+        return wasReservationAlreadyPulled;
+    }
+    
+    public static void getAllConfirmationNumbers(){
+        
+        if( !wereConfirmationNumbersPulled ){
+            
+            wereConfirmationNumbersPulled = true;
+            
+            Connection con = RuthDBConnection.getConnection();
+ 
+            try{
+               Statement st = con.createStatement();
+               ResultSet rs = st.executeQuery("SELECT CONFIRMATION_NUMBER FROM RESERVATIONS");
+
+               
+
+
+               while(rs.next()){
+                   confirmationNumbers.add(rs.getString("CONFIRMATION_NUMBER"));
+               }
+               con.close();
+
+               
+           }catch(Exception e){
+               System.out.println(e);
+               wereConfirmationNumbersPulled = false;
+               getAllConfirmationNumbers();
+           } 
+        }
+    }
+    
     public static void insert(Reservation p_rsrv){
         String myInsertCommand = "INSERT INTO RESERVATIONS( ";
         Vector <String> columnNames = new <String> Vector();
@@ -189,7 +236,7 @@ public class reservationsFactory
         paramVector.add(DateFormatUtility.formatDateWyn(p_rsrv.getDateBooked()));
         paramVector.add(p_rsrv.getUpgradeState());
         paramVector.add(p_rsrv.getNameOnGuestCert());
-        paramVector.add(Integer.toString(p_rsrv.getPointsRequiredForReservation()));
+        //paramVector.add(Integer.toString(p_rsrv.getPointsRequiredForReservation()));
         paramVector.add("date('now','0 days')");
         
 		columnNames.add( "OWNER_USER_NAME" );
@@ -201,7 +248,7 @@ public class reservationsFactory
 		columnNames.add( "DATE_BOOKED" );
 		columnNames.add( "UPGRADE_STATUS" );
 		columnNames.add( "GUEST_CERTIF" );
-                columnNames.add( "POINTS_REQUIRED_FOR_RESERVATION" );
+                //columnNames.add( "POINTS_REQUIRED_FOR_RESERVATION" );
                 columnNames.add( "TOUCHED" );
                 
 

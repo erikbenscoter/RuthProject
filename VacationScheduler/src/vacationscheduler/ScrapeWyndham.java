@@ -5,6 +5,7 @@
  */
 package vacationscheduler;
 
+import static dao.reservationsFactory.wasReservationAlreadyPulled;
 import dataobjs.Guest;
 import dataobjs.Reservation;
 import java.util.Vector;
@@ -28,7 +29,6 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 public class ScrapeWyndham
 {
     static WebDriver firefoxWindow;
-    
     
     
     public static Vector <Reservation> getUserReservations(String p_username, String p_password, Vector <Reservation> p_startingVector){
@@ -129,12 +129,16 @@ public class ScrapeWyndham
              currentReservation = p_webpageSrc.split("name=\"selectedConfirmation\"")[reservationItterator];
              
              reservationObject = parseReservation(currentReservation);
-           
              
-             System.out.println("++++++++++Starting to pick apart the points");
-             int pointsRequired = getPointsRequired(reservationObject.getConfimationNumber());
-             reservationObject.setPointsRequiredForReservation(pointsRequired);
-             System.out.println("++++++++++Done picking apart the points");
+             if( !wasReservationAlreadyPulled( reservationObject.getConfimationNumber() ) ){
+    
+                int pointsRequired = getPointsRequired(reservationObject.getConfimationNumber());
+                reservationObject.setPointsRequiredForReservation(pointsRequired);
+    
+             }
+             
+             
+            
              
              
              p_vectorOfReservations.add(reservationObject);
